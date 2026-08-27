@@ -38,7 +38,6 @@ export default function HeroDashboard() {
 
   const handleMouseLeave = () => {
     mouseX.set(0);
-    mouseY.set(0);
   };
 
   // Telemetry stream and log roll

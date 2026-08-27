@@ -5,12 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   ArrowRight,
+  BarChart3,
   ShieldCheck,
-  Activity,
+  CloudCheck,
+  CheckCircle2,
   Sparkles,
-  Cpu,
-  Zap,
-  Play,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
@@ -56,332 +55,378 @@ function CountUpNumber({
   );
 }
 
-// Fluid Cyberpunk Particle Mesh & Dynamic Light Beam Canvas
-function FluidCyberpunkCanvas() {
+// WebGL Interactive Fluid Background Shader (Stitch Hero Evolution)
+function WebGLShaderBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
-  const mouseRef = useRef({ x: -1000, y: -1000, active: false });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!canvasRef.current) return;
-      const rect = canvasRef.current.getBoundingClientRect();
-      mouseRef.current.x = e.clientX - rect.left;
-      mouseRef.current.y = e.clientY - rect.top;
-      mouseRef.current.active = true;
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current.active = false;
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
+    let animFrameId: number;
 
-    const handleResize = () => {
-      if (!canvas || !canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.clientWidth;
-      height = canvas.height = canvas.parentElement.clientHeight;
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    const isDark = theme === "dark" || document.documentElement.classList.contains("dark");
-    const particleCount = Math.min(Math.floor((width * height) / 11000), 85);
-
-    type CyberParticle = {
-      x: number;
-      y: number;
-      ox: number;
-      oy: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      color: string;
-      glowColor: string;
-    };
-
-    const darkColors = ["#06b6d4", "#a855f7", "#ec4899", "#3b82f6", "#10b981"];
-    const lightColors = ["#4f46e5", "#0284c7", "#7c3aed", "#0891b2", "#2563eb"];
-
-    const palette = isDark ? darkColors : lightColors;
-
-    const particles: CyberParticle[] = [];
-    for (let i = 0; i < particleCount; i++) {
-      const px = Math.random() * width;
-      const py = Math.random() * height;
-      const color = palette[Math.floor(Math.random() * palette.length)];
-      particles.push({
-        x: px,
-        y: py,
-        ox: px,
-        oy: py,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 2.2 + 1.2,
-        color: color,
-        glowColor: color,
-      });
+    function syncSize() {
+      if (!canvas) return;
+      const w = canvas.clientWidth || window.innerWidth;
+      const h = canvas.clientHeight || window.innerHeight;
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
     }
 
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
+    syncSize();
+    const observer = new ResizeObserver(syncSize);
+    if (canvas.parentElement) {
+      observer.observe(canvas.parentElement);
+    }
 
-      const mouse = mouseRef.current;
+    const gl =
+      canvas.getContext("webgl") ||
+      (canvas.getContext("experimental-webgl") as WebGLRenderingContext | null);
 
-      // Render Cyberpunk Particles & Cursor Force Beams
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+    if (!gl) return;
 
-        // Drift motion
-        p.x += p.vx;
-        p.y += p.vy;
+    const isDark =
+      theme === "dark" || document.documentElement.classList.contains("dark");
 
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        // Interactive Cursor Magnetic Force
-        if (mouse.active) {
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 180;
-
-          if (dist < maxDist) {
-            const force = (1 - dist / maxDist) * 1.5;
-            p.x -= (dx / dist) * force;
-            p.y -= (dy / dist) * force;
-
-            // Draw glowing energy beam to cursor
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            const beamGrad = ctx.createLinearGradient(p.x, p.y, mouse.x, mouse.y);
-            beamGrad.addColorStop(0, p.color);
-            beamGrad.addColorStop(1, isDark ? "rgba(6, 182, 212, 0.4)" : "rgba(79, 70, 229, 0.3)");
-            ctx.strokeStyle = beamGrad;
-            ctx.globalAlpha = (1 - dist / maxDist) * (isDark ? 0.35 : 0.2);
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-          }
-        }
-
-        // Particle Glow & Core
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = isDark ? 0.85 : 0.55;
-        ctx.shadowBlur = isDark ? 10 : 0;
-        ctx.shadowColor = p.glowColor;
-        ctx.fill();
-        ctx.shadowBlur = 0; // reset shadow
-
-        // Inter-particle light beam mesh
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const pdx = p.x - p2.x;
-          const pdy = p.y - p2.y;
-          const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
-
-          if (pdist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = p.color;
-            ctx.globalAlpha = (1 - pdist / 120) * (isDark ? 0.25 : 0.12);
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
+    const vs = `
+      attribute vec2 a_position;
+      varying vec2 v_texCoord;
+      void main() {
+        v_texCoord = a_position * 0.5 + 0.5;
+        gl_Position = vec4(a_position, 0.0, 1.0);
       }
+    `;
 
-      ctx.globalAlpha = 1.0;
-      animationFrameId = requestAnimationFrame(render);
+    const fsDark = `
+      precision highp float;
+      uniform float u_time;
+      uniform vec2 u_resolution;
+      uniform vec2 u_mouse;
+      varying vec2 v_texCoord;
+
+      void main() {
+          vec2 uv = v_texCoord;
+          vec2 mouse = u_mouse / u_resolution;
+          
+          vec3 color1 = vec3(0.486, 0.227, 0.929); // #7c3aed
+          vec3 color2 = vec3(0.02, 0.02, 0.04);   // #05050a
+          
+          float noise = sin(uv.x * 10.0 + u_time * 0.5) * cos(uv.y * 8.0 - u_time * 0.3);
+          noise += sin(uv.x * 5.0 - u_time * 0.2) * 0.5;
+          
+          float dist = distance(uv, mouse);
+          float glow = 1.0 - smoothstep(0.0, 0.6, dist);
+          
+          vec3 finalColor = mix(color2, color1, noise * 0.2 + 0.1);
+          finalColor += color1 * glow * 0.35;
+          
+          gl_FragColor = vec4(finalColor, 1.0);
+      }
+    `;
+
+    const fsLight = `
+      precision highp float;
+      uniform float u_time;
+      uniform vec2 u_resolution;
+      uniform vec2 u_mouse;
+      varying vec2 v_texCoord;
+
+      void main() {
+          vec2 uv = v_texCoord;
+          vec2 mouse = u_mouse / u_resolution;
+          
+          vec3 color1 = vec3(0.388, 0.275, 0.902); // #6346e6
+          vec3 color2 = vec3(0.973, 0.976, 1.0);   // #f8f9ff
+          
+          float noise = sin(uv.x * 10.0 + u_time * 0.4) * cos(uv.y * 8.0 - u_time * 0.25);
+          noise += sin(uv.x * 5.0 - u_time * 0.15) * 0.4;
+          
+          float dist = distance(uv, mouse);
+          float glow = 1.0 - smoothstep(0.0, 0.55, dist);
+          
+          vec3 finalColor = mix(color2, color1, noise * 0.08 + 0.03);
+          finalColor += color1 * glow * 0.12;
+          
+          gl_FragColor = vec4(finalColor, 1.0);
+      }
+    `;
+
+    function createShader(type: number, src: string) {
+      if (!gl) return null;
+      const s = gl.createShader(type);
+      if (!s) return null;
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    }
+
+    const vertexShader = createShader(gl.VERTEX_SHADER, vs);
+    const fragmentShader = createShader(
+      gl.FRAGMENT_SHADER,
+      isDark ? fsDark : fsLight
+    );
+
+    if (!vertexShader || !fragmentShader) return;
+
+    const prog = gl.createProgram();
+    if (!prog) return;
+    gl.attachShader(prog, vertexShader);
+    gl.attachShader(prog, fragmentShader);
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+      gl.STATIC_DRAW
+    );
+
+    const pos = gl.getAttribLocation(prog, "a_position");
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+    const uTime = gl.getUniformLocation(prog, "u_time");
+    const uRes = gl.getUniformLocation(prog, "u_resolution");
+    const uMouse = gl.getUniformLocation(prog, "u_mouse");
+
+    const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width && rect.height) {
+        const nx = (event.clientX - rect.left) / rect.width;
+        const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+        mouse.x = nx * canvas.width;
+        mouse.y = ny * canvas.height;
+      }
     };
 
-    render();
+    window.addEventListener("mousemove", handleMouseMove);
+
+    function render(t: number) {
+      if (!gl || !canvas) return;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      if (uTime) gl.uniform1f(uTime, t * 0.001);
+      if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+      if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      animFrameId = requestAnimationFrame(render);
+    }
+
+    animFrameId = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animFrameId);
     };
   }, [theme]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-700 overflow-hidden"
-    />
+    <div className="absolute inset-0 z-0 opacity-80 pointer-events-none mix-blend-screen overflow-hidden">
+      <canvas ref={canvasRef} className="block w-full h-full" />
+    </div>
   );
 }
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden bg-background pt-32 pb-20 dark:bg-[#080c14] lg:pt-36 lg:pb-28">
-      {/* Fluid Cyberpunk Particle Mesh & Dynamic Light Beam Canvas */}
-      <FluidCyberpunkCanvas />
+    <section className="relative min-h-[92vh] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-[#f8f9ff] dark:bg-[#05050a] transition-colors duration-300">
+      {/* Light Leaks & Geometric Ambient Accents */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none z-0" />
 
-      {/* Central Masking Radial Vignette for High Text Contrast */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-background/40 to-background dark:via-[#080c14]/40 dark:to-[#080c14]" />
+      {/* Grid Blueprint Overlay */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.04] dark:opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #808080 1px, transparent 1px), linear-gradient(to bottom, #808080 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
-      {/* Hero Content Container */}
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-        {/* Status Pill Badge */}
+      {/* WebGL Shader Interactive Canvas */}
+      <WebGLShaderBackground />
+
+      {/* Floating Value Prop Glass Cards (4 Corner Orbiters) */}
+      <div className="hidden xl:flex absolute top-[24%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03] animate-pulse">
+        <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+          <BarChart3 className="w-5 h-5 text-purple-600 dark:text-purple-300" />
+        </div>
+        <div>
+          <p className="text-[11px] text-slate-500 dark:text-white/50 font-semibold uppercase tracking-widest mb-0.5">
+            Real-Time
+          </p>
+          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90">
+            Analytics Engine
+          </p>
+        </div>
+      </div>
+
+      <div className="hidden xl:flex absolute bottom-[22%] left-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03]">
+        <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+          <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+        </div>
+        <div>
+          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90 mb-0.5">
+            Bank Grade
+          </p>
+          <p className="text-[11px] text-emerald-600 dark:text-[#4ade80] font-semibold flex items-center">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-ping" />
+            Protected
+          </p>
+        </div>
+      </div>
+
+      <div className="hidden xl:flex absolute top-[28%] right-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03]">
+        <div className="w-10 h-10 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+          <CloudCheck className="w-5 h-5 text-indigo-600 dark:text-indigo-300" />
+        </div>
+        <div>
+          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90 mb-0.5">
+            Global Scalability
+          </p>
+          <p className="text-[11px] text-slate-500 dark:text-white/50 font-semibold uppercase tracking-widest">
+            Cloud Native
+          </p>
+        </div>
+      </div>
+
+      <div className="hidden xl:flex absolute bottom-[24%] right-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03]">
+        <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+          <CheckCircle2 className="w-5 h-5 text-purple-600 dark:text-purple-300" />
+        </div>
+        <div>
+          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90 mb-0.5">
+            99.9% Uptime
+          </p>
+          <p className="text-[11px] text-slate-500 dark:text-white/50 font-semibold uppercase tracking-widest">
+            SLA Guarantee
+          </p>
+        </div>
+      </div>
+
+      {/* Main Stitch Hero Content Container */}
+      <div className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center">
+        {/* Next-Gen Badge */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="inline-flex items-center gap-2.5 rounded-full border border-slate-200/90 bg-white/90 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-brand shadow-xs backdrop-blur-xl dark:border-white/15 dark:bg-slate-900/90 dark:text-amber-400"
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full border border-slate-300/80 bg-white/80 shadow-xs backdrop-blur-md mb-8 dark:border-white/10 dark:bg-white/[0.04]"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+          <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-300" />
+          <span className="font-mono text-[11px] text-slate-700 dark:text-white/80 uppercase tracking-[0.2em] font-bold">
+            NEXT-GEN INFRASTRUCTURE &amp; AI
           </span>
-          <Sparkles className="h-3.5 w-3.5 text-brand dark:text-amber-400" />
-          <span>NEXT-GEN ENTERPRISE ENGINEERING &amp; AI</span>
         </motion.div>
 
-        {/* Kinetic Centered Headline */}
+        {/* Stitch Display Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-8 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-[68px] dark:text-white"
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="font-display text-4xl sm:text-6xl md:text-[76px] lg:text-[84px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-900 dark:text-white mb-8"
         >
-          Engineering digital platforms{" "}
-          <span className="block mt-2 bg-gradient-to-r from-brand via-electric to-indigo-600 bg-clip-text text-transparent dark:from-cyan-400 dark:via-electric dark:to-pink-400">
-            that power enterprise growth.
+          <span className="font-semibold text-slate-900/90 dark:text-white/90">
+            We are not just building Tech{" "}
+            <span className="text-slate-400 dark:text-white/40 font-light">—</span>
+          </span>
+          <br />
+          <span className="font-extrabold text-slate-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-white/60">
+            We are building{" "}
+          </span>
+          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-indigo-500 to-purple-400 dark:from-[#d2bbff] dark:to-[#b68cff] drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
+            Future.
           </span>
         </motion.h1>
 
-        {/* Supporting Subtitle */}
+        {/* Subtext */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mx-auto mt-6 max-w-2xl font-sans text-base font-medium leading-relaxed text-slate-600 sm:text-xl dark:text-slate-300"
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="font-sans text-base sm:text-lg md:text-[20px] leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-10 font-normal tracking-wide"
         >
-          Connectify designs, builds, and operates resilient digital infrastructure, cloud platforms, and intelligent software systems for high-growth enterprises and public sector leaders.
+          We partner with ambitious brands to build scalable digital products,
+          robust infrastructure, and immersive experiences that drive tomorrow&apos;s
+          success.
         </motion.p>
 
-        {/* Action CTAs Ribbon */}
+        {/* Action CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto"
         >
-          <div className="inline-flex items-center gap-3 rounded-full border border-slate-200/80 bg-white/80 p-2 shadow-2xl backdrop-blur-2xl dark:border-white/15 dark:bg-slate-900/80">
-            <Link
-              href="/contact"
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-brand px-7 py-3.5 font-display text-sm font-semibold text-white shadow-lg shadow-brand/25 transition-all duration-300 hover:scale-[1.03] dark:bg-electric dark:shadow-indigo-950/50"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/25 to-white/0 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
-              <span className="relative">Schedule Consultation</span>
-              <ArrowRight className="relative h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
+          <Link
+            href="/contact"
+            className="group inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white dark:bg-white dark:text-black font-display text-[15px] font-semibold rounded-full hover:bg-slate-800 dark:hover:bg-gray-100 transition-all duration-300 shadow-xl w-full sm:w-auto min-w-[190px]"
+          >
+            <span>Get in Touch</span>
+            <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
 
-            <Link
-              href="/services"
-              className="group inline-flex items-center gap-2 rounded-full px-6 py-3 font-display text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/10"
-            >
-              <Play className="h-4 w-4 fill-brand text-brand dark:fill-amber-400 dark:text-amber-400" />
-              <span>Explore Blueprints</span>
-            </Link>
-          </div>
+          <Link
+            href="/services"
+            className="inline-flex items-center justify-center px-8 py-4 border border-slate-300/80 bg-white/70 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[15px] font-semibold rounded-full hover:bg-white dark:hover:bg-white/10 transition-all duration-300 backdrop-blur-md w-full sm:w-auto min-w-[180px]"
+          >
+            Our Services
+          </Link>
         </motion.div>
 
-        {/* Integrated Metric Counter Glass Ribbon Bar */}
+        {/* Integrated Stats Ribbon Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-14 rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-900/80"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-16 w-full rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-900/80"
         >
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             <div className="space-y-1">
-              <div className="flex items-center justify-center gap-2 text-brand dark:text-electric">
-                <Activity className="h-5 w-5" />
-                <p className="font-mono text-3xl font-extrabold bg-gradient-to-r from-brand to-electric bg-clip-text text-transparent sm:text-4xl dark:from-amber-400 dark:to-electric">
-                  <CountUpNumber target={25} suffix="+" />
-                </p>
-              </div>
+              <p className="font-mono text-3xl font-extrabold text-purple-600 dark:text-purple-400 sm:text-4xl">
+                <CountUpNumber target={25} suffix="+" />
+              </p>
               <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
                 Deployed Systems
               </p>
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400">
-                <ShieldCheck className="h-5 w-5" />
-                <p className="font-mono text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent sm:text-4xl dark:from-emerald-400 dark:to-teal-300">
-                  <CountUpNumber target={99.99} decimals={2} suffix="%" />
-                </p>
-              </div>
+              <p className="font-mono text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 sm:text-4xl">
+                <CountUpNumber target={99.99} decimals={2} suffix="%" />
+              </p>
               <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
                 SLA Uptime
               </p>
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center justify-center gap-2 text-indigo-600 dark:text-indigo-400">
-                <Cpu className="h-5 w-5" />
-                <p className="font-mono text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-electric bg-clip-text text-transparent sm:text-4xl dark:from-indigo-400 dark:to-electric">
-                  <CountUpNumber target={6} />
-                </p>
-              </div>
+              <p className="font-mono text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-4xl">
+                <CountUpNumber target={6} />
+              </p>
               <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
                 Core Practices
               </p>
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center justify-center gap-2 text-amber-600 dark:text-amber-400">
-                <Zap className="h-5 w-5" />
-                <p className="font-mono text-3xl font-extrabold bg-gradient-to-r from-amber-600 to-amber-400 bg-clip-text text-transparent sm:text-4xl dark:from-amber-400 dark:to-amber-200">
-                  Tier-1
-                </p>
-              </div>
+              <p className="font-mono text-3xl font-extrabold text-amber-600 dark:text-amber-400 sm:text-4xl">
+                Tier-1
+              </p>
               <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
                 Enterprise Clients
               </p>
             </div>
-          </div>
-        </motion.div>
-
-        {/* Secondary Trust Row (Bottom Center) */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="mt-12 flex flex-wrap items-center justify-center gap-3 font-mono text-xs font-semibold text-slate-600 dark:text-slate-400"
-        >
-          <div className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-3.5 py-1.5 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>SOC2 Type II Verified</span>
-          </div>
-          <div className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-3.5 py-1.5 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Zero-Trust Edge</span>
-          </div>
-          <div className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-3.5 py-1.5 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>99.998% SLA</span>
           </div>
         </motion.div>
       </div>
