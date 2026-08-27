@@ -10,8 +10,6 @@ import {
   CloudCheck,
   CheckCircle2,
   Sparkles,
-  Layers,
-  Cpu,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
@@ -126,12 +124,11 @@ function FluidWarpGridCanvas() {
       ctx.clearRect(0, 0, width, height);
       time += 0.015;
 
-      // Smooth Lerp Mouse Tracking
       const mouse = mouseRef.current;
       mouse.x += (mouse.targetX - mouse.x) * 0.08;
       mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
-      // 1. Dynamic Mouse Spotlight Light Beam
+      // 1. Spotlight Radial Light Beam
       if (mouse.active && mouse.x > 0 && mouse.y > 0) {
         const spotlight = ctx.createRadialGradient(
           mouse.x,
@@ -170,7 +167,6 @@ function FluidWarpGridCanvas() {
             Math.sin(x * waveFreq + speed) * waveAmp +
             Math.cos(x * 0.002 - speed * 0.5) * 15;
 
-          // Mouse warp bending on wave lines
           if (mouse.active) {
             const dx = x - mouse.x;
             const dy = y - mouse.y;
@@ -200,7 +196,7 @@ function FluidWarpGridCanvas() {
         ctx.stroke();
       }
 
-      // 3. Fluid Warp Grid Lines (Horizontal & Vertical)
+      // 3. Fluid Warp Grid Lines
       const gridSize = 65;
       const cols = Math.ceil(width / gridSize);
       const rows = Math.ceil(height / gridSize);
@@ -210,7 +206,6 @@ function FluidWarpGridCanvas() {
         : "rgba(67, 56, 202, 0.08)";
       ctx.lineWidth = 1;
 
-      // Vertical Grid Lines with Wave Distortion
       for (let c = 0; c <= cols; c++) {
         const baseX = c * gridSize;
         ctx.beginPath();
@@ -231,7 +226,6 @@ function FluidWarpGridCanvas() {
         ctx.stroke();
       }
 
-      // Horizontal Grid Lines
       for (let r = 0; r <= rows; r++) {
         const baseY = r * gridSize;
         ctx.beginPath();
@@ -282,15 +276,15 @@ function FluidWarpGridCanvas() {
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-[90vh] lg:min-h-screen overflow-hidden flex flex-col justify-between pt-28 pb-20 md:pt-36 md:pb-24 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
-      {/* Full-Bleed Fluid Flowing Light Beams & Warp Grid Canvas */}
+    <section className="relative w-full min-h-[90vh] lg:min-h-screen overflow-hidden flex flex-col justify-between pt-28 pb-20 md:pt-32 md:pb-24 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
+      {/* Full-Bleed Canvas */}
       <FluidWarpGridCanvas />
 
-      {/* Central Masking Vignette Gradient Overlay */}
+      {/* Central Masking Gradient Overlay */}
       <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-[#f8fafc]/40 to-[#f8fafc] dark:via-[#080c14]/40 dark:to-[#080c14]" />
 
-      {/* Floating Glassmorphic Value Prop Orbiters (4 Corner Cards) */}
-      <div className="hidden xl:flex absolute top-[24%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none animate-pulse">
+      {/* Floating Glassmorphic Value Prop Orbiters */}
+      <div className="hidden xl:flex absolute top-[24%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
           <BarChart3 className="w-5 h-5 text-indigo-600 dark:text-purple-300" />
         </div>
@@ -304,7 +298,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute bottom-[22%] left-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none">
+      <div className="hidden xl:flex absolute bottom-[22%] left-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200/80 dark:bg-emerald-500/10 dark:border-emerald-500/20 flex items-center justify-center">
           <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
         </div>
@@ -319,7 +313,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute top-[28%] right-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none">
+      <div className="hidden xl:flex absolute top-[28%] right-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-sky-50 border border-sky-200/80 dark:bg-indigo-500/10 dark:border-indigo-500/20 flex items-center justify-center">
           <CloudCheck className="w-5 h-5 text-sky-600 dark:text-indigo-300" />
         </div>
@@ -333,7 +327,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute bottom-[24%] right-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none">
+      <div className="hidden xl:flex absolute bottom-[24%] right-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
           <CheckCircle2 className="w-5 h-5 text-indigo-600 dark:text-purple-300" />
         </div>
@@ -361,38 +355,26 @@ export default function Hero() {
         }}
         className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center my-auto"
       >
-        {/* 2. Centered Prominent Connectify Core Brand Emblem with Continuous Glow Effect */}
+        {/* 2. Official Connectify Brand Logo Centered Below Navbar */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, scale: 0.8, y: 15 },
+            hidden: { opacity: 0, scale: 0.9, y: 20 },
             show: { opacity: 1, scale: 1, y: 0 },
           }}
           transition={{ duration: 0.6 }}
-          className="relative mb-6"
+          className="mb-8"
         >
           <motion.div
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="group relative flex h-16 w-16 items-center justify-center rounded-2xl border border-indigo-200/80 bg-white/90 p-3.5 shadow-[0_0_40px_rgba(99,102,241,0.25)] backdrop-blur-xl dark:border-cyan-500/30 dark:bg-slate-900/90 dark:shadow-[0_0_50px_rgba(56,189,248,0.35)]"
+            className="group relative flex items-center justify-center rounded-2xl px-6 py-3.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_50px_rgba(99,102,241,0.22)] bg-white/80 border border-slate-200/90 dark:shadow-[0_0_60px_rgba(56,189,248,0.3)] dark:bg-slate-900/80 dark:border-cyan-500/20"
           >
-            {/* Pulsing Aura Halo */}
-            <span className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-purple-500 opacity-30 blur-md transition-opacity group-hover:opacity-75 animate-pulse" />
-
-            <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 via-sky-500 to-indigo-700 text-white shadow-inner">
-              <svg
-                className="h-8 w-8 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/connectifylogo.png"
+              alt="Connectify Brand Logo"
+              className="h-12 sm:h-14 w-auto transition-transform duration-300 group-hover:scale-105 dark:brightness-110 dark:invert-[0.1]"
+            />
           </motion.div>
         </motion.div>
 
@@ -403,7 +385,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-8 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
+          className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -415,14 +397,14 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Dynamic Kinetic Headline with Continuous Shimmer Effect */}
+        {/* Headline */}
         <motion.h1
           variants={{
             hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.7 }}
-          className="font-display text-4xl sm:text-6xl md:text-[76px] lg:text-[84px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-950 dark:text-white mb-8"
+          className="font-display text-4xl sm:text-6xl md:text-[76px] lg:text-[84px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-950 dark:text-white mb-6"
         >
           <span className="font-semibold text-slate-950 dark:text-white/90">
             We are not just building Tech{" "}
@@ -437,7 +419,7 @@ export default function Hero() {
           </span>
         </motion.h1>
 
-        {/* Subtitle Copy */}
+        {/* Subtitle */}
         <motion.p
           variants={{
             hidden: { opacity: 0, y: 16 },
@@ -451,7 +433,7 @@ export default function Hero() {
           success.
         </motion.p>
 
-        {/* Magnetic Interactive Action CTAs */}
+        {/* CTAs */}
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 16 },
@@ -476,7 +458,7 @@ export default function Hero() {
           </Link>
         </motion.div>
 
-        {/* Stats Counter Ribbon Bar */}
+        {/* Counter Ribbon */}
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 20 },
