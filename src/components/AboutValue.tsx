@@ -58,7 +58,7 @@ export default function AboutValue() {
                   </div>
                 </div>
                 <h3 className="mt-3 font-display text-lg font-bold text-slate-950 dark:text-white">Production-Grade Code</h3>
-                <p className="mt-1.5 font-sans text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300">Cloud-native microservices, zero-trust security controls, and sub-second latency.</p>
+                <p className="mt-1.5 font-sans text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300">Scalable microservices, clean codebases, and reliable performance.</p>
               </div>
 
               <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 dark:border-white/10 dark:bg-slate-900/80">

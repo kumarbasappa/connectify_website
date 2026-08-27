@@ -162,7 +162,7 @@ export default async function CaseStudyPage({
                 href="/contact"
                 className="group inline-flex items-center gap-3 rounded-full btn-glow px-8 py-4 font-display text-sm font-semibold"
               >
-                Schedule Architecture Consultation
+                Start a Project
                 <svg
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   fill="none"

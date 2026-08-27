@@ -19,7 +19,7 @@ export const projects: Project[] = [
     name: "Karnataka Statewide Survey Platform",
     initial: "K",
     category: "#01 · GovTech",
-    image: "/clients/The-Karnataka-Government-Kannada-Logo-Vector.svg-.png",
+    image: "/case-studies/karnataka-statewide-survey-platform.png",
     tags: ["GovTech", "Karnataka Socio-Educational Survey"],
     industries: ["GovTech"],
     summary:

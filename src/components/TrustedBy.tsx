@@ -3,14 +3,14 @@
 import { useRef } from "react";
 
 const industryDomains = [
-  { name: "Automotive Systems", tag: "Automotive" },
-  { name: "Enterprise SaaS Platforms", tag: "Enterprise" },
-  { name: "Banking & Financial Services", tag: "BFSI" },
-  { name: "Public Sector Digital Services", tag: "Government" },
-  { name: "Logistics & Fleet Mobility", tag: "Logistics" },
+  { name: "Automotive Solutions", tag: "Automotive" },
+  { name: "Enterprise Systems", tag: "Enterprise" },
+  { name: "Banking & Financial Rails", tag: "BFSI" },
+  { name: "Public Sector Tech", tag: "Public Sector" },
+  { name: "Logistics & Mobility", tag: "Logistics" },
   { name: "Cross-Border Fintech", tag: "Fintech" },
-  { name: "HealthTech Platforms", tag: "Healthcare" },
-  { name: "AI & Machine Learning", tag: "AI / ML" },
+  { name: "Healthcare Platforms", tag: "Healthcare" },
+  { name: "Artificial Intelligence", tag: "AI" },
 ];
 
 export default function TrustedBy() {
@@ -19,8 +19,8 @@ export default function TrustedBy() {
   return (
     <section className="relative overflow-hidden border-y border-black/10 bg-background py-14 dark:border-white/10">
       <div className="mx-auto max-w-7xl px-0 text-center">
-        <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-muted">
-          ENTERPRISE TECH ECOSYSTEM &amp; DOMAIN FOCUS
+        <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-900 dark:text-cyan-400">
+          INDUSTRIES WE BUILD FOR
         </p>
       </div>
 

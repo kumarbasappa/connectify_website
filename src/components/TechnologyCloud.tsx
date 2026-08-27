@@ -156,12 +156,6 @@ function TechCard3D({ tech }: { tech: { name: string; description: string; verif
               {tech.name}
             </h3>
           </div>
-          {tech.verified && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-              <ShieldCheck className="w-3 h-3 text-emerald-500" />
-              Verified
-            </span>
-          )}
         </div>
         <p className="font-sans mt-3.5 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
           {tech.description}
@@ -195,11 +189,11 @@ export default function TechnologyCloud() {
               03 / ENGINEERING STACK
             </p>
             <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl dark:text-white">
-              Proven technology matrix.
+              Technology Stack.
             </h2>
           </div>
           <p className="font-sans max-w-md text-sm font-medium leading-relaxed text-slate-700 dark:text-slate-300">
-            We work exclusively with modern, battle-tested technologies verified across our enterprise and government client deployments.
+            We build with modern, battle-tested technologies tailored for high-performance web, mobile, cloud, and AI systems.
           </p>
         </div>
 
