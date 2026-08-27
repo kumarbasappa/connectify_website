@@ -1,95 +1,88 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion } from "framer-motion";
+import { Cpu, Target, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 
 export default function AboutValue() {
-  const rootRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        "[data-value-reveal]",
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: rootRef.current,
-            start: "top 80%",
-            once: true
-          }
-        }
-      );
-    }, rootRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={rootRef} className="relative bg-background py-24 lg:py-32 border-t border-black/10 dark:border-white/10">
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
+    <section className="relative bg-background py-24 lg:py-32 border-t border-slate-200/90 dark:border-white/10 overflow-hidden">
+      {/* Subtle Background Glow */}
+      <div className="absolute top-1/2 left-[-5%] -translate-y-1/2 w-[35%] h-[35%] bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Left Column - Headline */}
-          <div className="lg:col-span-6" data-value-reveal>
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-brand dark:text-cyan-400">
-              01 / Engineering Philosophy
+          {/* Left Column - Headline & Kinetic Typography */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-cyan-400 mb-6">
+              <Sparkles className="w-3.5 h-3.5" />
+              ENTERPRISE FOUNDATION
+            </div>
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 mb-3">
+              01 / ENGINEERING PHILOSOPHY
             </p>
-            <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-5xl lg:leading-[1.1] dark:text-white">
+            <h2 className="font-display text-3xl font-extrabold tracking-tight text-slate-950 sm:text-5xl lg:text-5xl lg:leading-[1.1] dark:text-white">
               We build software systems <br />
-              <span className="bg-gradient-to-r from-brand to-electric bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-600 via-sky-600 to-violet-600 bg-clip-text text-transparent dark:from-white dark:via-slate-100 dark:to-indigo-300">
                 designed for real-world scale
               </span>{" "}
               and high-stakes reliability.
             </h2>
-          </div>
+          </motion.div>
 
-          {/* Right Column - Narrative & Pillars */}
-          <div className="space-y-6 lg:col-span-6" data-value-reveal>
-            <p className="font-sans text-base font-medium leading-relaxed text-slate-700 sm:text-lg dark:text-slate-300">
+          {/* Right Column - Narrative & Multi-Layer Glass Cards */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="space-y-6 lg:col-span-6"
+          >
+            <p className="font-sans text-base font-medium leading-relaxed text-slate-600 sm:text-lg dark:text-slate-300">
               Connectify operates at the intersection of business strategy and deep software engineering.
               Whether architecting statewide public infrastructure or launching high-frequency financial ledgers, we deliver software that remains stable, secure, and maintainable over years of production load.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              <div className="rounded-2xl border border-black/10 bg-card-bg p-6 shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10">
-                <span className="font-mono text-xs font-bold text-amber-400">01 / ARCHITECTURE</span>
-                <h3 className="mt-2 font-display text-lg font-bold text-foreground dark:text-white">Battle-Tested Code</h3>
-                <p className="mt-1 font-sans text-xs font-medium text-slate-600 dark:text-slate-300">Cloud-native microservices, zero-trust security controls, and sub-second latency.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-2xl dark:border-white/10 dark:bg-slate-900/80">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-indigo-600 dark:text-cyan-400">01 / ARCHITECTURE</span>
+                  <div className="p-2 rounded-xl bg-indigo-50 dark:bg-white/5 border border-indigo-100 dark:border-white/10">
+                    <Cpu className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
+                  </div>
+                </div>
+                <h3 className="mt-3 font-display text-lg font-bold text-slate-950 dark:text-white">Battle-Tested Code</h3>
+                <p className="mt-1.5 font-sans text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300">Cloud-native microservices, zero-trust security controls, and sub-second latency.</p>
               </div>
 
-              <div className="rounded-2xl border border-black/10 bg-card-bg p-6 shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10">
-                <span className="font-mono text-xs font-bold text-amber-400">02 / EXECUTION</span>
-                <h3 className="mt-2 font-display text-lg font-bold text-foreground dark:text-white">Measurable Impact</h3>
-                <p className="mt-1 font-sans text-xs font-medium text-slate-600 dark:text-slate-300">Direct alignment between every sprint deliverable and your core operational metrics.</p>
+              <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-2xl dark:border-white/10 dark:bg-slate-900/80">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-indigo-600 dark:text-cyan-400">02 / EXECUTION</span>
+                  <div className="p-2 rounded-xl bg-sky-50 dark:bg-white/5 border border-sky-100 dark:border-white/10">
+                    <Target className="w-5 h-5 text-sky-600 dark:text-indigo-400" />
+                  </div>
+                </div>
+                <h3 className="mt-3 font-display text-lg font-bold text-slate-950 dark:text-white">Measurable Impact</h3>
+                <p className="mt-1.5 font-sans text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300">Direct alignment between every sprint deliverable and core operational metrics.</p>
               </div>
             </div>
 
             <div className="pt-2">
               <Link
                 href="/about"
-                className="group inline-flex items-center gap-2 font-display text-sm font-semibold text-brand dark:text-cyan-400 transition-colors hover:text-electric dark:hover:text-white"
+                className="group inline-flex items-center gap-2 font-display text-sm font-semibold text-slate-950 dark:text-cyan-400 transition-colors hover:text-indigo-600 dark:hover:text-white"
               >
-                Read our engineering principles
-                <svg
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <span>Read our engineering principles</span>
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
