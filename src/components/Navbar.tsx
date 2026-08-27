@@ -2,18 +2,113 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useSpring,
+  useScroll,
+  useMotionValueEvent,
+  AnimatePresence,
+  MotionValue,
+} from "framer-motion";
+import {
+  Home,
+  Info,
+  Layers,
+  Box,
+  Briefcase,
+  Mail,
+  Sun,
+  Moon,
+  ArrowRight,
+  Menu,
+  X,
+} from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Products", href: "/products" },
-  { label: "Case Studies", href: "/case-studies" },
-  { label: "Contact", href: "/contact" },
+  { label: "Home", href: "/", icon: Home },
+  { label: "About", href: "/about", icon: Info },
+  { label: "Services", href: "/services", icon: Layers },
+  { label: "Products", href: "/products", icon: Box },
+  { label: "Case Studies", href: "/case-studies", icon: Briefcase },
+  { label: "Contact", href: "/contact", icon: Mail },
 ];
+
+function DockItem({
+  mouseX,
+  link,
+  isActive,
+}: {
+  mouseX: MotionValue<number>;
+  link: {
+    label: string;
+    href: string;
+    icon: React.ComponentType<{ className?: string }>;
+  };
+  isActive: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  const widthSync = useTransform(distance, [-140, 0, 140], [40, 54, 40]);
+  const width = useSpring(widthSync, {
+    mass: 0.1,
+    stiffness: 200,
+    damping: 12,
+  });
+
+  const [hovered, setHovered] = useState(false);
+  const Icon = link.icon;
+
+  return (
+    <div
+      ref={ref}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative flex flex-col items-center justify-end"
+    >
+      {/* macOS Floating Tooltip Badge */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 4, scale: 0.9 }}
+            animate={{ opacity: 1, y: -10, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="absolute -top-9 z-30 pointer-events-none px-2.5 py-1 rounded-md bg-slate-900/90 text-white text-[11px] font-semibold font-sans whitespace-nowrap backdrop-blur-md border border-white/10 shadow-lg dark:bg-white/90 dark:text-slate-950"
+          >
+            {link.label}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <Link href={link.href} aria-label={link.label}>
+        <motion.div
+          style={{ width, height: width }}
+          className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${
+            isActive
+              ? "bg-slate-900 text-white border-slate-800 shadow-md dark:bg-white dark:text-slate-950 dark:border-white"
+              : "bg-white/80 text-slate-700 border-slate-200/80 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
+          }`}
+        >
+          <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-none" />
+        </motion.div>
+      </Link>
+
+      {/* macOS Active App Indicator Dot */}
+      {isActive && (
+        <span className="absolute -bottom-2 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-sm" />
+      )}
+    </div>
+  );
+}
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -21,6 +116,8 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+
+  const mouseX = useMotionValue(Infinity);
 
   const { scrollY, scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -53,152 +150,89 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Modern Floating Bottom Navigation Dock */}
+      {/* macOS Floating Magnification Bottom Dock */}
       <motion.header
         variants={{
           visible: { y: 0, opacity: 1 },
-          hidden: { y: "150%", opacity: 0 },
+          hidden: { y: "160%", opacity: 0 },
         }}
         animate={hidden && !mobileMenuOpen ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed bottom-6 inset-x-0 mx-auto w-fit max-w-[92vw] sm:max-w-2xl z-50 flex items-center justify-between gap-3 px-4 py-2 rounded-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 shadow-2xl shadow-slate-950/15 transition-colors duration-300"
+        className="fixed bottom-6 inset-x-0 mx-auto w-fit z-50 flex items-end"
       >
-        {/* Desktop Navigation Links with Framer Motion layoutId Active Pill */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => {
-            const isActive =
-              pathname === link.href ||
-              (link.href !== "/" && pathname.startsWith(link.href));
-            return (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`relative rounded-full px-3.5 py-1.5 font-display text-xs sm:text-sm font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "text-indigo-600 dark:text-white"
-                    : "text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
-                }`}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="activeDockIndicator"
-                    className="absolute inset-0 rounded-full bg-indigo-100/80 dark:bg-white/15"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{link.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+        <motion.div
+          onMouseMove={(e) => mouseX.set(e.pageX)}
+          onMouseLeave={() => mouseX.set(Infinity)}
+          className="relative flex items-end gap-2.5 sm:gap-3 px-4 py-2.5 rounded-2xl bg-white/70 dark:bg-slate-950/70 backdrop-blur-2xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10"
+        >
+          {/* Desktop Magnified Dock Links */}
+          <div className="hidden md:flex items-end gap-2 sm:gap-2.5">
+            {navLinks.map((link) => {
+              const isActive =
+                pathname === link.href ||
+                (link.href !== "/" && pathname.startsWith(link.href));
+              return (
+                <DockItem
+                  key={link.label}
+                  mouseX={mouseX}
+                  link={link}
+                  isActive={isActive}
+                />
+              );
+            })}
+          </div>
 
-        {/* Action Controls: Theme Toggle & Consultation CTA */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Theme Toggle Button */}
-          {mounted && (
+          {/* Vertical Divider */}
+          <div className="hidden md:block h-8 w-[1px] bg-slate-200 dark:bg-slate-800 self-center mx-1" />
+
+          {/* Utilities & Action Buttons */}
+          <div className="flex items-center gap-2">
+            {/* Theme Toggle Button */}
+            {mounted && (
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 text-slate-800 transition-colors hover:bg-white dark:border-white/10 dark:bg-slate-900/80 dark:text-white/90 dark:hover:bg-slate-800"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-4 w-4 text-amber-400" />
+                ) : (
+                  <Moon className="h-4 w-4 text-slate-700" />
+                )}
+              </button>
+            )}
+
+            {/* Let's Talk CTA */}
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-1.5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 px-4 py-2.5 text-xs font-bold shadow-md transition-all duration-300 h-10"
+            >
+              <span>Let&apos;s Talk</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+
+            {/* Mobile Hamburger Toggle Button */}
             <button
               type="button"
-              onClick={toggleTheme}
-              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-slate-200/90 bg-white/80 text-slate-800 transition-colors hover:bg-slate-100 dark:border-white/15 dark:bg-white/10 dark:text-white/90 dark:hover:bg-white/20"
-              aria-label="Toggle theme"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-800 md:hidden dark:border-white/15 dark:bg-white/10 dark:text-white"
+              aria-label="Toggle menu"
             >
-              {theme === "dark" ? (
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
               ) : (
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                  />
-                </svg>
+                <Menu className="h-5 w-5" />
               )}
             </button>
-          )}
+          </div>
 
-          {/* CTA Button */}
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-1.5 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 px-4 py-1.5 sm:px-5 sm:py-2 text-xs font-semibold shadow-md transition-all duration-300"
-          >
-            <span>Let&apos;s Talk</span>
-            <svg
-              className="h-3.5 w-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </Link>
-
-          {/* Mobile Hamburger Toggle Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-800 md:hidden dark:border-white/15 dark:bg-white/10 dark:text-white"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        {/* 2px Continuous Scroll Progress Bar */}
-        <motion.div
-          style={{ scaleX, transformOrigin: "0%" }}
-          className="absolute bottom-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-indigo-600 via-sky-500 to-purple-500"
-        />
+          {/* 2px Scroll Progress Bar */}
+          <motion.div
+            style={{ scaleX, transformOrigin: "0%" }}
+            className="absolute bottom-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-indigo-600 via-sky-500 to-purple-500"
+          />
+        </motion.div>
       </motion.header>
 
       {/* Mobile Menu Bottom Sheet Drawer */}
@@ -210,18 +244,20 @@ export default function Navbar() {
                 const isActive =
                   pathname === link.href ||
                   (link.href !== "/" && pathname.startsWith(link.href));
+                const Icon = link.icon;
                 return (
                   <Link
                     key={link.label}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`rounded-xl px-4 py-2.5 font-display text-sm font-semibold transition-all ${
+                    className={`flex items-center gap-3 rounded-xl px-4 py-2.5 font-display text-sm font-semibold transition-all ${
                       isActive
                         ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950"
                         : "text-slate-800 hover:bg-slate-100 dark:text-white dark:hover:bg-white/10"
                     }`}
                   >
-                    {link.label}
+                    <Icon className="w-4 h-4" />
+                    <span>{link.label}</span>
                   </Link>
                 );
               })}
@@ -232,19 +268,7 @@ export default function Navbar() {
                   className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-950 py-3 font-display text-sm font-semibold shadow-lg"
                 >
                   <span>Schedule Consultation</span>
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </nav>
