@@ -55,7 +55,7 @@ function CountUpNumber({
   );
 }
 
-// 3D Particle Mesh Physics Canvas (Mouse Repulsion, Wave Deformation & Theme Engine)
+// Full-Bleed Edge-to-Edge 3D Particle Mesh Physics Canvas
 function InteractiveParticleMeshCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
@@ -111,17 +111,13 @@ function InteractiveParticleMeshCanvas() {
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
+      initParticles();
     };
 
     window.addEventListener("resize", handleResize);
 
     const isDark =
       theme === "dark" || document.documentElement.classList.contains("dark");
-
-    // Particle 3D Grid Parameters
-    const columns = Math.floor(width / 52);
-    const rows = Math.floor(height / 52);
-    const particleCount = Math.min(columns * rows, 110);
 
     type Particle = {
       baseX: number;
@@ -139,28 +135,38 @@ function InteractiveParticleMeshCanvas() {
     const darkParticleColors = ["#38bdf8", "#c084fc", "#06b6d4", "#a855f7"];
     const particlePalette = isDark ? darkParticleColors : lightParticleColors;
 
-    const particles: Particle[] = [];
+    let particles: Particle[] = [];
 
-    for (let i = 0; i < particleCount; i++) {
-      const col = i % columns;
-      const row = Math.floor(i / columns);
-      const bx = (width / (columns + 1)) * (col + 1) + (Math.random() - 0.5) * 20;
-      const by = (height / (rows + 1)) * (row + 1) + (Math.random() - 0.5) * 20;
-      const color = particlePalette[Math.floor(Math.random() * particlePalette.length)];
+    const initParticles = () => {
+      particles = [];
+      const colSpacing = 48;
+      const rowSpacing = 48;
+      const cols = Math.floor(width / colSpacing);
+      const rows = Math.floor(height / rowSpacing);
 
-      particles.push({
-        baseX: bx,
-        baseY: by,
-        x: bx,
-        y: by,
-        vx: 0,
-        vy: 0,
-        radius: Math.random() * 2.2 + 1.6,
-        phase: Math.random() * Math.PI * 2,
-        color: color,
-      });
-    }
+      for (let r = 0; r <= rows; r++) {
+        for (let c = 0; c <= cols; c++) {
+          const bx = (width / cols) * c + (Math.random() - 0.5) * 16;
+          const by = (height / rows) * r + (Math.random() - 0.5) * 16;
+          const color =
+            particlePalette[Math.floor(Math.random() * particlePalette.length)];
 
+          particles.push({
+            baseX: bx,
+            baseY: by,
+            x: bx,
+            y: by,
+            vx: 0,
+            vy: 0,
+            radius: Math.random() * 2.2 + 1.6,
+            phase: Math.random() * Math.PI * 2,
+            color: color,
+          });
+        }
+      }
+    };
+
+    initParticles();
     let time = 0;
 
     const render = () => {
@@ -172,7 +178,7 @@ function InteractiveParticleMeshCanvas() {
       mouse.x += (mouse.targetX - mouse.x) * 0.1;
       mouse.y += (mouse.targetY - mouse.y) * 0.1;
 
-      // 1. Ambient Dynamic Radial Spotlight following Cursor
+      // 1. Full-Bleed Dynamic Radial Spotlight following Cursor
       if (mouse.x > 0 && mouse.y > 0) {
         const spotlight = ctx.createRadialGradient(
           mouse.x,
@@ -180,7 +186,7 @@ function InteractiveParticleMeshCanvas() {
           0,
           mouse.x,
           mouse.y,
-          340
+          380
         );
         if (isDark) {
           spotlight.addColorStop(0, "rgba(56, 189, 248, 0.2)");
@@ -195,7 +201,7 @@ function InteractiveParticleMeshCanvas() {
         ctx.fillRect(0, 0, width, height);
       }
 
-      // 2. Physics & Particle Simulation Loop
+      // 2. Full-Bleed Physics & Particle Simulation Loop
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
@@ -210,10 +216,10 @@ function InteractiveParticleMeshCanvas() {
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 180;
+          const maxDist = 200;
 
           if (dist < maxDist) {
-            const force = (1 - dist / maxDist) * 35;
+            const force = (1 - dist / maxDist) * 38;
             const angle = Math.atan2(dy, dx);
             p.vx -= Math.cos(angle) * force * 0.12;
             p.vy -= Math.sin(angle) * force * 0.12;
@@ -258,14 +264,14 @@ function InteractiveParticleMeshCanvas() {
           const pdy = p.y - p2.y;
           const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
 
-          if (pdist < 125) {
+          if (pdist < 130) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = isDark
               ? "rgba(56, 189, 248, 0.3)"
               : "rgba(67, 56, 202, 0.22)";
-            ctx.globalAlpha = (1 - pdist / 125) * (isDark ? 0.3 : 0.22);
+            ctx.globalAlpha = (1 - pdist / 130) * (isDark ? 0.3 : 0.22);
             ctx.lineWidth = 0.9;
             ctx.stroke();
           }
@@ -288,14 +294,23 @@ function InteractiveParticleMeshCanvas() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-700 overflow-hidden"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        pointerEvents: "none",
+      }}
     />
   );
 }
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[92vh] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
-      {/* Dynamic Interactive 3D Particle Mesh Physics Canvas */}
+    <section className="relative w-full min-h-[90vh] lg:min-h-screen overflow-hidden flex flex-col justify-between pt-32 pb-20 md:pt-40 md:pb-24 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
+      {/* Full-Bleed Edge-to-Edge 3D Particle Mesh Physics Canvas */}
       <InteractiveParticleMeshCanvas />
 
       {/* Central Masking Radial Vignette for High Text Contrast */}
@@ -360,7 +375,7 @@ export default function Hero() {
       </div>
 
       {/* Main Hero Content Container */}
-      <div className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center">
+      <div className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center my-auto">
         {/* Status Pill Badge */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
