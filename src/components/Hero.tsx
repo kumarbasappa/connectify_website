@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -56,7 +55,7 @@ function CountUpNumber({
   );
 }
 
-// WebGL Interactive Fluid Background Shader (Stitch Hero Evolution)
+// WebGL Interactive Fluid Background Shader (Dual Light & Dark Mode Adaptation)
 function WebGLShaderBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
@@ -112,8 +111,8 @@ function WebGLShaderBackground() {
           vec2 uv = v_texCoord;
           vec2 mouse = u_mouse / u_resolution;
           
-          vec3 color1 = vec3(0.486, 0.227, 0.929); // #7c3aed
-          vec3 color2 = vec3(0.02, 0.02, 0.04);   // #05050a
+          vec3 color1 = vec3(0.486, 0.227, 0.929); // Electric Purple #7c3aed
+          vec3 color2 = vec3(0.02, 0.02, 0.04);   // Deep Slate #05050a
           
           float noise = sin(uv.x * 10.0 + u_time * 0.5) * cos(uv.y * 8.0 - u_time * 0.3);
           noise += sin(uv.x * 5.0 - u_time * 0.2) * 0.5;
@@ -139,8 +138,8 @@ function WebGLShaderBackground() {
           vec2 uv = v_texCoord;
           vec2 mouse = u_mouse / u_resolution;
           
-          vec3 color1 = vec3(0.388, 0.275, 0.902); // #6346e6
-          vec3 color2 = vec3(0.973, 0.976, 1.0);   // #f8f9ff
+          vec3 color1 = vec3(0.31, 0.275, 0.898); // Electric Indigo #4f46e5
+          vec3 color2 = vec3(0.973, 0.98, 0.988); // Off-White Slate #f8fafc
           
           float noise = sin(uv.x * 10.0 + u_time * 0.4) * cos(uv.y * 8.0 - u_time * 0.25);
           noise += sin(uv.x * 5.0 - u_time * 0.15) * 0.4;
@@ -148,8 +147,8 @@ function WebGLShaderBackground() {
           float dist = distance(uv, mouse);
           float glow = 1.0 - smoothstep(0.0, 0.55, dist);
           
-          vec3 finalColor = mix(color2, color1, noise * 0.08 + 0.03);
-          finalColor += color1 * glow * 0.12;
+          vec3 finalColor = mix(color2, color1, noise * 0.1 + 0.04);
+          finalColor += color1 * glow * 0.16;
           
           gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -230,7 +229,7 @@ function WebGLShaderBackground() {
   }, [theme]);
 
   return (
-    <div className="absolute inset-0 z-0 opacity-80 pointer-events-none mix-blend-screen overflow-hidden">
+    <div className="absolute inset-0 z-0 opacity-80 pointer-events-none mix-blend-multiply dark:mix-blend-screen overflow-hidden">
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );
@@ -238,124 +237,127 @@ function WebGLShaderBackground() {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[92vh] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-[#f8f9ff] dark:bg-[#05050a] transition-colors duration-300">
-      {/* Light Leaks & Geometric Ambient Accents */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none z-0" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none z-0" />
+    <section className="relative min-h-[92vh] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-[#f8fafc] dark:bg-[#05050a] transition-colors duration-300">
+      {/* Light Leaks & Ambient Gradient Orbs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[45%] h-[45%] bg-gradient-to-br from-indigo-200/40 via-sky-200/30 to-transparent dark:from-purple-600/20 dark:via-purple-900/10 rounded-full blur-[130px] pointer-events-none z-0" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[35%] h-[35%] bg-gradient-to-tl from-sky-200/30 via-emerald-200/20 to-transparent dark:from-emerald-500/10 dark:via-emerald-900/10 rounded-full blur-[110px] pointer-events-none z-0" />
 
-      {/* Grid Blueprint Overlay */}
+      {/* Vector Blueprint Grid Overlay */}
       <div
-        className="absolute inset-0 z-0 opacity-[0.04] dark:opacity-[0.03] pointer-events-none"
+        className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(to right, #808080 1px, transparent 1px), linear-gradient(to bottom, #808080 1px, transparent 1px)",
+            "linear-gradient(to right, #4f46e5 1px, transparent 1px), linear-gradient(to bottom, #4f46e5 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
 
-      {/* WebGL Shader Interactive Canvas */}
+      {/* WebGL Interactive Background Canvas */}
       <WebGLShaderBackground />
 
       {/* Floating Value Prop Glass Cards (4 Corner Orbiters) */}
-      <div className="hidden xl:flex absolute top-[24%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03] animate-pulse">
-        <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-          <BarChart3 className="w-5 h-5 text-purple-600 dark:text-purple-300" />
+      <div className="hidden xl:flex absolute top-[24%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none animate-pulse">
+        <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
+          <BarChart3 className="w-5 h-5 text-indigo-600 dark:text-purple-300" />
         </div>
         <div>
-          <p className="text-[11px] text-slate-500 dark:text-white/50 font-semibold uppercase tracking-widest mb-0.5">
+          <p className="text-[11px] text-slate-500 dark:text-white/50 font-bold uppercase tracking-widest mb-0.5">
             Real-Time
           </p>
-          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90">
+          <p className="text-[14px] font-bold text-slate-900 dark:text-white/90">
             Analytics Engine
           </p>
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute bottom-[22%] left-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03]">
-        <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+      <div className="hidden xl:flex absolute bottom-[22%] left-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none">
+        <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200/80 dark:bg-emerald-500/10 dark:border-emerald-500/20 flex items-center justify-center">
           <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
         </div>
         <div>
-          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90 mb-0.5">
+          <p className="text-[14px] font-bold text-slate-900 dark:text-white/90 mb-0.5">
             Bank Grade
           </p>
-          <p className="text-[11px] text-emerald-600 dark:text-[#4ade80] font-semibold flex items-center">
+          <p className="text-[11px] text-emerald-600 dark:text-[#4ade80] font-bold flex items-center">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-ping" />
             Protected
           </p>
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute top-[28%] right-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03]">
-        <div className="w-10 h-10 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-          <CloudCheck className="w-5 h-5 text-indigo-600 dark:text-indigo-300" />
+      <div className="hidden xl:flex absolute top-[28%] right-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none">
+        <div className="w-10 h-10 rounded-full bg-sky-50 border border-sky-200/80 dark:bg-indigo-500/10 dark:border-indigo-500/20 flex items-center justify-center">
+          <CloudCheck className="w-5 h-5 text-sky-600 dark:text-indigo-300" />
         </div>
         <div>
-          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90 mb-0.5">
+          <p className="text-[14px] font-bold text-slate-900 dark:text-white/90 mb-0.5">
             Global Scalability
           </p>
-          <p className="text-[11px] text-slate-500 dark:text-white/50 font-semibold uppercase tracking-widest">
+          <p className="text-[11px] text-slate-500 dark:text-white/50 font-bold uppercase tracking-widest">
             Cloud Native
           </p>
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute bottom-[24%] right-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.03]">
-        <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-          <CheckCircle2 className="w-5 h-5 text-purple-600 dark:text-purple-300" />
+      <div className="hidden xl:flex absolute bottom-[24%] right-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none">
+        <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
+          <CheckCircle2 className="w-5 h-5 text-indigo-600 dark:text-purple-300" />
         </div>
         <div>
-          <p className="text-[14px] font-semibold text-slate-900 dark:text-white/90 mb-0.5">
+          <p className="text-[14px] font-bold text-slate-900 dark:text-white/90 mb-0.5">
             99.9% Uptime
           </p>
-          <p className="text-[11px] text-slate-500 dark:text-white/50 font-semibold uppercase tracking-widest">
+          <p className="text-[11px] text-slate-500 dark:text-white/50 font-bold uppercase tracking-widest">
             SLA Guarantee
           </p>
         </div>
       </div>
 
-      {/* Main Stitch Hero Content Container */}
+      {/* Main Hero Content Container */}
       <div className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center">
-        {/* Next-Gen Badge */}
+        {/* Status Pill Badge */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full border border-slate-300/80 bg-white/80 shadow-xs backdrop-blur-md mb-8 dark:border-white/10 dark:bg-white/[0.04]"
+          className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-8 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
         >
-          <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-          <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-300" />
-          <span className="font-mono text-[11px] text-slate-700 dark:text-white/80 uppercase tracking-[0.2em] font-bold">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] font-extrabold">
             NEXT-GEN INFRASTRUCTURE &amp; AI
           </span>
         </motion.div>
 
-        {/* Stitch Display Headline */}
+        {/* Dynamic Display Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-display text-4xl sm:text-6xl md:text-[76px] lg:text-[84px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-900 dark:text-white mb-8"
+          className="font-display text-4xl sm:text-6xl md:text-[76px] lg:text-[84px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-950 dark:text-white mb-8"
         >
-          <span className="font-semibold text-slate-900/90 dark:text-white/90">
+          <span className="font-semibold text-slate-950 dark:text-white/90">
             We are not just building Tech{" "}
             <span className="text-slate-400 dark:text-white/40 font-light">—</span>
           </span>
           <br />
-          <span className="font-extrabold text-slate-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-white/60">
+          <span className="font-extrabold text-slate-950 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-white/60">
             We are building{" "}
           </span>
-          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-indigo-500 to-purple-400 dark:from-[#d2bbff] dark:to-[#b68cff] drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
+          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 to-violet-600 dark:from-[#d2bbff] dark:to-[#b68cff] drop-shadow-[0_0_25px_rgba(79,70,229,0.25)] dark:drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
             Future.
           </span>
         </motion.h1>
 
-        {/* Subtext */}
+        {/* Subtitle Copy */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="font-sans text-base sm:text-lg md:text-[20px] leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-10 font-normal tracking-wide"
+          className="font-sans text-base sm:text-lg md:text-[20px] leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-10 font-medium tracking-wide"
         >
           We partner with ambitious brands to build scalable digital products,
           robust infrastructure, and immersive experiences that drive tomorrow&apos;s
@@ -371,7 +373,7 @@ export default function Hero() {
         >
           <Link
             href="/contact"
-            className="group inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white dark:bg-white dark:text-black font-display text-[15px] font-semibold rounded-full hover:bg-slate-800 dark:hover:bg-gray-100 transition-all duration-300 shadow-xl w-full sm:w-auto min-w-[190px]"
+            className="group inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[15px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[190px]"
           >
             <span>Get in Touch</span>
             <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -379,52 +381,52 @@ export default function Hero() {
 
           <Link
             href="/services"
-            className="inline-flex items-center justify-center px-8 py-4 border border-slate-300/80 bg-white/70 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[15px] font-semibold rounded-full hover:bg-white dark:hover:bg-white/10 transition-all duration-300 backdrop-blur-md w-full sm:w-auto min-w-[180px]"
+            className="inline-flex items-center justify-center px-8 py-4 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[15px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[180px]"
           >
             Our Services
           </Link>
         </motion.div>
 
-        {/* Integrated Stats Ribbon Bar */}
+        {/* Stats Counter Ribbon */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 w-full rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-xl backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-900/80"
+          className="mt-16 w-full rounded-3xl border border-slate-200/90 bg-white/90 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-none"
         >
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-purple-600 dark:text-purple-400 sm:text-4xl">
+              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
                 <CountUpNumber target={25} suffix="+" />
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
+              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Deployed Systems
               </p>
             </div>
 
             <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 sm:text-4xl">
+              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
                 <CountUpNumber target={99.99} decimals={2} suffix="%" />
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
+              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 SLA Uptime
               </p>
             </div>
 
             <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-4xl">
+              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
                 <CountUpNumber target={6} />
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
+              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Core Practices
               </p>
             </div>
 
             <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-amber-600 dark:text-amber-400 sm:text-4xl">
+              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
                 Tier-1
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300">
+              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Enterprise Clients
               </p>
             </div>
