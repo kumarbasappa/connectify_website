@@ -17,7 +17,7 @@ export default function SitemapPage() {
         description="Comprehensive index of our company routes, service pillars, industry platforms, and case study archives."
       />
 
-      <div className="bg-background px-6 py-16 lg:py-24">
+      <div className="bg-background px-0 py-16 lg:py-24">
         <div className="mx-auto max-w-6xl grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
           {/* Main Pages */}
           <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-slate-900/80">

@@ -46,7 +46,7 @@ const platforms = [
 export default function EnterprisePlatforms() {
   return (
     <section id="platforms" className="relative z-10 bg-background py-24 border-t border-black/10 dark:border-white/10">
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-0">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">

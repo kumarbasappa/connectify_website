@@ -14,7 +14,7 @@ export default function TermsPage() {
         description="Standard terms and conditions governing our enterprise consulting engagements and platform use."
       />
 
-      <div className="bg-background px-6 py-16 lg:py-24">
+      <div className="bg-background px-0 py-16 lg:py-24">
         <div className="mx-auto max-w-4xl space-y-12">
           <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-slate-900/80">
             <h2 className="font-display text-2xl font-bold text-slate-900 dark:text-white">

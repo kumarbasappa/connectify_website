@@ -8,7 +8,7 @@ export default function PageIntro({
   description?: string;
 }) {
   return (
-    <header className="border-b border-black/10 bg-background px-6 pb-20 pt-36 dark:border-white/10">
+    <header className="border-b border-black/10 bg-background px-0 pb-20 pt-36 dark:border-white/10">
       <div className="mx-auto w-full max-w-6xl">
         <p className="text-xs font-medium uppercase tracking-[0.35em] text-brand">
           {eyebrow}

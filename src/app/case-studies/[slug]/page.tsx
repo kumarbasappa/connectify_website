@@ -4,6 +4,8 @@ import { projects } from "@/lib/projects";
 import FinalCta from "@/components/FinalCta";
 import BorderGlow from "@/components/BorderGlow";
 
+import ProjectDropdown from "@/components/ProjectDropdown";
+
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
@@ -39,8 +41,11 @@ export default async function CaseStudyPage({
   return (
     <>
       {/* Header / Hero */}
-      <header className="border-b border-slate-800 bg-[#0B0F17] px-6 pb-20 pt-36">
+      <header className="border-b border-slate-800 bg-[#0B0F17] px-0 pb-20 pt-36">
         <div className="mx-auto w-full max-w-5xl">
+          {/* Mobile Project Selector Dropdown */}
+          <ProjectDropdown currentSlug={project.slug} mode="project" label="Switch Project Case Study" />
+
           <Link
             href="/case-studies"
             className="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 transition-colors hover:text-amber-400"
@@ -72,7 +77,7 @@ export default async function CaseStudyPage({
       </header>
 
       {/* Main Content */}
-      <div className="px-6 py-16 lg:py-24 bg-background">
+      <div className="px-0 py-16 lg:py-24 bg-background">
         <div className="mx-auto w-full max-w-5xl space-y-16">
           {/* Main Visual */}
           <div className="overflow-hidden rounded-3xl border border-slate-800 shadow-2xl">

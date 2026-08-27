@@ -22,7 +22,7 @@ export default function ContactPage() {
         description="Have a question or a new enterprise engagement in mind? Send us a project brief or reach our Bengaluru office directly."
       />
 
-      <div className="px-6 py-16 lg:py-24 bg-background">
+      <div className="px-0 py-16 lg:py-24 bg-background">
         <div className="mx-auto grid w-full max-w-6xl gap-12 sm:grid-cols-5">
           {/* Direct Channels */}
           <div className="space-y-6 sm:col-span-2">

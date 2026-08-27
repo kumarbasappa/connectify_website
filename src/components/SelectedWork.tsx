@@ -18,9 +18,9 @@ const projectMetricsMap: Record<string, string> = {
   "karnataka-statewide-survey-platform": "6.8M Citizens Onboarded • 100% Uptime",
   "taurus-career-ai": "500k Active AI Chats • <45ms Response",
   "flycure-health": "HIPAA Certified • 99.99% Cloud SLA",
-  "hyundai-dealer-platform": "450+ Dealerships Synced • Real-Time Inventory",
-  "itc-supply-chain-analytics": "2.4M Daily Events • Zero-Lag Kafka",
-  "au-bank-digital-onboarding": "Tier-1 BFSI Security • 12ms KYC Verification",
+  "cloud-kitchen-pos": "100+ Kitchens Synced • <100ms Sync",
+  "contractor-loyalty-app": "50k+ Active Contractors • Tier-1 Rewards",
+  "trackway": "Real-Time Telemetry • <15ms Latency",
 };
 
 export default function SelectedWork() {
@@ -29,22 +29,40 @@ export default function SelectedWork() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const items = gsap.utils.toArray<HTMLElement>("[data-project-card]");
-      items.forEach((el) => {
+      items.forEach((el, index) => {
+        // Staggered reveal & smooth entry on viewport scroll
         gsap.fromTo(
           el,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 45, scale: 0.97 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.8,
+            scale: 1,
+            duration: 0.85,
+            delay: (index % 3) * 0.12,
             ease: "power3.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 90%",
+              start: "top 88%",
               once: true,
             },
           }
         );
+
+        // Parallax image shift on scroll
+        const img = el.querySelector("img");
+        if (img) {
+          gsap.to(img, {
+            yPercent: -10,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
       });
     }, rootRef);
 
@@ -57,12 +75,12 @@ export default function SelectedWork() {
       ref={rootRef}
       className="relative bg-background py-24 lg:py-32 border-t border-slate-200/90 dark:border-white/10 overflow-hidden"
     >
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
+      <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-brand dark:text-cyan-400 flex items-center gap-2">
               <Activity className="w-3.5 h-3.5" />
-              05 / SELECTED DEPLOYMENTS
+              06 / SELECTED DEPLOYMENTS
             </p>
             <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl dark:text-white">
               Proven enterprise impact.
@@ -78,7 +96,7 @@ export default function SelectedWork() {
         </div>
 
         {/* Project Cards Grid */}
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredProjects.map((project) => {
             const systemMetric =
               projectMetricsMap[project.slug] || "99.99% Operational SLA";
@@ -103,7 +121,7 @@ export default function SelectedWork() {
                         src={project.image}
                         alt={project.name}
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
 
@@ -120,7 +138,7 @@ export default function SelectedWork() {
                           <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand dark:text-cyan-400">
                             {project.category}
                           </span>
-                          <ArrowRight className="h-4 w-4 text-slate-400 transition-all group-hover:translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-cyan-400" />
+                          <ArrowRight className="h-4 w-4 text-slate-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-cyan-400" />
                         </div>
                         <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-slate-950 transition-colors group-hover:text-brand dark:text-white dark:group-hover:text-cyan-400">
                           {project.name}

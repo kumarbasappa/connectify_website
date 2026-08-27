@@ -69,7 +69,7 @@ export default function AboutPage() {
         description="Your strategic technology partner in the digital transformation revolution — a boutique consultancy blending strategy, capital advisory, and enterprise software engineering."
       />
 
-      <div className="px-6 py-16 lg:py-24 bg-background">
+      <div className="px-0 py-16 lg:py-24 bg-background">
         <div className="mx-auto w-full max-w-6xl space-y-24">
           {/* Section 1: Story */}
           <section>

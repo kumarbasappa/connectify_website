@@ -67,7 +67,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-full bg-background font-sans text-foreground transition-colors duration-300"
+        className="min-h-full bg-background font-sans text-foreground transition-colors duration-300 overflow-x-hidden"
         suppressHydrationWarning
       >
         <ThemeProvider>
@@ -75,7 +75,9 @@ export default function RootLayout({
           <SmoothScroll />
           <RevealOnScroll />
           <Navbar />
-          <PageTransitionWrapper>{children}</PageTransitionWrapper>
+          <main className="relative w-full overflow-x-hidden">
+            <PageTransitionWrapper>{children}</PageTransitionWrapper>
+          </main>
           <Footer />
         </ThemeProvider>
       </body>

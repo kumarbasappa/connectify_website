@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { serviceCategories } from "@/lib/services";
@@ -46,11 +47,11 @@ export default function WhatWeBuild() {
       {/* Background Subtle Ambient Glow */}
       <div className="absolute top-1/3 left-[-10%] w-[35%] h-[35%] bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
+      <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
         <div data-services-heading className="max-w-3xl">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand dark:text-cyan-400 flex items-center gap-2">
             <Cpu className="w-3.5 h-3.5" />
-            01 / SERVICES SUITE
+            02 / SERVICES SUITE
           </p>
           <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-5xl dark:text-white">
             Technology consulting &amp; strategic advisory pillars.
@@ -70,13 +71,16 @@ export default function WhatWeBuild() {
                   key={item.id}
                   onMouseEnter={() => setActiveIdx(index)}
                   onClick={() => setActiveIdx(index)}
-                  className={`group cursor-pointer rounded-2xl border p-6 transition-all duration-300 ${
-                    isActive
-                      ? "border-brand bg-white dark:bg-slate-900/90 shadow-xl shadow-brand/10 scale-[1.01] dark:border-indigo-500"
-                      : "border-black/10 bg-card-bg hover:border-brand/40 dark:border-white/10 dark:hover:border-indigo-500/40"
-                  }`}
+                  className="relative group cursor-pointer rounded-2xl border p-6 transition-all duration-300 border-black/10 dark:border-white/10"
                 >
-                  <div className="flex items-center justify-between gap-4">
+                  {isActive && (
+                    <motion.div
+                      layoutId="activePillar"
+                      className="absolute inset-0 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-brand dark:border-indigo-500 shadow-xl shadow-brand/10 z-0"
+                      transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                    />
+                  )}
+                  <div className="relative z-10 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                       <span
                         className={`font-mono text-sm font-extrabold transition-colors ${
@@ -96,7 +100,9 @@ export default function WhatWeBuild() {
                       </h3>
                     </div>
 
-                    <div
+                    <Link
+                      href={`/services#${item.id}`}
+                      aria-label={`Explore ${item.title} details`}
                       className={`flex h-8 w-8 items-center justify-center rounded-full transition-all ${
                         isActive
                           ? "bg-slate-900 text-white dark:bg-indigo-600 dark:text-white"
@@ -104,10 +110,10 @@ export default function WhatWeBuild() {
                       }`}
                     >
                       <ArrowRight className="h-4 w-4" />
-                    </div>
+                    </Link>
                   </div>
 
-                  <p className="font-sans mt-3 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
+                  <p className="relative z-10 font-sans mt-3 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
                     {item.subtitle}
                   </p>
                 </div>
@@ -115,73 +121,83 @@ export default function WhatWeBuild() {
             })}
           </div>
 
-          {/* Right Column: Glassmorphic Detail Inspector Pane */}
+          {/* Right Column: Glassmorphic Detail Inspector Pane with Animated Slide Cross-fade */}
           <div className="lg:col-span-6">
-            <div className="sticky top-28 rounded-3xl border border-slate-200/90 bg-white/95 p-8 shadow-2xl backdrop-blur-xl lg:p-10 dark:border-white/10 dark:bg-slate-900/90">
-              <div className="flex items-center justify-between">
-                <span className="rounded-full bg-brand/10 px-4 py-1.5 font-mono text-xs font-bold text-brand dark:bg-cyan-950/60 dark:text-cyan-400 dark:border dark:border-cyan-500/30 flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5" />
-                  PILLAR {activeService.number}
-                </span>
-                <span className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
-                  Interactive Detail Pane
-                </span>
-              </div>
-
-              <h3 className="mt-6 font-display text-2xl font-extrabold text-slate-950 sm:text-3xl dark:text-white">
-                {activeService.title}
-              </h3>
-              <p className="font-sans mt-4 text-sm font-medium leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
-                {activeService.description}
-              </p>
-
-              {/* Key Challenges Solved */}
-              <div className="mt-8">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-cyan-400 flex items-center gap-1.5">
-                  <ShieldAlert className="w-3.5 h-3.5" />
-                  Key Business Challenges Solved:
-                </h4>
-                <ul className="mt-3.5 grid gap-2.5 sm:grid-cols-2">
-                  {activeService.problemsSolved.map((prob, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2.5 font-sans text-xs font-medium leading-snug text-slate-700 dark:text-slate-300"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>{prob}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Enterprise Deliverables */}
-              <div className="mt-8 border-t border-slate-200/90 pt-6 dark:border-white/10">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-indigo-400 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Production Deliverables:
-                </h4>
-                <div className="mt-3.5 flex flex-wrap gap-2">
-                  {activeService.deliverables.map((del, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-slate-100/80 px-3 py-1.5 font-sans text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                      {del}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-8 pt-4">
-                <Link
-                  href={`/services#${activeService.id}`}
-                  className="group inline-flex items-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 px-6 py-3 font-display text-sm font-semibold transition-all duration-300 shadow-md"
+            <div className="sticky top-28 rounded-3xl border border-slate-200/90 bg-white/95 p-8 shadow-2xl backdrop-blur-xl lg:p-10 dark:border-white/10 dark:bg-slate-900/90 min-h-[480px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeService.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
                 >
-                  <span>Explore {activeService.title} Details</span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </div>
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full bg-brand/10 px-4 py-1.5 font-mono text-xs font-bold text-brand dark:bg-cyan-950/60 dark:text-cyan-400 dark:border dark:border-cyan-500/30 flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5" />
+                      PILLAR {activeService.number}
+                    </span>
+                    <span className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
+                      Interactive Detail Pane
+                    </span>
+                  </div>
+
+                  <h3 className="mt-6 font-display text-2xl font-extrabold text-slate-950 sm:text-3xl dark:text-white">
+                    {activeService.title}
+                  </h3>
+                  <p className="font-sans mt-4 text-sm font-medium leading-relaxed text-slate-700 sm:text-base dark:text-slate-300">
+                    {activeService.description}
+                  </p>
+
+                  {/* Key Challenges Solved */}
+                  <div className="mt-8">
+                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-cyan-400 flex items-center gap-1.5">
+                      <ShieldAlert className="w-3.5 h-3.5" />
+                      Key Business Challenges Solved:
+                    </h4>
+                    <ul className="mt-3.5 grid gap-2.5 sm:grid-cols-2">
+                      {activeService.problemsSolved.map((prob, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2.5 font-sans text-xs font-medium leading-snug text-slate-700 dark:text-slate-300"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                          <span>{prob}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Enterprise Deliverables */}
+                  <div className="mt-8 border-t border-slate-200/90 pt-6 dark:border-white/10">
+                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-indigo-400 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      Production Deliverables:
+                    </h4>
+                    <div className="mt-3.5 flex flex-wrap gap-2">
+                      {activeService.deliverables.map((del, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-slate-100/80 px-3 py-1.5 font-sans text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                          {del}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-4">
+                    <Link
+                      href={`/services#${activeService.id}`}
+                      className="group inline-flex items-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 px-6 py-3 font-display text-sm font-semibold transition-all duration-300 shadow-md"
+                    >
+                      <span>Explore {activeService.title} Details</span>
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>

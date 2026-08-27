@@ -8,7 +8,7 @@ import { ArrowRight, ShieldCheck, Zap, TrendingUp, Clock, CheckCircle2 } from "l
 export default function WhyConnectify() {
   return (
     <section className="relative bg-background py-24 lg:py-32 border-t border-slate-200/90 dark:border-white/10 overflow-hidden">
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
+      <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -20,7 +20,7 @@ export default function WhyConnectify() {
           <div>
             <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand dark:text-cyan-400 flex items-center gap-2">
               <ShieldCheck className="w-3.5 h-3.5" />
-              04 / DIFFERENTIATORS
+              05 / DIFFERENTIATORS
             </p>
             <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-950 sm:text-5xl dark:text-white">
               Why enterprise leaders trust Connectify.
@@ -120,9 +120,13 @@ export default function WhyConnectify() {
                   </p>
                 </div>
 
-                <div className="mt-6 rounded-xl border border-emerald-500/30 bg-emerald-50/80 p-3.5 font-mono text-xs text-slate-900 dark:bg-emerald-950/50 dark:text-slate-200 flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping shrink-0" />
-                  <span className="text-emerald-900 dark:text-emerald-400 font-extrabold">99.998% Uptime SLA</span> • SOC2 Compliant
+                <div className="mt-6 rounded-xl border border-emerald-500/30 bg-emerald-50/80 p-3.5 font-mono text-xs text-slate-900 dark:bg-emerald-950/50 dark:text-slate-200 flex items-center gap-2.5">
+                  <span className="relative flex h-2.5 w-2.5 items-center justify-center shrink-0">
+                    <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-40" />
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                  </span>
+                  <span className="text-emerald-900 dark:text-emerald-400 font-extrabold">99.998% Uptime SLA</span> • Active Incident Response &lt; 5 mins
                 </div>
               </div>
             </BorderGlow>

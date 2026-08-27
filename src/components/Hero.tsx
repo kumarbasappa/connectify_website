@@ -275,73 +275,35 @@ function FluidWarpGridCanvas() {
 }
 
 export default function Hero() {
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCursorPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  // Split headline for word-by-word reveal stagger
+  const line1Words = ["We", "are", "not", "just", "building", "Tech"];
+  const line2Words = ["We", "are", "building"];
+  const line3Words = ["the", "Future."];
+
   return (
-    <section className="relative w-full min-h-screen overflow-hidden flex flex-col justify-between pt-4 sm:pt-6 pb-24 md:pb-28 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
+    <section
+      onMouseMove={handleMouseMove}
+      className="relative w-full min-h-[100dvh] min-h-screen overflow-hidden flex flex-col justify-center items-center pt-12 pb-32 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300"
+    >
       {/* Full-Bleed Canvas */}
       <FluidWarpGridCanvas />
 
-      {/* Central Masking Gradient Overlay */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-[#f8fafc]/40 to-[#f8fafc] dark:via-[#080c14]/40 dark:to-[#080c14]" />
+      {/* Dynamic Cursor-Follow Radial Glow */}
+      <div
+        className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-500 opacity-60 dark:opacity-40"
+        style={{
+          background: `radial-gradient(650px circle at ${cursorPos.x}px ${cursorPos.y}px, rgba(99,102,241,0.14), transparent 80%)`,
+        }}
+      />
 
-      {/* Floating Glassmorphic Value Prop Orbiters */}
-      <div className="hidden xl:flex absolute top-[14%] left-[5%] rounded-2xl p-3.5 items-center space-x-3 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
-        <div className="w-9 h-9 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
-          <BarChart3 className="w-4 h-4 text-indigo-600 dark:text-purple-300" />
-        </div>
-        <div>
-          <p className="text-[10px] text-slate-500 dark:text-white/50 font-bold uppercase tracking-widest mb-0.5">
-            Real-Time
-          </p>
-          <p className="text-[13px] font-bold text-slate-900 dark:text-white/90">
-            Analytics Engine
-          </p>
-        </div>
-      </div>
-
-      <div className="hidden xl:flex absolute bottom-[24%] left-[6%] rounded-2xl p-3.5 items-center space-x-3 z-10 w-[200px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
-        <div className="w-9 h-9 rounded-full bg-emerald-50 border border-emerald-200/80 dark:bg-emerald-500/10 dark:border-emerald-500/20 flex items-center justify-center">
-          <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-        </div>
-        <div>
-          <p className="text-[13px] font-bold text-slate-900 dark:text-white/90 mb-0.5">
-            Bank Grade
-          </p>
-          <p className="text-[10px] text-emerald-600 dark:text-[#4ade80] font-bold flex items-center">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-ping" />
-            Protected
-          </p>
-        </div>
-      </div>
-
-      <div className="hidden xl:flex absolute top-[16%] right-[5%] rounded-2xl p-3.5 items-center space-x-3 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
-        <div className="w-9 h-9 rounded-full bg-sky-50 border border-sky-200/80 dark:bg-indigo-500/10 dark:border-indigo-500/20 flex items-center justify-center">
-          <CloudCheck className="w-4 h-4 text-sky-600 dark:text-indigo-300" />
-        </div>
-        <div>
-          <p className="text-[13px] font-bold text-slate-900 dark:text-white/90 mb-0.5">
-            Global Scalability
-          </p>
-          <p className="text-[10px] text-slate-500 dark:text-white/50 font-bold uppercase tracking-widest">
-            Cloud Native
-          </p>
-        </div>
-      </div>
-
-      <div className="hidden xl:flex absolute bottom-[26%] right-[6%] rounded-2xl p-3.5 items-center space-x-3 z-10 w-[200px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
-        <div className="w-9 h-9 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
-          <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-purple-300" />
-        </div>
-        <div>
-          <p className="text-[13px] font-bold text-slate-900 dark:text-white/90 mb-0.5">
-            99.9% Uptime
-          </p>
-          <p className="text-[10px] text-slate-500 dark:text-white/50 font-bold uppercase tracking-widest">
-            SLA Guarantee
-          </p>
-        </div>
-      </div>
-
-      {/* Main Hero Content Container - Fits completely inside initial 100vh viewport */}
+      {/* Main Hero Content Container - Optically centered upward */}
       <motion.div
         initial="hidden"
         animate="show"
@@ -353,7 +315,7 @@ export default function Hero() {
             },
           },
         }}
-        className="relative z-20 w-full max-w-[980px] mx-auto px-6 flex flex-col items-center text-center my-auto"
+        className="relative z-20 w-full max-w-[980px] mx-auto px-0 flex flex-col items-center text-center my-auto -translate-y-4 md:-translate-y-6"
       >
         {/* 1. Official Connectify Brand Logo Centered Near Top */}
         <motion.div
@@ -362,60 +324,119 @@ export default function Hero() {
             show: { opacity: 1, scale: 1, y: 0 },
           }}
           transition={{ duration: 0.4 }}
-          className="mt-1 sm:mt-2 mb-2 sm:mb-3"
+          className="mt-1 sm:mt-2 mb-4"
         >
           <motion.div
             animate={{ y: [0, -4, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="group relative flex items-center justify-center rounded-2xl px-4 py-2 sm:px-5 sm:py-2.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_40px_rgba(99,102,241,0.2)] bg-white/80 border border-slate-200/90 dark:shadow-[0_0_50px_rgba(56,189,248,0.25)] dark:bg-slate-900/80 dark:border-cyan-500/20"
+            className="group relative flex items-center justify-center rounded-2xl px-5 py-2.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_40px_rgba(99,102,241,0.15)] bg-white/60 border border-slate-200/80 dark:shadow-[0_0_50px_rgba(99,102,241,0.25)] dark:bg-slate-900/60 dark:border-indigo-500/20"
           >
+            {/* Light Mode Purple Logo */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/connectifylogo.png"
+              src="/connectifylogo-purple.png"
               alt="Connectify Brand Logo"
-              className="h-9 sm:h-11 w-auto transition-transform duration-300 group-hover:scale-105 dark:brightness-110 dark:invert-[0.1]"
+              className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 dark:hidden"
+            />
+            {/* Dark Mode White Logo */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/connectifylogo-white.png"
+              alt="Connectify Brand Logo"
+              className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
             />
           </motion.div>
         </motion.div>
 
-        {/* Status Pill Badge */}
+        {/* Status Pill Badge with Animated Radar Ping */}
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 10 },
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.3 }}
-          className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-3 sm:mb-4 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
+          className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-5 md:mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
         >
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-2.5 w-2.5 items-center justify-center">
+            <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-40" />
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
           </span>
-          <Sparkles className="w-3 h-3 text-indigo-600 dark:text-amber-400" />
+          <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-extrabold">
             NEXT-GEN INFRASTRUCTURE &amp; AI
           </span>
         </motion.div>
 
-        {/* Scaled Responsive Headline */}
+        {/* Scaled Responsive Headline with Word-Level Reveal Stagger */}
         <motion.h1
           variants={{
-            hidden: { opacity: 0, y: 14 },
-            show: { opacity: 1, y: 0 },
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: { staggerChildren: 0.05, delayChildren: 0.1 },
+            },
           }}
-          transition={{ duration: 0.5 }}
-          className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[66px] md:leading-[1.08] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-3 sm:mb-4"
+          className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[66px] md:leading-[1.08] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-4 flex flex-wrap justify-center items-center gap-x-3 gap-y-1"
         >
-          <span className="font-semibold text-slate-950 dark:text-white/90">
-            We are not just building Tech{" "}
-            <span className="text-slate-400 dark:text-white/40 font-light">—</span>
+          <span className="inline-flex flex-wrap justify-center gap-x-2.5 text-slate-950 dark:text-white/90 font-semibold">
+            {line1Words.map((word, idx) => (
+              <motion.span
+                key={`l1-${idx}`}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+            ))}
+            <motion.span
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                show: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="text-slate-400 dark:text-white/40 font-light inline-block"
+            >
+              —
+            </motion.span>
           </span>
-          <br />
-          <span className="font-extrabold text-slate-950 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-white/60">
-            We are building{" "}
+
+          <span className="w-full h-0 basis-full" />
+
+          <span className="inline-flex flex-wrap justify-center gap-x-2.5 text-slate-950 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-white/60 font-extrabold">
+            {line2Words.map((word, idx) => (
+              <motion.span
+                key={`l2-${idx}`}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+            ))}
           </span>
-          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 via-purple-600 to-indigo-600 animate-gradient-x bg-[length:200%_auto] dark:from-[#d2bbff] dark:via-[#93c5fd] dark:to-[#b68cff] drop-shadow-[0_0_20px_rgba(79,70,229,0.22)] dark:drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
-            Future.
+
+          <span className="inline-flex flex-wrap justify-center gap-x-2.5 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 via-purple-600 to-indigo-600 animate-gradient-x bg-[length:200%_auto] dark:from-[#d2bbff] dark:via-[#93c5fd] dark:to-[#b68cff] drop-shadow-[0_0_20px_rgba(79,70,229,0.22)] dark:drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
+            {line3Words.map((word, idx) => (
+              <motion.span
+                key={`l3-${idx}`}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+            ))}
           </span>
         </motion.h1>
 
@@ -426,7 +447,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5 }}
-          className="font-sans text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-white/60 max-w-xl mx-auto mb-5 sm:mb-6 font-medium tracking-wide"
+          className="font-sans text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-7 md:mb-8 font-medium tracking-wide"
         >
           We partner with ambitious brands to build scalable digital products,
           robust infrastructure, and immersive experiences that drive tomorrow&apos;s
@@ -440,7 +461,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col sm:flex-row items-center justify-center space-y-2.5 sm:space-y-0 sm:space-x-3.5 w-full sm:w-auto mb-6 sm:mb-7"
+          className="flex flex-col sm:flex-row items-center justify-center space-y-2.5 sm:space-y-0 sm:space-x-3.5 w-full sm:w-auto"
         >
           <Link
             href="/contact"
@@ -458,7 +479,8 @@ export default function Hero() {
           </Link>
         </motion.div>
 
-        {/* Counter Ribbon - Compact padding */}
+        {/* Counter Ribbon - Commented out per request */}
+        {/*
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 14 },
@@ -505,6 +527,7 @@ export default function Hero() {
             </div>
           </div>
         </motion.div>
+        */}
       </motion.div>
     </section>
   );

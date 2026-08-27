@@ -57,11 +57,11 @@ function DockItem({
     return val - bounds.x - bounds.width / 2;
   });
 
-  const widthSync = useTransform(distance, [-140, 0, 140], [40, 54, 40]);
+  const widthSync = useTransform(distance, [-150, 0, 150], [40, 54, 40]);
   const width = useSpring(widthSync, {
     mass: 0.1,
-    stiffness: 200,
-    damping: 12,
+    stiffness: 260,
+    damping: 16,
   });
 
   const [hovered, setHovered] = useState(false);
@@ -74,14 +74,14 @@ function DockItem({
       onMouseLeave={() => setHovered(false)}
       className="relative flex flex-col items-center justify-end"
     >
-      {/* macOS Floating Tooltip Badge */}
+      {/* macOS Floating Tooltip Badge with Spring Overshoot */}
       <AnimatePresence>
         {hovered && (
           <motion.div
-            initial={{ opacity: 0, y: 4, scale: 0.9 }}
-            animate={{ opacity: 1, y: -10, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
+            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+            animate={{ opacity: 1, y: -10, scale: 1.05 }}
+            exit={{ opacity: 0, y: 6, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="absolute -top-9 z-30 pointer-events-none px-2.5 py-1 rounded-md bg-slate-900/90 text-white text-[11px] font-semibold font-sans whitespace-nowrap backdrop-blur-md border border-white/10 shadow-lg dark:bg-white/90 dark:text-slate-950"
           >
             {link.label}
@@ -92,19 +92,22 @@ function DockItem({
       <Link href={link.href} aria-label={link.label}>
         <motion.div
           style={{ width, height: width }}
-          className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${
-            isActive
-              ? "bg-slate-900 text-white border-slate-800 shadow-md dark:bg-white dark:text-slate-950 dark:border-white"
-              : "bg-white/80 text-slate-700 border-slate-200/80 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
-          }`}
+          className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${isActive
+            ? "bg-slate-900 text-white border-slate-800 shadow-md dark:bg-white dark:text-slate-950 dark:border-white"
+            : "bg-white/80 text-slate-700 border-slate-200/80 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
+            }`}
         >
           <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-none" />
         </motion.div>
       </Link>
 
-      {/* macOS Active App Indicator Dot */}
+      {/* macOS Active App Indicator Dot with Horizontal Glide Layout Transition */}
       {isActive && (
-        <span className="absolute -bottom-2 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-sm" />
+        <motion.span
+          layoutId="navbar-active-indicator"
+          transition={{ type: "spring", stiffness: 380, damping: 28 }}
+          className="absolute -bottom-2 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]"
+        />
       )}
     </div>
   );
@@ -150,6 +153,31 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Top-Left Fixed Corporate Brand Logo Badge */}
+      <div className="fixed top-5 left-5 z-50 flex items-center">
+        <Link
+          href="/"
+          className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-indigo-500/50 dark:border-white/10 dark:bg-slate-950/80 dark:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
+        >
+          {/* Light Mode Purple Icon */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/connectify-icon-purple.png"
+            alt="Konnectify Icon"
+            className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 dark:hidden"
+          />
+          {/* Dark Mode White Icon */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/connectify-icon-white.png"
+            alt="Konnectify Icon"
+            className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 hidden dark:block"
+          />
+          <span className="font-display text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">connectify
+          </span>
+        </Link>
+      </div>
+
       {/* macOS Floating Magnification Bottom Dock */}
       <motion.header
         variants={{
@@ -158,12 +186,12 @@ export default function Navbar() {
         }}
         animate={hidden && !mobileMenuOpen ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed bottom-6 inset-x-0 mx-auto w-fit z-50 flex items-end"
+        className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-end w-max max-w-[95vw]"
       >
         <motion.div
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
-          className="relative flex items-end gap-2.5 sm:gap-3 px-4 py-2.5 rounded-2xl bg-white/70 dark:bg-slate-950/70 backdrop-blur-2xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10"
+          className="relative flex items-end gap-2.5 sm:gap-3 px-4 py-2.5 rounded-2xl bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10"
         >
           {/* Desktop Magnified Dock Links */}
           <div className="hidden md:flex items-end gap-2 sm:gap-2.5">
@@ -250,11 +278,10 @@ export default function Navbar() {
                     key={link.label}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-2.5 font-display text-sm font-semibold transition-all ${
-                      isActive
-                        ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950"
-                        : "text-slate-800 hover:bg-slate-100 dark:text-white dark:hover:bg-white/10"
-                    }`}
+                    className={`flex items-center gap-3 rounded-xl px-4 py-2.5 font-display text-sm font-semibold transition-all ${isActive
+                      ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950"
+                      : "text-slate-800 hover:bg-slate-100 dark:text-white dark:hover:bg-white/10"
+                      }`}
                   >
                     <Icon className="w-4 h-4" />
                     <span>{link.label}</span>

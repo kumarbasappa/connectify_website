@@ -19,7 +19,7 @@ export default function ServicesPage() {
         description="From full-stack digital solutions and cloud infrastructure to business growth advisory and AI foundations — we partner with ambitious organizations across 6 core pillars."
       />
 
-      <div className="px-6 py-16 lg:py-24 bg-background">
+      <div className="px-0 py-16 lg:py-24 bg-background">
         <div className="mx-auto w-full max-w-6xl space-y-24">
           {/* Quick Jump Navigation */}
           <nav className="flex flex-wrap gap-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-md dark:border-white/10 dark:bg-slate-900/80">

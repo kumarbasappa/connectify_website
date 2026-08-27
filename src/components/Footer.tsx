@@ -2,17 +2,25 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-black/10 bg-background pt-16 pb-12 dark:border-white/10">
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
+    <footer className="relative border-t border-black/10 bg-background pt-16 pb-28 sm:pb-32 dark:border-white/10">
+      <div className="mx-auto w-full max-w-7xl px-0">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-3">
+              {/* Light Mode Logo (Purple) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/connectifylogo.png"
+                src="/connectifylogo-purple.png"
                 alt="Connectify Corporate Logo"
-                className="h-14 sm:h-16 w-auto object-contain dark:brightness-110 dark:invert-[0.1]"
+                className="h-10 sm:h-12 w-auto object-contain dark:hidden"
+              />
+              {/* Dark Mode Logo (White) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/connectifylogo-white.png"
+                alt="Connectify Corporate Logo"
+                className="h-10 sm:h-12 w-auto object-contain hidden dark:block"
               />
             </Link>
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted">
@@ -173,7 +181,7 @@ export default function Footer() {
             <Link href="/terms" className="transition-colors hover:text-foreground">
               Terms of Service
             </Link>
-            <Link href="/sitemap.xml" className="transition-colors hover:text-foreground">
+            <Link href="/sitemap" className="transition-colors hover:text-foreground">
               Sitemap
             </Link>
           </div>

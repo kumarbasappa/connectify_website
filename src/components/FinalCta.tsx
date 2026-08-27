@@ -10,7 +10,7 @@ export default function FinalCta() {
       {/* Deep Ambient Mesh Gradient Backdrop */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-r from-indigo-500/20 via-sky-500/15 to-purple-500/20 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="relative mx-auto w-full max-w-5xl px-6 lg:px-12">
+      <div className="relative mx-auto w-full max-w-5xl px-0">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

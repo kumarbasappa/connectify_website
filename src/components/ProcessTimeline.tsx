@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { processSteps } from "@/lib/process";
 import { CheckCircle2, ArrowRight, Activity, GitBranch, Layers, Rocket } from "lucide-react";
 
 export default function ProcessTimeline() {
   const [activeStep, setActiveStep] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const pathLength = useSpring(scrollYProgress, { stiffness: 300, damping: 50 });
 
   const stageIcons = [
     <Activity key="1" className="w-5 h-5 text-indigo-500" />,
@@ -16,12 +24,15 @@ export default function ProcessTimeline() {
   ];
 
   return (
-    <section className="relative bg-surface py-24 lg:py-32 border-t border-black/5 dark:border-white/10 overflow-hidden">
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
+    <section
+      ref={sectionRef}
+      className="relative bg-surface py-24 lg:py-32 border-t border-black/5 dark:border-white/10 overflow-hidden"
+    >
+      <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
         <div className="max-w-3xl">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand dark:text-amber-400 flex items-center gap-2">
             <GitBranch className="w-3.5 h-3.5" />
-            03 / PROCESS ARCHITECTURE
+            04 / PROCESS ARCHITECTURE
           </p>
           <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
             Four stages from concept to enterprise scale.
@@ -31,9 +42,32 @@ export default function ProcessTimeline() {
           </p>
         </div>
 
-        {/* Dynamic Connecting Stepper Line for Desktop */}
-        <div className="relative mt-12 hidden lg:block px-8">
-          <div className="absolute top-1/2 left-16 right-16 h-1.5 -translate-y-1/2 bg-slate-200/80 dark:bg-slate-800/80 rounded-full overflow-hidden z-0">
+        {/* Dynamic Scroll-Driven Connecting Path Line for Desktop */}
+        <div className="relative mt-12 hidden lg:block px-0 h-8">
+          <svg className="absolute top-1/2 left-12 right-12 w-[calc(100%-6rem)] h-8 -translate-y-1/2 pointer-events-none z-0" viewBox="0 0 1000 20" preserveAspectRatio="none">
+            <path
+              d="M 10 10 L 990 10"
+              fill="none"
+              stroke="rgba(148, 163, 184, 0.25)"
+              strokeWidth="4"
+              strokeDasharray="6 6"
+            />
+            <motion.path
+              d="M 10 10 L 990 10"
+              fill="none"
+              stroke="url(#process-line-gradient)"
+              strokeWidth="5"
+              style={{ pathLength }}
+            />
+            <defs>
+              <linearGradient id="process-line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#4f46e5" />
+                <stop offset="50%" stopColor="#0ea5e9" />
+                <stop offset="100%" stopColor="#f59e0b" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div className="absolute top-1/2 left-16 right-16 h-1.5 -translate-y-1/2 rounded-full overflow-hidden z-0 opacity-40">
             <motion.div
               className="h-full bg-gradient-to-r from-indigo-600 via-sky-500 to-amber-400"
               initial={{ width: "0%" }}
@@ -44,7 +78,7 @@ export default function ProcessTimeline() {
         </div>
 
         {/* Animated Sequential Process Workflow Tabs */}
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-4 relative z-10">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4 relative z-10">
           {processSteps.map((step, idx) => {
             const isActive = idx === activeStep;
             return (

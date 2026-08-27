@@ -98,6 +98,79 @@ function TechBrandSvg({ name }: { name: string }) {
   return <Cpu className="w-5 h-5 text-indigo-500" />;
 }
 
+// 3D Perspective Tilt Card with Inner Glare
+function TechCard3D({ tech }: { tech: { name: string; description: string; verified?: boolean } }) {
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+
+    setRotate({ x: rotateX, y: rotateY });
+    setGlarePos({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 1,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setGlarePos((prev) => ({ ...prev, opacity: 0 }));
+  };
+
+  return (
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(800px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transition: "transform 0.15s ease-out",
+      }}
+      className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-md backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/80 hover:border-brand/60 dark:hover:border-indigo-500/60 shadow-slate-900/5 hover:shadow-2xl"
+    >
+      {/* Dynamic Inner Glare Radial */}
+      <div
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-0"
+        style={{
+          opacity: glarePos.opacity,
+          background: `radial-gradient(350px circle at ${glarePos.x}% ${glarePos.y}%, rgba(99,102,241,0.18), transparent 70%)`,
+        }}
+      />
+
+      <div className="relative z-10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 flex items-center justify-center">
+              <TechBrandSvg name={tech.name} />
+            </div>
+            <h3 className="font-display text-xl font-bold text-slate-900 transition-colors group-hover:text-brand dark:text-white dark:group-hover:text-cyan-400">
+              {tech.name}
+            </h3>
+          </div>
+          {tech.verified && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <ShieldCheck className="w-3 h-3 text-emerald-500" />
+              Verified
+            </span>
+          )}
+        </div>
+        <p className="font-sans mt-3.5 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
+          {tech.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function TechnologyCloud() {
   const [activeTab, setActiveTab] = useState(technologyCategories[0].id);
 
@@ -114,12 +187,12 @@ export default function TechnologyCloud() {
 
   return (
     <section className="relative bg-background py-24 lg:py-32 border-t border-slate-200/90 dark:border-white/10 overflow-hidden">
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
+      <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-brand dark:text-cyan-400 flex items-center gap-2">
               <Layers className="w-3.5 h-3.5" />
-              02 / ENGINEERING STACK
+              03 / ENGINEERING STACK
             </p>
             <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl dark:text-white">
               Proven technology matrix.
@@ -172,30 +245,7 @@ export default function TechnologyCloud() {
             className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {selectedCategory.techs.map((tech) => (
-              <div
-                key={tech.name}
-                className="group rounded-2xl border border-slate-200/90 bg-white p-6 shadow-md shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 hover:shadow-xl dark:border-white/10 dark:bg-slate-900/80 dark:hover:border-indigo-500/50"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 flex items-center justify-center">
-                      <TechBrandSvg name={tech.name} />
-                    </div>
-                    <h3 className="font-display text-xl font-bold text-slate-900 transition-colors group-hover:text-brand dark:text-white dark:group-hover:text-cyan-400">
-                      {tech.name}
-                    </h3>
-                  </div>
-                  {tech.verified && (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                      <ShieldCheck className="w-3 h-3 text-emerald-500" />
-                      Verified
-                    </span>
-                  )}
-                </div>
-                <p className="font-sans mt-3.5 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
-                  {tech.description}
-                </p>
-              </div>
+              <TechCard3D key={tech.name} tech={tech} />
             ))}
           </motion.div>
         </AnimatePresence>

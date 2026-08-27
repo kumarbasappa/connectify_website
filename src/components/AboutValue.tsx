@@ -10,7 +10,7 @@ export default function AboutValue() {
       {/* Subtle Background Glow */}
       <div className="absolute top-1/2 left-[-5%] -translate-y-1/2 w-[35%] h-[35%] bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
+      <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Left Column - Headline & Kinetic Typography */}
           <motion.div
@@ -38,8 +38,8 @@ export default function AboutValue() {
 
           {/* Right Column - Narrative & Multi-Layer Glass Cards */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
             className="space-y-6 lg:col-span-6"
@@ -50,10 +50,10 @@ export default function AboutValue() {
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-2xl dark:border-white/10 dark:bg-slate-900/80">
+              <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 dark:border-white/10 dark:bg-slate-900/80">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-bold text-indigo-600 dark:text-cyan-400">01 / ARCHITECTURE</span>
-                  <div className="p-2 rounded-xl bg-indigo-50 dark:bg-white/5 border border-indigo-100 dark:border-white/10">
+                  <div className="p-2 rounded-xl bg-indigo-50 dark:bg-white/5 border border-indigo-100 dark:border-white/10 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
                     <Cpu className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
                   </div>
                 </div>
@@ -61,10 +61,10 @@ export default function AboutValue() {
                 <p className="mt-1.5 font-sans text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300">Cloud-native microservices, zero-trust security controls, and sub-second latency.</p>
               </div>
 
-              <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-2xl dark:border-white/10 dark:bg-slate-900/80">
+              <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 dark:border-white/10 dark:bg-slate-900/80">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-bold text-indigo-600 dark:text-cyan-400">02 / EXECUTION</span>
-                  <div className="p-2 rounded-xl bg-sky-50 dark:bg-white/5 border border-sky-100 dark:border-white/10">
+                  <div className="p-2 rounded-xl bg-sky-50 dark:bg-white/5 border border-sky-100 dark:border-white/10 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
                     <Target className="w-5 h-5 text-sky-600 dark:text-indigo-400" />
                   </div>
                 </div>

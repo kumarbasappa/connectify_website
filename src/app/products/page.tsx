@@ -90,7 +90,7 @@ export default function ProductsPage() {
         description="Production-grade application platforms engineered for enterprise deployment, regulatory compliance, and high transaction volume."
       />
 
-      <div className="px-6 py-16 lg:py-24 bg-background">
+      <div className="px-0 py-16 lg:py-24 bg-background">
         <div className="mx-auto w-full max-w-6xl space-y-12">
           {/* Quick Jump Navigation Pills */}
           <nav className="flex flex-wrap gap-2 rounded-2xl border border-black/10 bg-card-bg p-3 shadow-md dark:border-white/10">
