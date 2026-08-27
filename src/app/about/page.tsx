@@ -139,7 +139,7 @@ export default function AboutPage() {
           {/* Section 5: Why Choose Us */}
           <section>
             <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
-              03 / Why Choose Us
+              04 / Why Choose Us
             </p>
             <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl dark:text-white">
               Built for speed, scale, and accountability.

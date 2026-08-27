@@ -12,7 +12,7 @@ export default function WhyConnectify() {
             <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand dark:text-amber-400">
               04 / DIFFERENTIATORS
             </p>
-            <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl dark:text-white">
+            <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
               Why enterprise leaders trust Connectify.
             </h2>
           </div>
@@ -46,7 +46,7 @@ export default function WhyConnectify() {
               edgeSensitivity={35}
               colors={["#f59e0b", "#fbbf24", "#d97706"]}
             >
-              <div className="flex h-full flex-col justify-between rounded-2xl border border-black/10 bg-card-bg p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 backdrop-blur-sm">
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 dark:bg-slate-900/80 backdrop-blur-sm">
                 <div>
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-bold text-brand dark:text-amber-400">
@@ -57,7 +57,7 @@ export default function WhyConnectify() {
                     </span>
                   </div>
 
-                  <h3 className="mt-6 font-display text-2xl font-bold text-foreground sm:text-3xl dark:text-white">
+                  <h3 className="mt-6 font-display text-2xl font-bold text-slate-900 sm:text-3xl dark:text-white">
                     Business-First Engineering
                   </h3>
                   <p className="mt-4 font-sans text-base leading-relaxed text-slate-700 dark:text-slate-300">
@@ -65,14 +65,14 @@ export default function WhyConnectify() {
                   </p>
                 </div>
 
-                <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-black/10 pt-6 dark:border-white/10">
-                  <span className="rounded-full border border-black/10 bg-surface px-3.5 py-1.5 font-mono text-xs font-semibold text-foreground/80 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200">
+                <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-6 dark:border-white/10">
+                  <span className="rounded-full border border-slate-300 bg-slate-100 px-3.5 py-1.5 font-mono text-xs font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200">
                     ✓ Financial Model Sync
                   </span>
-                  <span className="rounded-full border border-black/10 bg-surface px-3.5 py-1.5 font-mono text-xs font-semibold text-foreground/80 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200">
+                  <span className="rounded-full border border-slate-300 bg-slate-100 px-3.5 py-1.5 font-mono text-xs font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200">
                     ✓ TCO Reduction
                   </span>
-                  <span className="rounded-full border border-black/10 bg-surface px-3.5 py-1.5 font-mono text-xs font-semibold text-foreground/80 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200">
+                  <span className="rounded-full border border-slate-300 bg-slate-100 px-3.5 py-1.5 font-mono text-xs font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200">
                     ✓ Board-Ready KPIs
                   </span>
                 </div>
@@ -91,12 +91,12 @@ export default function WhyConnectify() {
               edgeSensitivity={35}
               colors={["#f59e0b", "#fbbf24", "#d97706"]}
             >
-              <div className="flex h-full flex-col justify-between rounded-2xl border border-black/10 bg-card-bg p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 backdrop-blur-sm">
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 dark:bg-slate-900/80 backdrop-blur-sm">
                 <div>
                   <span className="font-mono text-xs font-bold text-brand dark:text-amber-400">
                     02 / RESILIENCE
                   </span>
-                  <h3 className="mt-4 font-display text-xl font-bold text-foreground dark:text-white">
+                  <h3 className="mt-4 font-display text-xl font-bold text-slate-900 dark:text-white">
                     Enterprise Security &amp; Scale
                   </h3>
                   <p className="mt-3 font-sans text-sm leading-relaxed text-slate-700 dark:text-slate-300">
@@ -104,8 +104,8 @@ export default function WhyConnectify() {
                   </p>
                 </div>
 
-                <div className="mt-6 rounded-xl border border-black/10 bg-surface p-3.5 font-mono text-xs text-slate-700 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-300">
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓ 99.998% Uptime</span> • SOC2 &amp; HIPAA Compliant
+                <div className="mt-6 rounded-xl border border-emerald-300 bg-emerald-50/90 p-3.5 font-mono text-xs text-slate-900 dark:border-emerald-500/30 dark:bg-emerald-950/50 dark:text-slate-200">
+                  <span className="text-emerald-900 dark:text-emerald-400 font-extrabold">✓ 99.998% Uptime</span> • SOC2 &amp; HIPAA Compliant
                 </div>
               </div>
             </BorderGlow>
@@ -122,12 +122,12 @@ export default function WhyConnectify() {
               edgeSensitivity={35}
               colors={["#f59e0b", "#fbbf24", "#d97706"]}
             >
-              <div className="flex h-full flex-col justify-between rounded-2xl border border-black/10 bg-card-bg p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 backdrop-blur-sm">
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 dark:bg-slate-900/80 backdrop-blur-sm">
                 <div>
                   <span className="font-mono text-xs font-bold text-brand dark:text-amber-400">
                     03 / USER EXPERIENCE
                   </span>
-                  <h3 className="mt-4 font-display text-xl font-bold text-foreground dark:text-white">
+                  <h3 className="mt-4 font-display text-xl font-bold text-slate-900 dark:text-white">
                     Product Thinking &amp; UX
                   </h3>
                   <p className="mt-3 font-sans text-sm leading-relaxed text-slate-700 dark:text-slate-300">
@@ -135,7 +135,7 @@ export default function WhyConnectify() {
                   </p>
                 </div>
 
-                <div className="mt-6 font-mono text-xs font-semibold text-brand dark:text-amber-400">
+                <div className="mt-6 font-mono text-xs font-bold text-brand dark:text-amber-400">
                   3x Faster Time-to-Market →
                 </div>
               </div>
@@ -153,18 +153,18 @@ export default function WhyConnectify() {
               edgeSensitivity={35}
               colors={["#f59e0b", "#fbbf24", "#d97706"]}
             >
-              <div className="flex h-full flex-col justify-between rounded-2xl border border-black/10 bg-card-bg p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 backdrop-blur-sm">
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10 dark:bg-slate-900/80 backdrop-blur-sm">
                 <div>
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-bold text-brand dark:text-amber-400">
                       04 / OPERATIONAL EMBEDDING
                     </span>
-                    <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 font-mono text-[11px] font-bold text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                    <span className="rounded-full bg-emerald-100 border border-emerald-300 px-3 py-1 font-mono text-[11px] font-extrabold text-emerald-900 dark:bg-emerald-950/60 dark:border-emerald-500/30 dark:text-emerald-400">
                       24/7 SRE COVERAGE
                     </span>
                   </div>
 
-                  <h3 className="mt-6 font-display text-2xl font-bold text-foreground sm:text-3xl dark:text-white">
+                  <h3 className="mt-6 font-display text-2xl font-bold text-slate-900 sm:text-3xl dark:text-white">
                     Long-Term Operational Partnership
                   </h3>
                   <p className="mt-4 font-sans text-base leading-relaxed text-slate-700 dark:text-slate-300">
@@ -172,8 +172,8 @@ export default function WhyConnectify() {
                   </p>
                 </div>
 
-                <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-black/10 pt-6 dark:border-white/10">
-                  <div className="flex items-center gap-2 font-mono text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-slate-200 pt-6 dark:border-white/10">
+                  <div className="flex items-center gap-2 font-mono text-xs font-bold text-slate-900 dark:text-slate-200">
                     <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span>Active Incident Response &lt; 5 mins</span>
                   </div>

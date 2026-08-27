@@ -22,7 +22,7 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex items-center gap-3">
               <a
-                href="https://www.linkedin.com"
+                href="https://www.linkedin.com/company/connectify-global"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Connectify on LinkedIn"
@@ -31,7 +31,7 @@ export default function Footer() {
                 in
               </a>
               <a
-                href="https://twitter.com"
+                href="https://x.com/connectifyglobal"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Connectify on X"
@@ -40,7 +40,7 @@ export default function Footer() {
                 X
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/connectify.global"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Connectify on Instagram"
@@ -112,6 +112,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/services#brand-experience" className="transition-colors hover:text-brand">
+                  Brand Experience
+                </Link>
+              </li>
+              <li>
                 <Link href="/services#data-ai" className="transition-colors hover:text-brand">
                   Data &amp; AI
                 </Link>
@@ -162,13 +167,13 @@ export default function Footer() {
             © 2026 Connectify. All rights reserved. Built for enterprise performance.
           </p>
           <div className="flex flex-wrap gap-6 text-xs text-muted">
-            <Link href="/contact" className="transition-colors hover:text-foreground">
+            <Link href="/privacy" className="transition-colors hover:text-foreground">
               Privacy Policy
             </Link>
-            <Link href="/contact" className="transition-colors hover:text-foreground">
+            <Link href="/terms" className="transition-colors hover:text-foreground">
               Terms of Service
             </Link>
-            <Link href="/case-studies" className="transition-colors hover:text-foreground">
+            <Link href="/sitemap.xml" className="transition-colors hover:text-foreground">
               Sitemap
             </Link>
           </div>

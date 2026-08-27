@@ -21,12 +21,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
     const savedTheme = localStorage.getItem("connectify-theme") as Theme | null;
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (savedTheme === "dark") {
       setTheme("dark");
       document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+      document.documentElement.style.colorScheme = "dark";
+    } else {
+      setTheme("light");
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
     }
   }, []);
 
@@ -34,7 +38,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const nextTheme = theme === "light" ? "dark" : "light";
     setTheme(nextTheme);
     localStorage.setItem("connectify-theme", nextTheme);
-    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+    if (nextTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+      document.documentElement.style.colorScheme = "dark";
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
+    }
   };
 
   return (

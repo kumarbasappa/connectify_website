@@ -96,7 +96,14 @@ body {
 }
 
 /* Typography Hierarchy Utilities & Global Rules */
-h1, h2, h3, h4, h5, h6, .font-heading, .font-display {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading,
+.font-display {
   font-family: var(--font-heading);
   letter-spacing: -0.025em;
   line-height: 1.15;
@@ -112,7 +119,14 @@ h2 {
   line-height: 1.12;
 }
 
-p, span, li, a, button, label, input, textarea {
+p,
+span,
+li,
+a,
+button,
+label,
+input,
+textarea {
   font-family: var(--font-sans);
 }
 
@@ -176,7 +190,6 @@ html.dark .btn-glow {
   color: #ffffff;
   box-shadow:
     0 0 20px rgba(99, 102, 241, 0.35),
-    0 0 45px rgba(79, 70, 229, 0.25);
 }
 
 .btn-glow::before {
@@ -223,8 +236,9 @@ html.dark .btn-glow {
   0% {
     transform: translateX(0%);
   }
+
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 
@@ -242,6 +256,7 @@ html.dark .btn-glow {
   0% {
     stroke-dashoffset: 800;
   }
+
   100% {
     stroke-dashoffset: 0;
   }
@@ -281,6 +296,7 @@ html.dark .btn-glow {
 
 /* Reduced Motion Respect */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   ::before,
   ::after {
@@ -289,7 +305,7 @@ html.dark .btn-glow {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .animate-marquee,
   .animate-wave {
     animation: none !important;

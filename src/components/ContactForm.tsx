@@ -63,22 +63,22 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-8 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-500">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
           <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="mt-4 font-inter text-2xl font-bold text-foreground">
+        <h3 className="mt-4 font-inter text-2xl font-bold text-slate-900 dark:text-white">
           Message Received
         </h3>
-        <p className="mt-2 text-sm text-muted">
-          Thank you for reaching out, <span className="font-semibold text-foreground">{formData.name}</span>. Our business engineering team will review your project brief and respond within 24 hours.
+        <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
+          Thank you for reaching out, <span className="font-semibold text-slate-900 dark:text-white">{formData.name}</span>. Our business engineering team will review your project brief and respond within 24 hours.
         </p>
         <div className="mt-6">
           <button
             type="button"
             onClick={handleReset}
-            className="rounded-full border border-black/20 bg-background px-6 py-2.5 font-inter text-xs font-semibold text-foreground hover:bg-surface dark:border-white/20"
+            className="rounded-full border border-slate-300 bg-white px-6 py-2.5 font-inter text-xs font-semibold text-slate-900 shadow-xs hover:bg-slate-50 dark:border-white/20 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
           >
             Send another message
           </button>
@@ -90,14 +90,14 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {status === "error" && errorMessage && (
-        <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs font-semibold text-rose-500">
+        <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs font-semibold text-rose-600 dark:text-rose-400">
           {errorMessage}
         </div>
       )}
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-wider text-foreground/80">
+          <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
             Full Name <span className="text-brand">*</span>
           </label>
           <input
@@ -107,12 +107,12 @@ export default function ContactForm() {
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             placeholder="Jane Doe"
-            className="mt-2 w-full rounded-xl border border-black/15 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:border-white/15 dark:bg-white/5"
+            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
           />
         </div>
 
         <div>
-          <label htmlFor="contact-email" className="block text-xs font-bold uppercase tracking-wider text-foreground/80">
+          <label htmlFor="contact-email" className="block text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
             Work Email <span className="text-brand">*</span>
           </label>
           <input
@@ -122,14 +122,14 @@ export default function ContactForm() {
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             placeholder="jane@company.com"
-            className="mt-2 w-full rounded-xl border border-black/15 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:border-white/15 dark:bg-white/5"
+            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
           />
         </div>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="contact-company" className="block text-xs font-bold uppercase tracking-wider text-foreground/80">
+          <label htmlFor="contact-company" className="block text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
             Company / Organization
           </label>
           <input
@@ -138,22 +138,22 @@ export default function ContactForm() {
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
             placeholder="Acme Enterprise"
-            className="mt-2 w-full rounded-xl border border-black/15 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:border-white/15 dark:bg-white/5"
+            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
           />
         </div>
 
         <div>
-          <label htmlFor="contact-service" className="block text-xs font-bold uppercase tracking-wider text-foreground/80">
+          <label htmlFor="contact-service" className="block text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
             Primary Area of Interest
           </label>
           <select
             id="contact-service"
             value={formData.service}
             onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-            className="mt-2 w-full rounded-xl border border-black/15 bg-background px-4 py-3 text-sm text-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:border-white/15 dark:bg-white/5"
+            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-slate-900 dark:text-white"
           >
             {serviceOptions.map((opt) => (
-              <option key={opt} value={opt} className="bg-background text-foreground">
+              <option key={opt} value={opt} className="bg-white text-slate-900 dark:bg-slate-900 dark:text-white">
                 {opt}
               </option>
             ))}
@@ -162,7 +162,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="contact-message" className="block text-xs font-bold uppercase tracking-wider text-foreground/80">
+        <label htmlFor="contact-message" className="block text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
           Project Brief / Message <span className="text-brand">*</span>
         </label>
         <textarea
@@ -172,7 +172,7 @@ export default function ContactForm() {
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           placeholder="Tell us about your objectives, timeline, or architecture requirements..."
-          className="mt-2 w-full rounded-xl border border-black/15 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:border-white/15 dark:bg-white/5"
+          className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
         />
       </div>
 
@@ -205,7 +205,7 @@ export default function ContactForm() {
         )}
       </button>
 
-      <p className="text-center text-[11px] text-muted">
+      <p className="text-center text-[11px] text-slate-600 dark:text-slate-400">
         By submitting this form, you agree to our confidential handling of your project brief.
       </p>
     </form>

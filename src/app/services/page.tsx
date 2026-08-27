@@ -22,12 +22,12 @@ export default function ServicesPage() {
       <div className="px-6 py-16 lg:py-24 bg-background">
         <div className="mx-auto w-full max-w-6xl space-y-24">
           {/* Quick Jump Navigation */}
-          <nav className="flex flex-wrap gap-2 rounded-2xl border border-black/10 bg-card-bg p-3 shadow-md dark:border-white/10">
+          <nav className="flex flex-wrap gap-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-md dark:border-white/10 dark:bg-slate-900/80">
             {serviceCategories.map((group) => (
               <a
                 key={group.id}
                 href={`#${group.id}`}
-                className="rounded-xl px-4 py-2 font-mono text-xs font-semibold text-muted transition-colors hover:bg-amber-500/10 hover:text-amber-400 dark:hover:bg-amber-500/20 dark:hover:text-amber-300"
+                className="rounded-xl px-4 py-2 font-mono text-xs font-bold text-slate-700 transition-colors hover:bg-brand/10 hover:text-brand dark:text-slate-300 dark:hover:bg-amber-500/20 dark:hover:text-amber-300"
               >
                 {group.title}
               </a>
@@ -38,11 +38,11 @@ export default function ServicesPage() {
           {serviceCategories.map((pillar) => (
             <section key={pillar.id} id={pillar.id} className="scroll-mt-28 space-y-8">
               {/* Pillar Header */}
-              <div className="border-b border-black/10 pb-6 dark:border-white/10">
-                <span className="font-mono text-xs font-bold text-amber-400">
+              <div className="border-b border-slate-200 pb-6 dark:border-white/10">
+                <span className="font-mono text-xs font-bold text-brand dark:text-amber-400">
                   PILLAR {pillar.number}
                 </span>
-                <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl dark:text-white">
+                <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
                   {pillar.title}
                 </h2>
                 <p className="mt-2 max-w-3xl font-sans text-base font-medium leading-relaxed text-slate-700 sm:text-lg dark:text-slate-300">
@@ -52,28 +52,28 @@ export default function ServicesPage() {
 
               {/* Problems Solved & Deliverables Grid */}
               <div className="grid gap-6 sm:grid-cols-2">
-                <div className="rounded-2xl border border-black/10 bg-surface p-6 shadow-md transition-all duration-300 ease-in-out hover:border-amber-400/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] dark:border-white/10 dark:bg-white/5">
-                  <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-amber-400">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md transition-all duration-300 ease-in-out hover:border-brand/60 hover:shadow-lg dark:border-white/10 dark:bg-slate-900/80 dark:hover:border-amber-400/60">
+                  <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-amber-400">
                     Business Problems Solved
                   </h3>
                   <ul className="mt-4 space-y-2.5">
                     {pillar.problemsSolved.map((prob, idx) => (
                       <li key={idx} className="flex items-start gap-2.5 font-sans text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
-                        <span className="mt-0.5 font-bold text-amber-400">•</span>
+                        <span className="mt-0.5 font-bold text-brand dark:text-amber-400">•</span>
                         <span>{prob}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="rounded-2xl border border-black/10 bg-surface p-6 shadow-md transition-all duration-300 ease-in-out hover:border-amber-400/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] dark:border-white/10 dark:bg-white/5">
-                  <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-amber-400">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md transition-all duration-300 ease-in-out hover:border-brand/60 hover:shadow-lg dark:border-white/10 dark:bg-slate-900/80 dark:hover:border-amber-400/60">
+                  <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-amber-400">
                     Typical Deliverables
                   </h3>
                   <ul className="mt-4 space-y-2.5">
                     {pillar.deliverables.map((del, idx) => (
                       <li key={idx} className="flex items-start gap-2.5 font-sans text-xs font-medium leading-relaxed text-slate-700 dark:text-slate-300">
-                        <span className="mt-0.5 font-bold text-amber-400">•</span>
+                        <span className="mt-0.5 font-bold text-brand dark:text-amber-400">•</span>
                         <span>{del}</span>
                       </li>
                     ))}
@@ -86,13 +86,13 @@ export default function ServicesPage() {
                 {pillar.services.map((service, i) => (
                   <article
                     key={service.name}
-                    className="flex flex-col justify-between rounded-2xl border border-black/10 bg-card-bg p-8 shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] dark:border-white/10"
+                    className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-brand/60 hover:shadow-xl dark:border-white/10 dark:bg-slate-900/80 dark:hover:border-amber-400/60"
                   >
                     <div>
-                      <span className="font-mono text-xs font-bold text-amber-400">
+                      <span className="font-mono text-xs font-bold text-brand dark:text-amber-400">
                         {pillar.number}.{String(i + 1).padStart(2, "0")}
                       </span>
-                      <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-foreground dark:text-white">
+                      <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                         {service.name}
                       </h3>
                       <p className="mt-3 font-sans text-sm font-medium leading-relaxed text-slate-700 dark:text-slate-300">
@@ -100,10 +100,10 @@ export default function ServicesPage() {
                       </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10">
+                    <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/10">
                       <Link
                         href="/contact"
-                        className="group inline-flex items-center gap-2 font-display text-xs font-semibold text-amber-400 transition-colors hover:text-amber-300 dark:hover:text-white"
+                        className="group inline-flex items-center gap-2 font-display text-xs font-bold text-brand transition-colors hover:text-brand-deep dark:text-amber-400 dark:hover:text-white"
                       >
                         <span>Initiate {service.name} engagement</span>
                         <svg
