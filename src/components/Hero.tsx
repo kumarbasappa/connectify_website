@@ -10,6 +10,7 @@ import {
   CloudCheck,
   CheckCircle2,
   Sparkles,
+  Cpu,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
@@ -469,6 +470,56 @@ export default function Hero() {
           </div>
         </motion.div>
         */}
+      </motion.div>
+
+      {/* Floating Enterprise Tech Badge 1 (Cloud Native) - Top Left */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        style={{
+          transform: `translate3d(${(cursorPos.x / 1200 - 0.5) * -10}px, ${(cursorPos.y / 800 - 0.5) * -10}px, 0)`,
+        }}
+        className="hidden xl:flex absolute top-24 left-8 xl:left-12 z-10 items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/75 p-3.5 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-out dark:border-white/10 dark:bg-slate-900/75 pointer-events-none"
+      >
+        <motion.div
+          animate={{ y: [0, -9, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          className="flex items-center gap-3"
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 dark:bg-cyan-500/10 dark:text-cyan-400 border border-indigo-500/20">
+            <Cpu className="h-4 w-4" />
+          </div>
+          <div className="text-left">
+            <p className="font-display text-xs font-bold text-slate-900 dark:text-white">Cloud Native</p>
+            <p className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">Scalable Microservices</p>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Floating Enterprise Tech Badge 2 (AI Engineering) - Bottom Right */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+        style={{
+          transform: `translate3d(${(cursorPos.x / 1200 - 0.5) * 10}px, ${(cursorPos.y / 800 - 0.5) * 10}px, 0)`,
+        }}
+        className="hidden xl:flex absolute bottom-28 right-8 xl:right-12 z-10 items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/75 p-3.5 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-out dark:border-white/10 dark:bg-slate-900/75 pointer-events-none"
+      >
+        <motion.div
+          animate={{ y: [0, 9, 0] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+          className="flex items-center gap-3"
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500/10 text-sky-600 dark:bg-amber-500/10 dark:text-amber-400 border border-sky-500/20">
+            <Sparkles className="h-4 w-4" />
+          </div>
+          <div className="text-left">
+            <p className="font-display text-xs font-bold text-slate-900 dark:text-white">AI Engineering</p>
+            <p className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">Intelligent Workflows</p>
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );
