@@ -55,207 +55,253 @@ function CountUpNumber({
   );
 }
 
-// WebGL Interactive Fluid Background Shader (Dual Light & Dark Mode Adaptation)
-function WebGLShaderBackground() {
+// 3D Particle Mesh Physics Canvas (Mouse Repulsion, Wave Deformation & Theme Engine)
+function InteractiveParticleMeshCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
+  const mouseRef = useRef({
+    x: -1000,
+    y: -1000,
+    targetX: -1000,
+    targetY: -1000,
+    active: false,
+  });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!canvasRef.current) return;
+      const rect = canvasRef.current.getBoundingClientRect();
+      mouseRef.current.targetX = e.clientX - rect.left;
+      mouseRef.current.targetY = e.clientY - rect.top;
+      mouseRef.current.active = true;
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.active = false;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseleave", handleMouseLeave);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
     let animFrameId: number;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    function syncSize() {
-      if (!canvas) return;
-      const w = canvas.clientWidth || window.innerWidth;
-      const h = canvas.clientHeight || window.innerHeight;
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
-      }
-    }
+    let width = canvas.parentElement?.clientWidth || window.innerWidth;
+    let height = canvas.parentElement?.clientHeight || window.innerHeight;
 
-    syncSize();
-    const observer = new ResizeObserver(syncSize);
-    if (canvas.parentElement) {
-      observer.observe(canvas.parentElement);
-    }
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
 
-    const gl =
-      canvas.getContext("webgl") ||
-      (canvas.getContext("experimental-webgl") as WebGLRenderingContext | null);
+    const handleResize = () => {
+      if (!canvas || !canvas.parentElement) return;
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+    };
 
-    if (!gl) return;
+    window.addEventListener("resize", handleResize);
 
     const isDark =
       theme === "dark" || document.documentElement.classList.contains("dark");
 
-    const vs = `
-      attribute vec2 a_position;
-      varying vec2 v_texCoord;
-      void main() {
-        v_texCoord = a_position * 0.5 + 0.5;
-        gl_Position = vec4(a_position, 0.0, 1.0);
-      }
-    `;
+    // Particle 3D Grid Parameters
+    const columns = Math.floor(width / 52);
+    const rows = Math.floor(height / 52);
+    const particleCount = Math.min(columns * rows, 110);
 
-    const fsDark = `
-      precision highp float;
-      uniform float u_time;
-      uniform vec2 u_resolution;
-      uniform vec2 u_mouse;
-      varying vec2 v_texCoord;
-
-      void main() {
-          vec2 uv = v_texCoord;
-          vec2 mouse = u_mouse / u_resolution;
-          
-          vec3 color1 = vec3(0.486, 0.227, 0.929); // Electric Purple #7c3aed
-          vec3 color2 = vec3(0.02, 0.02, 0.04);   // Deep Slate #05050a
-          
-          float noise = sin(uv.x * 10.0 + u_time * 0.5) * cos(uv.y * 8.0 - u_time * 0.3);
-          noise += sin(uv.x * 5.0 - u_time * 0.2) * 0.5;
-          
-          float dist = distance(uv, mouse);
-          float glow = 1.0 - smoothstep(0.0, 0.6, dist);
-          
-          vec3 finalColor = mix(color2, color1, noise * 0.2 + 0.1);
-          finalColor += color1 * glow * 0.35;
-          
-          gl_FragColor = vec4(finalColor, 1.0);
-      }
-    `;
-
-    const fsLight = `
-      precision highp float;
-      uniform float u_time;
-      uniform vec2 u_resolution;
-      uniform vec2 u_mouse;
-      varying vec2 v_texCoord;
-
-      void main() {
-          vec2 uv = v_texCoord;
-          vec2 mouse = u_mouse / u_resolution;
-          
-          vec3 color1 = vec3(0.31, 0.275, 0.898); // Electric Indigo #4f46e5
-          vec3 color2 = vec3(0.973, 0.98, 0.988); // Off-White Slate #f8fafc
-          
-          float noise = sin(uv.x * 10.0 + u_time * 0.4) * cos(uv.y * 8.0 - u_time * 0.25);
-          noise += sin(uv.x * 5.0 - u_time * 0.15) * 0.4;
-          
-          float dist = distance(uv, mouse);
-          float glow = 1.0 - smoothstep(0.0, 0.55, dist);
-          
-          vec3 finalColor = mix(color2, color1, noise * 0.1 + 0.04);
-          finalColor += color1 * glow * 0.16;
-          
-          gl_FragColor = vec4(finalColor, 1.0);
-      }
-    `;
-
-    function createShader(type: number, src: string) {
-      if (!gl) return null;
-      const s = gl.createShader(type);
-      if (!s) return null;
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      return s;
-    }
-
-    const vertexShader = createShader(gl.VERTEX_SHADER, vs);
-    const fragmentShader = createShader(
-      gl.FRAGMENT_SHADER,
-      isDark ? fsDark : fsLight
-    );
-
-    if (!vertexShader || !fragmentShader) return;
-
-    const prog = gl.createProgram();
-    if (!prog) return;
-    gl.attachShader(prog, vertexShader);
-    gl.attachShader(prog, fragmentShader);
-    gl.linkProgram(prog);
-    gl.useProgram(prog);
-
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW
-    );
-
-    const pos = gl.getAttribLocation(prog, "a_position");
-    gl.enableVertexAttribArray(pos);
-    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-
-    const uTime = gl.getUniformLocation(prog, "u_time");
-    const uRes = gl.getUniformLocation(prog, "u_resolution");
-    const uMouse = gl.getUniformLocation(prog, "u_mouse");
-
-    const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      if (rect.width && rect.height) {
-        const nx = (event.clientX - rect.left) / rect.width;
-        const ny = 1.0 - (event.clientY - rect.top) / rect.height;
-        mouse.x = nx * canvas.width;
-        mouse.y = ny * canvas.height;
-      }
+    type Particle = {
+      baseX: number;
+      baseY: number;
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      phase: number;
+      color: string;
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    const lightParticleColors = ["#4338ca", "#0284c7", "#6366f1", "#0284c7"];
+    const darkParticleColors = ["#38bdf8", "#c084fc", "#06b6d4", "#a855f7"];
+    const particlePalette = isDark ? darkParticleColors : lightParticleColors;
 
-    function render(t: number) {
-      if (!gl || !canvas) return;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      if (uTime) gl.uniform1f(uTime, t * 0.001);
-      if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
-      if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      animFrameId = requestAnimationFrame(render);
+    const particles: Particle[] = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      const col = i % columns;
+      const row = Math.floor(i / columns);
+      const bx = (width / (columns + 1)) * (col + 1) + (Math.random() - 0.5) * 20;
+      const by = (height / (rows + 1)) * (row + 1) + (Math.random() - 0.5) * 20;
+      const color = particlePalette[Math.floor(Math.random() * particlePalette.length)];
+
+      particles.push({
+        baseX: bx,
+        baseY: by,
+        x: bx,
+        y: by,
+        vx: 0,
+        vy: 0,
+        radius: Math.random() * 2.2 + 1.6,
+        phase: Math.random() * Math.PI * 2,
+        color: color,
+      });
     }
 
-    animFrameId = requestAnimationFrame(render);
+    let time = 0;
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      time += 0.02;
+
+      // Lerp mouse tracking with spring damping
+      const mouse = mouseRef.current;
+      mouse.x += (mouse.targetX - mouse.x) * 0.1;
+      mouse.y += (mouse.targetY - mouse.y) * 0.1;
+
+      // 1. Ambient Dynamic Radial Spotlight following Cursor
+      if (mouse.x > 0 && mouse.y > 0) {
+        const spotlight = ctx.createRadialGradient(
+          mouse.x,
+          mouse.y,
+          0,
+          mouse.x,
+          mouse.y,
+          340
+        );
+        if (isDark) {
+          spotlight.addColorStop(0, "rgba(56, 189, 248, 0.2)");
+          spotlight.addColorStop(0.5, "rgba(192, 132, 252, 0.1)");
+          spotlight.addColorStop(1, "rgba(8, 12, 20, 0)");
+        } else {
+          spotlight.addColorStop(0, "rgba(99, 102, 241, 0.12)");
+          spotlight.addColorStop(0.5, "rgba(2, 132, 199, 0.06)");
+          spotlight.addColorStop(1, "rgba(248, 250, 252, 0)");
+        }
+        ctx.fillStyle = spotlight;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      // 2. Physics & Particle Simulation Loop
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        // Organic sinusoidal wave oscillation
+        const waveX = Math.sin(time + p.phase) * 6;
+        const waveY = Math.cos(time * 0.8 + p.phase) * 6;
+        const targetX = p.baseX + waveX;
+        const targetY = p.baseY + waveY;
+
+        // Mouse Repulsion & Spring Distortion Physics
+        if (mouse.active) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const maxDist = 180;
+
+          if (dist < maxDist) {
+            const force = (1 - dist / maxDist) * 35;
+            const angle = Math.atan2(dy, dx);
+            p.vx -= Math.cos(angle) * force * 0.12;
+            p.vy -= Math.sin(angle) * force * 0.12;
+
+            // Draw magnetic cursor connector lines
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = isDark
+              ? "rgba(56, 189, 248, 0.35)"
+              : "rgba(67, 56, 202, 0.28)";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+
+        // Spring return to wave equilibrium
+        p.vx += (targetX - p.x) * 0.04;
+        p.vy += (targetY - p.y) * 0.04;
+        p.vx *= 0.88; // Damping
+        p.vy *= 0.88;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Draw particle node
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = isDark ? 0.9 : 0.85;
+        if (isDark) {
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = p.color;
+        }
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Inter-particle connective vectors
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const pdx = p.x - p2.x;
+          const pdy = p.y - p2.y;
+          const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
+
+          if (pdist < 125) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = isDark
+              ? "rgba(56, 189, 248, 0.3)"
+              : "rgba(67, 56, 202, 0.22)";
+            ctx.globalAlpha = (1 - pdist / 125) * (isDark ? 0.3 : 0.22);
+            ctx.lineWidth = 0.9;
+            ctx.stroke();
+          }
+        }
+      }
+
+      ctx.globalAlpha = 1.0;
+      animFrameId = requestAnimationFrame(render);
+    };
+
+    render();
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animFrameId);
     };
   }, [theme]);
 
   return (
-    <div className="absolute inset-0 z-0 opacity-80 pointer-events-none mix-blend-multiply dark:mix-blend-screen overflow-hidden">
-      <canvas ref={canvasRef} className="block w-full h-full" />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-700 overflow-hidden"
+    />
   );
 }
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[92vh] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-[#f8fafc] dark:bg-[#05050a] transition-colors duration-300">
-      {/* Light Leaks & Ambient Gradient Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[45%] h-[45%] bg-gradient-to-br from-indigo-200/40 via-sky-200/30 to-transparent dark:from-purple-600/20 dark:via-purple-900/10 rounded-full blur-[130px] pointer-events-none z-0" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[35%] h-[35%] bg-gradient-to-tl from-sky-200/30 via-emerald-200/20 to-transparent dark:from-emerald-500/10 dark:via-emerald-900/10 rounded-full blur-[110px] pointer-events-none z-0" />
+    <section className="relative min-h-[92vh] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex flex-col items-center justify-center bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
+      {/* Dynamic Interactive 3D Particle Mesh Physics Canvas */}
+      <InteractiveParticleMeshCanvas />
 
-      {/* Vector Blueprint Grid Overlay */}
-      <div
-        className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #4f46e5 1px, transparent 1px), linear-gradient(to bottom, #4f46e5 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      {/* Central Masking Radial Vignette for High Text Contrast */}
+      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-[#f8fafc]/40 to-[#f8fafc] dark:via-[#080c14]/40 dark:to-[#080c14]" />
 
-      {/* WebGL Interactive Background Canvas */}
-      <WebGLShaderBackground />
-
-      {/* Floating Value Prop Glass Cards (4 Corner Orbiters) */}
+      {/* Floating Glassmorphic Value Prop Orbiters (4 Corner Cards) */}
       <div className="hidden xl:flex absolute top-[24%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg shadow-indigo-950/5 dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none animate-pulse">
         <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
           <BarChart3 className="w-5 h-5 text-indigo-600 dark:text-purple-300" />
@@ -364,7 +410,7 @@ export default function Hero() {
           success.
         </motion.p>
 
-        {/* Action CTAs */}
+        {/* Magnetic Interactive Action CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -373,21 +419,21 @@ export default function Hero() {
         >
           <Link
             href="/contact"
-            className="group inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[15px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[190px]"
+            className="group relative inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[15px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[190px]"
           >
-            <span>Get in Touch</span>
+            <span>Schedule Consultation</span>
             <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
 
           <Link
             href="/services"
-            className="inline-flex items-center justify-center px-8 py-4 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[15px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[180px]"
+            className="inline-flex items-center justify-center px-8 py-4 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[15px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[180px]"
           >
             Our Services
           </Link>
         </motion.div>
 
-        {/* Stats Counter Ribbon */}
+        {/* Stats Counter Ribbon Bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
