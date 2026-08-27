@@ -128,7 +128,7 @@ function FluidWarpGridCanvas() {
       mouse.x += (mouse.targetX - mouse.x) * 0.08;
       mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
-      // 1. Spotlight Radial Light Beam
+      // Spotlight Radial Light Beam
       if (mouse.active && mouse.x > 0 && mouse.y > 0) {
         const spotlight = ctx.createRadialGradient(
           mouse.x,
@@ -151,7 +151,7 @@ function FluidWarpGridCanvas() {
         ctx.fillRect(0, 0, width, height);
       }
 
-      // 2. Flowing Neon Horizon Wave Beams
+      // Flowing Neon Horizon Wave Beams
       const beamCount = 5;
       for (let b = 0; b < beamCount; b++) {
         ctx.beginPath();
@@ -196,7 +196,7 @@ function FluidWarpGridCanvas() {
         ctx.stroke();
       }
 
-      // 3. Fluid Warp Grid Lines
+      // Fluid Warp Grid Lines
       const gridSize = 65;
       const cols = Math.ceil(width / gridSize);
       const rows = Math.ceil(height / gridSize);
@@ -276,7 +276,7 @@ function FluidWarpGridCanvas() {
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-[90vh] lg:min-h-screen overflow-hidden flex flex-col justify-between pt-28 pb-20 md:pt-32 md:pb-24 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
+    <section className="relative w-full min-h-[85vh] overflow-hidden flex flex-col justify-between pt-8 sm:pt-12 pb-28 md:pb-32 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
       {/* Full-Bleed Canvas */}
       <FluidWarpGridCanvas />
 
@@ -284,7 +284,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-[#f8fafc]/40 to-[#f8fafc] dark:via-[#080c14]/40 dark:to-[#080c14]" />
 
       {/* Floating Glassmorphic Value Prop Orbiters */}
-      <div className="hidden xl:flex absolute top-[24%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="hidden xl:flex absolute top-[18%] left-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
           <BarChart3 className="w-5 h-5 text-indigo-600 dark:text-purple-300" />
         </div>
@@ -298,7 +298,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute bottom-[22%] left-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="hidden xl:flex absolute bottom-[26%] left-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200/80 dark:bg-emerald-500/10 dark:border-emerald-500/20 flex items-center justify-center">
           <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
         </div>
@@ -313,7 +313,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute top-[28%] right-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="hidden xl:flex absolute top-[22%] right-[6%] rounded-2xl p-4 items-center space-x-4 z-10 w-[240px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-sky-50 border border-sky-200/80 dark:bg-indigo-500/10 dark:border-indigo-500/20 flex items-center justify-center">
           <CloudCheck className="w-5 h-5 text-sky-600 dark:text-indigo-300" />
         </div>
@@ -327,7 +327,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden xl:flex absolute bottom-[24%] right-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="hidden xl:flex absolute bottom-[28%] right-[8%] rounded-2xl p-4 items-center space-x-4 z-10 w-[220px] border border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-lg dark:border-white/10 dark:bg-white/[0.03]">
         <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200/80 dark:bg-purple-500/10 dark:border-purple-500/20 flex items-center justify-center">
           <CheckCircle2 className="w-5 h-5 text-indigo-600 dark:text-purple-300" />
         </div>
@@ -349,31 +349,31 @@ export default function Hero() {
           hidden: {},
           show: {
             transition: {
-              staggerChildren: 0.12,
+              staggerChildren: 0.1,
             },
           },
         }}
         className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center my-auto"
       >
-        {/* 2. Official Connectify Brand Logo Centered Below Navbar */}
+        {/* 1. Official Connectify Brand Logo Centered Near Top */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, scale: 0.9, y: 20 },
+            hidden: { opacity: 0, scale: 0.9, y: 15 },
             show: { opacity: 1, scale: 1, y: 0 },
           }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
+          transition={{ duration: 0.5 }}
+          className="mt-2 sm:mt-4 mb-3 sm:mb-4"
         >
           <motion.div
-            animate={{ y: [0, -6, 0] }}
+            animate={{ y: [0, -5, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="group relative flex items-center justify-center rounded-2xl px-6 py-3.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_50px_rgba(99,102,241,0.22)] bg-white/80 border border-slate-200/90 dark:shadow-[0_0_60px_rgba(56,189,248,0.3)] dark:bg-slate-900/80 dark:border-cyan-500/20"
+            className="group relative flex items-center justify-center rounded-2xl px-5 py-2.5 sm:px-6 sm:py-3 backdrop-blur-xl transition-all duration-300 shadow-[0_0_50px_rgba(99,102,241,0.22)] bg-white/80 border border-slate-200/90 dark:shadow-[0_0_60px_rgba(56,189,248,0.3)] dark:bg-slate-900/80 dark:border-cyan-500/20"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/connectifylogo.png"
               alt="Connectify Brand Logo"
-              className="h-12 sm:h-14 w-auto transition-transform duration-300 group-hover:scale-105 dark:brightness-110 dark:invert-[0.1]"
+              className="h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105 dark:brightness-110 dark:invert-[0.1]"
             />
           </motion.div>
         </motion.div>
@@ -381,18 +381,18 @@ export default function Hero() {
         {/* Status Pill Badge */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: 16 },
+            hidden: { opacity: 0, y: 12 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
+          transition={{ duration: 0.4 }}
+          className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-4 sm:mb-5 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
           <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] font-extrabold">
+          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-extrabold">
             NEXT-GEN INFRASTRUCTURE &amp; AI
           </span>
         </motion.div>
@@ -400,11 +400,11 @@ export default function Hero() {
         {/* Headline */}
         <motion.h1
           variants={{
-            hidden: { opacity: 0, y: 20 },
+            hidden: { opacity: 0, y: 16 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.7 }}
-          className="font-display text-4xl sm:text-6xl md:text-[76px] lg:text-[84px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-950 dark:text-white mb-6"
+          transition={{ duration: 0.6 }}
+          className="font-display text-4xl sm:text-6xl md:text-[72px] lg:text-[80px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-950 dark:text-white mb-4 sm:mb-5"
         >
           <span className="font-semibold text-slate-950 dark:text-white/90">
             We are not just building Tech{" "}
@@ -422,11 +422,11 @@ export default function Hero() {
         {/* Subtitle */}
         <motion.p
           variants={{
-            hidden: { opacity: 0, y: 16 },
+            hidden: { opacity: 0, y: 12 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.7 }}
-          className="font-sans text-base sm:text-lg md:text-[20px] leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-10 font-medium tracking-wide"
+          transition={{ duration: 0.6 }}
+          className="font-sans text-base sm:text-lg md:text-[19px] leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-6 sm:mb-8 font-medium tracking-wide"
         >
           We partner with ambitious brands to build scalable digital products,
           robust infrastructure, and immersive experiences that drive tomorrow&apos;s
@@ -436,15 +436,15 @@ export default function Hero() {
         {/* CTAs */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: 16 },
+            hidden: { opacity: 0, y: 14 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto"
+          transition={{ duration: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 w-full sm:w-auto mb-8 sm:mb-10"
         >
           <Link
             href="/contact"
-            className="group relative inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[15px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[190px]"
+            className="group relative inline-flex items-center justify-center px-8 py-3.5 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[15px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[190px]"
           >
             <span>Schedule Consultation</span>
             <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -452,7 +452,7 @@ export default function Hero() {
 
           <Link
             href="/services"
-            className="inline-flex items-center justify-center px-8 py-4 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[15px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[180px]"
+            className="inline-flex items-center justify-center px-8 py-3.5 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[15px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[180px]"
           >
             Our Services
           </Link>
@@ -461,45 +461,45 @@ export default function Hero() {
         {/* Counter Ribbon */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: 20 },
+            hidden: { opacity: 0, y: 16 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.8 }}
-          className="mt-16 w-full rounded-3xl border border-slate-200/90 bg-white/90 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-none"
+          transition={{ duration: 0.7 }}
+          className="w-full rounded-3xl border border-slate-200/90 bg-white/90 p-5 sm:p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/80 dark:shadow-none"
         >
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div className="space-y-0.5">
+              <p className="font-mono text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
                 <CountUpNumber target={25} suffix="+" />
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Deployed Systems
               </p>
             </div>
 
-            <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
+            <div className="space-y-0.5">
+              <p className="font-mono text-2xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
                 <CountUpNumber target={99.99} decimals={2} suffix="%" />
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 SLA Uptime
               </p>
             </div>
 
-            <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
+            <div className="space-y-0.5">
+              <p className="font-mono text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
                 <CountUpNumber target={6} />
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Core Practices
               </p>
             </div>
 
-            <div className="space-y-1">
-              <p className="font-mono text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
+            <div className="space-y-0.5">
+              <p className="font-mono text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
                 Tier-1
               </p>
-              <p className="font-mono text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Enterprise Clients
               </p>
             </div>
