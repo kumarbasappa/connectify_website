@@ -55,7 +55,7 @@ export default function SelectedWork() {
     <section
       id="work"
       ref={rootRef}
-      className="relative bg-background py-24 lg:py-32 border-t border-black/10 dark:border-white/10 overflow-hidden"
+      className="relative bg-background py-24 lg:py-32 border-t border-slate-200/90 dark:border-white/10 overflow-hidden"
     >
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-12 relative z-10">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
@@ -95,7 +95,7 @@ export default function SelectedWork() {
                 >
                   <Link
                     href={`/case-studies/${project.slug}`}
-                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md transition-all duration-500 ease-out hover:-translate-y-2 hover:border-indigo-500/60 hover:shadow-2xl dark:border-white/10 dark:bg-slate-900/90"
+                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-indigo-500/60 hover:shadow-2xl dark:border-white/10 dark:bg-slate-900/90 dark:hover:border-cyan-500/60 dark:hover:shadow-[0_0_30px_rgba(56,189,248,0.15)]"
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                       {/* eslint-disable-next-line @next/next/no-img-element */}

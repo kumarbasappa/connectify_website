@@ -61,9 +61,9 @@ export default function Navbar() {
         }}
         animate={hidden && !mobileMenuOpen ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed bottom-6 inset-x-0 mx-auto w-fit max-w-[92vw] sm:max-w-2xl z-50 flex items-center justify-between gap-3 px-4 py-2.5 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-2xl shadow-slate-950/15 transition-colors duration-300"
+        className="fixed bottom-6 inset-x-0 mx-auto w-fit max-w-[92vw] sm:max-w-2xl z-50 flex items-center justify-between gap-3 px-4 py-2 rounded-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 shadow-2xl shadow-slate-950/15 transition-colors duration-300"
       >
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links with Framer Motion layoutId Active Pill */}
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => {
             const isActive =
@@ -73,16 +73,20 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className={`relative rounded-full px-3.5 py-1.5 font-display text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                className={`relative rounded-full px-3.5 py-1.5 font-display text-xs sm:text-sm font-semibold transition-colors duration-200 ${
                   isActive
-                    ? "bg-indigo-50 text-indigo-600 dark:bg-white/15 dark:text-white"
-                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white"
+                    ? "text-indigo-600 dark:text-white"
+                    : "text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
                 }`}
               >
-                {link.label}
                 {isActive && (
-                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-indigo-600 dark:bg-cyan-400" />
+                  <motion.span
+                    layoutId="activeDockIndicator"
+                    className="absolute inset-0 rounded-full bg-indigo-100/80 dark:bg-white/15"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
                 )}
+                <span className="relative z-10">{link.label}</span>
               </Link>
             );
           })}

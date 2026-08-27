@@ -12,7 +12,7 @@ export default function ProcessTimeline() {
     <Activity key="1" className="w-5 h-5 text-indigo-500" />,
     <GitBranch key="2" className="w-5 h-5 text-purple-500" />,
     <Layers key="3" className="w-5 h-5 text-sky-500" />,
-    <Rocket key="4" className="w-5 h-5 text-emerald-500" />,
+    <Rocket key="4" className="w-5 h-5 text-amber-500" />,
   ];
 
   return (
@@ -31,8 +31,20 @@ export default function ProcessTimeline() {
           </p>
         </div>
 
+        {/* Dynamic Connecting Stepper Line for Desktop */}
+        <div className="relative mt-12 hidden lg:block px-8">
+          <div className="absolute top-1/2 left-16 right-16 h-1.5 -translate-y-1/2 bg-slate-200/80 dark:bg-slate-800/80 rounded-full overflow-hidden z-0">
+            <motion.div
+              className="h-full bg-gradient-to-r from-indigo-600 via-sky-500 to-amber-400"
+              initial={{ width: "0%" }}
+              animate={{ width: `${(activeStep / (processSteps.length - 1)) * 100}%` }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            />
+          </div>
+        </div>
+
         {/* Animated Sequential Process Workflow Tabs */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-4 relative z-10">
           {processSteps.map((step, idx) => {
             const isActive = idx === activeStep;
             return (
@@ -43,7 +55,7 @@ export default function ProcessTimeline() {
                 className={`relative flex flex-col justify-between rounded-2xl border p-6 text-left transition-all duration-300 ease-in-out ${
                   isActive
                     ? "border-brand bg-white shadow-xl scale-[1.02] dark:border-amber-400 dark:bg-slate-900/90 dark:shadow-[0_0_25px_rgba(245,158,11,0.25)]"
-                    : "border-slate-200 bg-white hover:border-brand/60 dark:border-white/10 dark:bg-slate-900/60 dark:hover:border-amber-400/60"
+                    : "border-slate-200 bg-white/90 hover:border-brand/60 dark:border-white/10 dark:bg-slate-900/60 dark:hover:border-amber-400/60"
                 }`}
               >
                 <div>
