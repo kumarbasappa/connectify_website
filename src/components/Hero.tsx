@@ -10,6 +10,8 @@ import {
   CloudCheck,
   CheckCircle2,
   Sparkles,
+  Layers,
+  Cpu,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
@@ -55,8 +57,8 @@ function CountUpNumber({
   );
 }
 
-// Full-Bleed Edge-to-Edge 3D Particle Mesh Physics Canvas
-function InteractiveParticleMeshCanvas() {
+// Fluid Flowing Light Beams & Warp Grid Canvas Component
+function FluidWarpGridCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
   const mouseRef = useRef({
@@ -111,7 +113,6 @@ function InteractiveParticleMeshCanvas() {
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
-      initParticles();
     };
 
     window.addEventListener("resize", handleResize);
@@ -119,166 +120,138 @@ function InteractiveParticleMeshCanvas() {
     const isDark =
       theme === "dark" || document.documentElement.classList.contains("dark");
 
-    type Particle = {
-      baseX: number;
-      baseY: number;
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      phase: number;
-      color: string;
-    };
-
-    const lightParticleColors = ["#4338ca", "#0284c7", "#6366f1", "#0284c7"];
-    const darkParticleColors = ["#38bdf8", "#c084fc", "#06b6d4", "#a855f7"];
-    const particlePalette = isDark ? darkParticleColors : lightParticleColors;
-
-    let particles: Particle[] = [];
-
-    const initParticles = () => {
-      particles = [];
-      const colSpacing = 48;
-      const rowSpacing = 48;
-      const cols = Math.floor(width / colSpacing);
-      const rows = Math.floor(height / rowSpacing);
-
-      for (let r = 0; r <= rows; r++) {
-        for (let c = 0; c <= cols; c++) {
-          const bx = (width / cols) * c + (Math.random() - 0.5) * 16;
-          const by = (height / rows) * r + (Math.random() - 0.5) * 16;
-          const color =
-            particlePalette[Math.floor(Math.random() * particlePalette.length)];
-
-          particles.push({
-            baseX: bx,
-            baseY: by,
-            x: bx,
-            y: by,
-            vx: 0,
-            vy: 0,
-            radius: Math.random() * 2.2 + 1.6,
-            phase: Math.random() * Math.PI * 2,
-            color: color,
-          });
-        }
-      }
-    };
-
-    initParticles();
     let time = 0;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-      time += 0.02;
+      time += 0.015;
 
-      // Lerp mouse tracking with spring damping
+      // Smooth Lerp Mouse Tracking
       const mouse = mouseRef.current;
-      mouse.x += (mouse.targetX - mouse.x) * 0.1;
-      mouse.y += (mouse.targetY - mouse.y) * 0.1;
+      mouse.x += (mouse.targetX - mouse.x) * 0.08;
+      mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
-      // 1. Full-Bleed Dynamic Radial Spotlight following Cursor
-      if (mouse.x > 0 && mouse.y > 0) {
+      // 1. Dynamic Mouse Spotlight Light Beam
+      if (mouse.active && mouse.x > 0 && mouse.y > 0) {
         const spotlight = ctx.createRadialGradient(
           mouse.x,
           mouse.y,
           0,
           mouse.x,
           mouse.y,
-          380
+          360
         );
         if (isDark) {
-          spotlight.addColorStop(0, "rgba(56, 189, 248, 0.2)");
-          spotlight.addColorStop(0.5, "rgba(192, 132, 252, 0.1)");
+          spotlight.addColorStop(0, "rgba(56, 189, 248, 0.22)");
+          spotlight.addColorStop(0.4, "rgba(168, 85, 247, 0.12)");
           spotlight.addColorStop(1, "rgba(8, 12, 20, 0)");
         } else {
-          spotlight.addColorStop(0, "rgba(99, 102, 241, 0.12)");
-          spotlight.addColorStop(0.5, "rgba(2, 132, 199, 0.06)");
+          spotlight.addColorStop(0, "rgba(67, 56, 202, 0.15)");
+          spotlight.addColorStop(0.4, "rgba(2, 132, 199, 0.08)");
           spotlight.addColorStop(1, "rgba(248, 250, 252, 0)");
         }
         ctx.fillStyle = spotlight;
         ctx.fillRect(0, 0, width, height);
       }
 
-      // 2. Full-Bleed Physics & Particle Simulation Loop
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-
-        // Organic sinusoidal wave oscillation
-        const waveX = Math.sin(time + p.phase) * 6;
-        const waveY = Math.cos(time * 0.8 + p.phase) * 6;
-        const targetX = p.baseX + waveX;
-        const targetY = p.baseY + waveY;
-
-        // Mouse Repulsion & Spring Distortion Physics
-        if (mouse.active) {
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 200;
-
-          if (dist < maxDist) {
-            const force = (1 - dist / maxDist) * 38;
-            const angle = Math.atan2(dy, dx);
-            p.vx -= Math.cos(angle) * force * 0.12;
-            p.vy -= Math.sin(angle) * force * 0.12;
-
-            // Draw magnetic cursor connector lines
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = isDark
-              ? "rgba(56, 189, 248, 0.35)"
-              : "rgba(67, 56, 202, 0.28)";
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-
-        // Spring return to wave equilibrium
-        p.vx += (targetX - p.x) * 0.04;
-        p.vy += (targetY - p.y) * 0.04;
-        p.vx *= 0.88; // Damping
-        p.vy *= 0.88;
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        // Draw particle node
+      // 2. Flowing Neon Horizon Wave Beams
+      const beamCount = 5;
+      for (let b = 0; b < beamCount; b++) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = isDark ? 0.9 : 0.85;
-        if (isDark) {
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = p.color;
-        }
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        const beamYOffset = (height / (beamCount + 1)) * (b + 1);
+        const waveFreq = 0.003 + b * 0.001;
+        const waveAmp = 35 + b * 10;
+        const speed = time * (1 + b * 0.3);
 
-        // Inter-particle connective vectors
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const pdx = p.x - p2.x;
-          const pdy = p.y - p2.y;
-          const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
+        ctx.moveTo(0, beamYOffset);
+        for (let x = 0; x <= width; x += 15) {
+          let y =
+            beamYOffset +
+            Math.sin(x * waveFreq + speed) * waveAmp +
+            Math.cos(x * 0.002 - speed * 0.5) * 15;
 
-          if (pdist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = isDark
-              ? "rgba(56, 189, 248, 0.3)"
-              : "rgba(67, 56, 202, 0.22)";
-            ctx.globalAlpha = (1 - pdist / 130) * (isDark ? 0.3 : 0.22);
-            ctx.lineWidth = 0.9;
-            ctx.stroke();
+          // Mouse warp bending on wave lines
+          if (mouse.active) {
+            const dx = x - mouse.x;
+            const dy = y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 180) {
+              const bend = (1 - dist / 180) * 40;
+              y += dy > 0 ? bend : -bend;
+            }
           }
+
+          ctx.lineTo(x, y);
         }
+
+        const gradient = ctx.createLinearGradient(0, 0, width, 0);
+        if (isDark) {
+          gradient.addColorStop(0, "rgba(56, 189, 248, 0.05)");
+          gradient.addColorStop(0.5, "rgba(168, 85, 247, 0.35)");
+          gradient.addColorStop(1, "rgba(56, 189, 248, 0.05)");
+        } else {
+          gradient.addColorStop(0, "rgba(67, 56, 202, 0.05)");
+          gradient.addColorStop(0.5, "rgba(2, 132, 199, 0.28)");
+          gradient.addColorStop(1, "rgba(67, 56, 202, 0.05)");
+        }
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
       }
 
-      ctx.globalAlpha = 1.0;
+      // 3. Fluid Warp Grid Lines (Horizontal & Vertical)
+      const gridSize = 65;
+      const cols = Math.ceil(width / gridSize);
+      const rows = Math.ceil(height / gridSize);
+
+      ctx.strokeStyle = isDark
+        ? "rgba(56, 189, 248, 0.07)"
+        : "rgba(67, 56, 202, 0.08)";
+      ctx.lineWidth = 1;
+
+      // Vertical Grid Lines with Wave Distortion
+      for (let c = 0; c <= cols; c++) {
+        const baseX = c * gridSize;
+        ctx.beginPath();
+        for (let y = 0; y <= height; y += 20) {
+          let x = baseX + Math.sin(y * 0.005 + time) * 6;
+          if (mouse.active) {
+            const dx = x - mouse.x;
+            const dy = y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 160) {
+              const push = (1 - dist / 160) * 30;
+              x += dx > 0 ? push : -push;
+            }
+          }
+          if (y === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      // Horizontal Grid Lines
+      for (let r = 0; r <= rows; r++) {
+        const baseY = r * gridSize;
+        ctx.beginPath();
+        for (let x = 0; x <= width; x += 20) {
+          let y = baseY + Math.cos(x * 0.005 + time * 0.8) * 6;
+          if (mouse.active) {
+            const dx = x - mouse.x;
+            const dy = y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 160) {
+              const push = (1 - dist / 160) * 30;
+              y += dy > 0 ? push : -push;
+            }
+          }
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
       animFrameId = requestAnimationFrame(render);
     };
 
@@ -309,11 +282,11 @@ function InteractiveParticleMeshCanvas() {
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-[90vh] lg:min-h-screen overflow-hidden flex flex-col justify-between pt-32 pb-20 md:pt-40 md:pb-24 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
-      {/* Full-Bleed Edge-to-Edge 3D Particle Mesh Physics Canvas */}
-      <InteractiveParticleMeshCanvas />
+    <section className="relative w-full min-h-[90vh] lg:min-h-screen overflow-hidden flex flex-col justify-between pt-28 pb-20 md:pt-36 md:pb-24 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300">
+      {/* Full-Bleed Fluid Flowing Light Beams & Warp Grid Canvas */}
+      <FluidWarpGridCanvas />
 
-      {/* Central Masking Radial Vignette for High Text Contrast */}
+      {/* Central Masking Vignette Gradient Overlay */}
       <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-[#f8fafc]/40 to-[#f8fafc] dark:via-[#080c14]/40 dark:to-[#080c14]" />
 
       {/* Floating Glassmorphic Value Prop Orbiters (4 Corner Cards) */}
@@ -375,11 +348,60 @@ export default function Hero() {
       </div>
 
       {/* Main Hero Content Container */}
-      <div className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center my-auto">
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={{
+          hidden: {},
+          show: {
+            transition: {
+              staggerChildren: 0.12,
+            },
+          },
+        }}
+        className="relative z-20 w-full max-w-[1050px] mx-auto px-6 flex flex-col items-center text-center my-auto"
+      >
+        {/* 2. Centered Prominent Connectify Core Brand Emblem with Continuous Glow Effect */}
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, scale: 0.8, y: 15 },
+            show: { opacity: 1, scale: 1, y: 0 },
+          }}
+          transition={{ duration: 0.6 }}
+          className="relative mb-6"
+        >
+          <motion.div
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="group relative flex h-16 w-16 items-center justify-center rounded-2xl border border-indigo-200/80 bg-white/90 p-3.5 shadow-[0_0_40px_rgba(99,102,241,0.25)] backdrop-blur-xl dark:border-cyan-500/30 dark:bg-slate-900/90 dark:shadow-[0_0_50px_rgba(56,189,248,0.35)]"
+          >
+            {/* Pulsing Aura Halo */}
+            <span className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-purple-500 opacity-30 blur-md transition-opacity group-hover:opacity-75 animate-pulse" />
+
+            <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 via-sky-500 to-indigo-700 text-white shadow-inner">
+              <svg
+                className="h-8 w-8 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+
         {/* Status Pill Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
+          variants={{
+            hidden: { opacity: 0, y: 16 },
+            show: { opacity: 1, y: 0 },
+          }}
           transition={{ duration: 0.5 }}
           className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-8 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
         >
@@ -393,11 +415,13 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Dynamic Display Headline */}
+        {/* Dynamic Kinetic Headline with Continuous Shimmer Effect */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            show: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 0.7 }}
           className="font-display text-4xl sm:text-6xl md:text-[76px] lg:text-[84px] md:leading-[1.05] md:tracking-[-0.04em] font-extrabold text-slate-950 dark:text-white mb-8"
         >
           <span className="font-semibold text-slate-950 dark:text-white/90">
@@ -408,16 +432,18 @@ export default function Hero() {
           <span className="font-extrabold text-slate-950 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-white/60">
             We are building{" "}
           </span>
-          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 to-violet-600 dark:from-[#d2bbff] dark:to-[#b68cff] drop-shadow-[0_0_25px_rgba(79,70,229,0.25)] dark:drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
+          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 via-purple-600 to-indigo-600 animate-gradient-x bg-[length:200%_auto] dark:from-[#d2bbff] dark:via-[#93c5fd] dark:to-[#b68cff] drop-shadow-[0_0_25px_rgba(79,70,229,0.25)] dark:drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
             Future.
           </span>
         </motion.h1>
 
         {/* Subtitle Copy */}
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          variants={{
+            hidden: { opacity: 0, y: 16 },
+            show: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 0.7 }}
           className="font-sans text-base sm:text-lg md:text-[20px] leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-10 font-medium tracking-wide"
         >
           We partner with ambitious brands to build scalable digital products,
@@ -427,9 +453,11 @@ export default function Hero() {
 
         {/* Magnetic Interactive Action CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          variants={{
+            hidden: { opacity: 0, y: 16 },
+            show: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 0.7 }}
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto"
         >
           <Link
@@ -450,9 +478,11 @@ export default function Hero() {
 
         {/* Stats Counter Ribbon Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            show: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 0.8 }}
           className="mt-16 w-full rounded-3xl border border-slate-200/90 bg-white/90 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-none"
         >
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
@@ -493,7 +523,7 @@ export default function Hero() {
             </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
