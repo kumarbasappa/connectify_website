@@ -364,79 +364,22 @@ export default function Hero() {
           </span>
           <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-extrabold">
-            NEXT-GEN INFRASTRUCTURE &amp; AI
+            ENTERPRISE SOFTWARE &amp; AI ENGINEERING
           </span>
         </motion.div>
 
-        {/* Scaled Responsive Headline with Word-Level Reveal Stagger */}
+        {/* Scaled Responsive Headline */}
         <motion.h1
           variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: 0.05, delayChildren: 0.1 },
-            },
+            hidden: { opacity: 0, y: 12 },
+            show: { opacity: 1, y: 0 },
           }}
-          className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[66px] md:leading-[1.08] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-4 flex flex-wrap justify-center items-center gap-x-3 gap-y-1"
+          transition={{ duration: 0.5 }}
+          className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[62px] md:leading-[1.1] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-4 max-w-4xl"
         >
-          <span className="inline-flex flex-wrap justify-center gap-x-2.5 text-slate-950 dark:text-white/90 font-semibold">
-            {line1Words.map((word, idx) => (
-              <motion.span
-                key={`l1-${idx}`}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  show: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
-            <motion.span
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="text-slate-400 dark:text-white/40 font-light inline-block"
-            >
-              —
-            </motion.span>
-          </span>
-
-          <span className="w-full h-0 basis-full" />
-
-          <span className="inline-flex flex-wrap justify-center gap-x-2.5 text-slate-950 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-white/60 font-extrabold">
-            {line2Words.map((word, idx) => (
-              <motion.span
-                key={`l2-${idx}`}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  show: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </span>
-
-          <span className="inline-flex flex-wrap justify-center gap-x-2.5 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 via-purple-600 to-indigo-600 animate-gradient-x bg-[length:200%_auto] dark:from-[#d2bbff] dark:via-[#93c5fd] dark:to-[#b68cff] drop-shadow-[0_0_20px_rgba(79,70,229,0.22)] dark:drop-shadow-[0_0_25px_rgba(124,58,237,0.3)]">
-            {line3Words.map((word, idx) => (
-              <motion.span
-                key={`l3-${idx}`}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  show: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
+          We engineer scalable digital products,{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 to-purple-600 dark:from-indigo-400 dark:via-cyan-300 dark:to-purple-300">
+            cloud platforms &amp; AI solutions.
           </span>
         </motion.h1>
 
@@ -447,11 +390,9 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5 }}
-          className="font-sans text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-white/60 max-w-2xl mx-auto mb-7 md:mb-8 font-medium tracking-wide"
+          className="font-sans text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-white/70 max-w-2xl mx-auto mb-7 md:mb-8 font-medium tracking-wide"
         >
-          We partner with ambitious brands to build scalable digital products,
-          robust infrastructure, and immersive experiences that drive tomorrow&apos;s
-          success.
+          Connectify helps ambitious brands and growing enterprises build high-performance web applications, robust cloud architecture, and production-ready AI tools.
         </motion.p>
 
         {/* CTAs */}
@@ -465,17 +406,17 @@ export default function Hero() {
         >
           <Link
             href="/contact"
-            className="group relative inline-flex items-center justify-center px-7 py-3 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
+            className="group relative inline-flex items-center justify-center px-7 py-3.5 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
           >
-            <span>Schedule Consultation</span>
+            <span>Start a Project</span>
             <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
 
           <Link
-            href="/services"
-            className="inline-flex items-center justify-center px-7 py-3 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[170px]"
+            href="/case-studies"
+            className="inline-flex items-center justify-center px-7 py-3.5 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[170px]"
           >
-            Our Services
+            Explore Our Work
           </Link>
         </motion.div>
 

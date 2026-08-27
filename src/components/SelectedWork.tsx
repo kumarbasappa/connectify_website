@@ -13,14 +13,14 @@ gsap.registerPlugin(ScrollTrigger);
 // Select top 6 showcase projects from real data
 const featuredProjects = projects.slice(0, 6);
 
-// High-contrast live system metric chips
+// Authentic domain badges for showcased projects
 const projectMetricsMap: Record<string, string> = {
-  "karnataka-statewide-survey-platform": "6.8M Citizens Onboarded • 100% Uptime",
-  "taurus-career-ai": "500k Active AI Chats • <45ms Response",
-  "flycure-health": "HIPAA Certified • 99.99% Cloud SLA",
-  "cloud-kitchen-pos": "100+ Kitchens Synced • <100ms Sync",
-  "contractor-loyalty-app": "50k+ Active Contractors • Tier-1 Rewards",
-  "trackway": "Real-Time Telemetry • <15ms Latency",
+  "karnataka-statewide-survey-platform": "Statewide Public Infrastructure",
+  "taurus-career-ai": "Conversational AI Platform",
+  "flycure-health": "Cross-Border HealthTech Platform",
+  "cloud-kitchen-pos": "Multi-Location POS Architecture",
+  "contractor-loyalty-app": "Contractor Rewards Platform",
+  "trackway": "Real-Time Fleet Telemetry",
 };
 
 export default function SelectedWork() {

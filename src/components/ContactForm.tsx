@@ -137,20 +137,20 @@ export default function ContactForm() {
             type="text"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            placeholder="Acme Enterprise"
-            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
+            placeholder="Acme Inc."
+            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
           />
         </div>
 
         <div>
           <label htmlFor="contact-service" className="block text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
-            Primary Area of Interest
+            Project Requirement
           </label>
           <select
             id="contact-service"
             value={formData.service}
             onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-slate-900 dark:text-white"
+            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-xs focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:border-white/15 dark:bg-slate-900 dark:text-white"
           >
             {serviceOptions.map((opt) => (
               <option key={opt} value={opt} className="bg-white text-slate-900 dark:bg-slate-900 dark:text-white">
@@ -163,35 +163,35 @@ export default function ContactForm() {
 
       <div>
         <label htmlFor="contact-message" className="block text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
-          Project Brief / Message <span className="text-brand">*</span>
+          Project Requirement Details <span className="text-indigo-600 dark:text-indigo-400">*</span>
         </label>
         <textarea
           id="contact-message"
-          rows={5}
+          rows={4}
           required
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           placeholder="Tell us about your objectives, timeline, or architecture requirements..."
-          className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
+          className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
         />
       </div>
 
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="group flex w-full items-center justify-center gap-3 rounded-full btn-glow py-4 text-center font-inter text-sm font-semibold disabled:opacity-50"
+        className="group flex w-full items-center justify-center gap-3 rounded-full bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 py-4 text-center font-sans text-sm font-bold transition-all duration-300 hover:scale-[1.01] disabled:opacity-50 shadow-md"
       >
         {status === "submitting" ? (
           <span className="flex items-center gap-2">
-            <svg className="h-4 w-4 animate-spin text-brand" viewBox="0 0 24 24" fill="none">
+            <svg className="h-4 w-4 animate-spin text-white dark:text-slate-950" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
             </svg>
-            Sending Enquiry...
+            Processing Request...
           </span>
         ) : (
           <>
-            Submit Business Brief
+            Start a Project
             <svg
               className="h-4 w-4 transition-transform group-hover:translate-x-1"
               fill="none"

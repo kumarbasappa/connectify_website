@@ -10,77 +10,114 @@ export type ProcessStep = {
 export const processSteps: ProcessStep[] = [
   {
     stepNumber: "01",
-    title: "Consultation & Discovery",
-    subtitle: "Understanding your vision, business drivers, and technical requirements",
+    title: "Discover",
+    subtitle: "Understanding project goals, requirements, and technical scope",
     description:
-      "We begin every engagement with deep-dive technical and strategic discovery. We audit existing systems, map user journeys, define core business objectives, and align stakeholders on measurable outcomes.",
+      "We audit existing systems, understand business goals, define technical scope, and map user requirements to align on clear project deliverables.",
     activities: [
-      "Architecture & Technical Debt Audit",
-      "Business Model & Unit Economics Alignment",
-      "User Persona & Workflow Mapping",
-      "Security & Compliance Requirements Assessment"
+      "Technical & Business Requirements Audit",
+      "User Journey & Scope Mapping",
+      "Security & Compliance Checklist"
     ],
     deliverables: [
-      "Technical Discovery Report",
-      "System Requirements Specification (SRS)",
-      "High-level Architecture Blueprint"
+      "Technical Discovery Summary",
+      "Scope & Requirements Architecture Blueprint"
     ]
   },
   {
     stepNumber: "02",
-    title: "Strategy & UX/UI Design",
-    subtitle: "Engineering intuitive interfaces backed by scalable architecture",
+    title: "Plan",
+    subtitle: "Structuring technology stack, sprint roadmaps, and milestones",
     description:
-      "Our team designs the complete solution from low-fidelity user flows to pixel-perfect interactive prototypes and production-ready component design systems. Simultaneously, backend architects design data models and API contracts.",
+      "We select optimal technologies, design system architecture, create data schemas, and lay out an agile sprint roadmap with clear milestones.",
     activities: [
-      "Interactive Wireframing & Prototyping",
-      "Design System & Token Curation",
-      "Database Schema & API Interface Contract Design",
-      "Sprint Roadmap & Milestones Planning"
+      "Technology Stack & Cloud Architecture Selection",
+      "Database & API Schema Structuring",
+      "Sprint Roadmap & Milestone Scheduling"
     ],
     deliverables: [
-      "Production-ready Figma Design System",
-      "Interactive Product Prototype",
-      "API Specification & Database Schemas",
-      "Agile Project Plan & Milestone Matrix"
+      "System Architecture Specification",
+      "Agile Milestone Schedule"
     ]
   },
   {
     stepNumber: "03",
-    title: "Agile Implementation",
-    subtitle: "Building resilient codebases with continuous delivery and automated testing",
+    title: "Design",
+    subtitle: "Crafting intuitive visual interfaces and design systems",
     description:
-      "We build using bi-weekly agile sprints with continuous integration, automated unit testing, and regular demonstration milestones. Our engineering adheres strictly to clean code practices, security hardening, and performance optimizations.",
+      "Our team designs user-centric wireframes, UI design tokens, component libraries, and interactive prototypes tailored to your brand identity.",
     activities: [
-      "Bi-weekly Agile Development Sprints",
-      "Automated CI/CD Pipeline Integration",
-      "Real-time Client Demo Sessions",
-      "End-to-End Automated Testing & Security Code Reviews"
+      "Interactive Wireframing & UX Flow",
+      "Design System & UI Component Curation",
+      "Clickable Product Prototypes"
     ],
     deliverables: [
-      "Staging Environment Access",
-      "Clean, Documented Code Repository",
-      "Automated Test Coverage Suite",
-      "Sprint Progress Reports"
+      "Figma UI Design System",
+      "Interactive Prototype"
     ]
   },
   {
     stepNumber: "04",
-    title: "Deployment & Scaling",
-    subtitle: "Seamless production launch with proactive monitoring and long-term support",
+    title: "Develop",
+    subtitle: "Engineering clean, scalable, and modular software codebases",
     description:
-      "We manage zero-downtime production launches, setup real-time monitoring and alerting, conduct load testing under stress conditions, and provide continuous SRE support to ensure ongoing platform performance and growth.",
+      "We build full-stack web applications, mobile apps, and cloud backend microservices using modern, strongly typed frameworks.",
     activities: [
-      "Zero-downtime Production Deployment",
-      "Load & Penetration Stress Testing",
-      "24/7 Monitoring & Alerting Setup (Grafana/Datadog)",
-      "Team Handover & Operations Documentation"
+      "Bi-weekly Agile Development Sprints",
+      "Full-stack & API Integration",
+      "Clean Code Reviews & Refactoring"
     ],
     deliverables: [
-      "Live Production System Deployment",
-      "SLA & Maintenance Operations Manual",
-      "System Performance & Security Audit Clearances",
-      "Ongoing Post-launch Support Plan"
+      "Staging Codebase Repository",
+      "Documented API Contracts"
+    ]
+  },
+  {
+    stepNumber: "05",
+    title: "Test",
+    subtitle: "Rigorous quality assurance, automated tests, and performance reviews",
+    description:
+      "We perform automated unit testing, integration checks, cross-device QA, security vulnerability scans, and performance optimizations.",
+    activities: [
+      "Automated End-to-End & Unit Testing",
+      "Cross-Browser & Mobile Device Testing",
+      "Security Audit & Performance Tuning"
+    ],
+    deliverables: [
+      "QA & Automated Test Report",
+      "Security & Performance Clearances"
+    ]
+  },
+  {
+    stepNumber: "06",
+    title: "Deploy",
+    subtitle: "Seamless production launch and cloud environment setup",
+    description:
+      "We manage zero-downtime production deployment, configure cloud infrastructure, set up SSL/DNS, and enable automated CI/CD pipelines.",
+    activities: [
+      "Production Cloud Environment Configuration",
+      "Zero-downtime Release Deployment",
+      "CI/CD Pipeline Activation"
+    ],
+    deliverables: [
+      "Live Production Platform",
+      "Deployment & Infrastructure Runbook"
+    ]
+  },
+  {
+    stepNumber: "07",
+    title: "Support",
+    subtitle: "Continuous monitoring, platform maintenance, and ongoing updates",
+    description:
+      "Post-launch, we provide 24/7 monitoring, security updates, feature enhancements, and proactive SRE support to keep your software running smoothly.",
+    activities: [
+      "24/7 System Monitoring & Alerting",
+      "Security Patching & Framework Updates",
+      "Iterative Feature Enhancements"
+    ],
+    deliverables: [
+      "System Health Dashboards",
+      "Ongoing Technical Support SLA"
     ]
   }
 ];

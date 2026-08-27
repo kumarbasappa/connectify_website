@@ -116,7 +116,7 @@ export default function WhyConnectify() {
                     Enterprise Security &amp; Scale
                   </h3>
                   <p className="mt-3 font-sans text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                    Zero-trust security architectures, sub-15ms latencies, and multi-region failovers built to handle real-world peak loads for banks and state platforms.
+                    Zero-trust security architecture, low-latency response times, and multi-region failover designed to handle production demand with stability.
                   </p>
                 </div>
 
@@ -126,7 +126,7 @@ export default function WhyConnectify() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
                   </span>
-                  <span className="text-emerald-900 dark:text-emerald-400 font-extrabold">99.998% Uptime SLA</span> • Active Incident Response &lt; 5 mins
+                  <span className="text-emerald-900 dark:text-emerald-400 font-extrabold">High-Availability SLA Target</span> • 24/7 Monitoring Coverage
                 </div>
               </div>
             </BorderGlow>
@@ -156,16 +156,16 @@ export default function WhyConnectify() {
                     03 / VELOCITY
                   </span>
                   <h3 className="mt-4 font-display text-xl font-bold text-slate-950 dark:text-white">
-                    Product Thinking &amp; UX
+                    Product Design &amp; UX
                   </h3>
                   <p className="mt-3 font-sans text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                    Engineering, modern visual design, and product strategy work together seamlessly, eliminating handoff friction and accelerating shipping velocity.
+                    Engineering, modern UI design, and product strategy work together seamlessly, eliminating handoff friction and accelerating delivery.
                   </p>
                 </div>
 
                 <div className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs font-extrabold text-indigo-600 dark:text-cyan-400">
                   <Zap className="w-3.5 h-3.5 text-amber-500" />
-                  <span>3x Faster Time-to-Market →</span>
+                  <span>Streamlined Product Delivery →</span>
                 </div>
               </div>
             </BorderGlow>

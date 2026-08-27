@@ -22,7 +22,7 @@ export default function AboutValue() {
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-cyan-400 mb-6">
               <Sparkles className="w-3.5 h-3.5" />
-              ENTERPRISE FOUNDATION
+              ENGINEERING EXCELLENCE
             </div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 mb-3">
               01 / ENGINEERING PHILOSOPHY
@@ -45,8 +45,8 @@ export default function AboutValue() {
             className="space-y-6 lg:col-span-6"
           >
             <p className="font-sans text-base font-medium leading-relaxed text-slate-600 sm:text-lg dark:text-slate-300">
-              Connectify operates at the intersection of business strategy and deep software engineering.
-              Whether architecting statewide public infrastructure or launching high-frequency financial ledgers, we deliver software that remains stable, secure, and maintainable over years of production load.
+              Connectify operates at the intersection of product design, business strategy, and deep software engineering.
+              From modern web applications to cloud platform deployments, we deliver clean software that scales seamlessly under production load.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -57,7 +57,7 @@ export default function AboutValue() {
                     <Cpu className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
                   </div>
                 </div>
-                <h3 className="mt-3 font-display text-lg font-bold text-slate-950 dark:text-white">Battle-Tested Code</h3>
+                <h3 className="mt-3 font-display text-lg font-bold text-slate-950 dark:text-white">Production-Grade Code</h3>
                 <p className="mt-1.5 font-sans text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300">Cloud-native microservices, zero-trust security controls, and sub-second latency.</p>
               </div>
 

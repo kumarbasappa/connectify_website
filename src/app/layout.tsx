@@ -9,26 +9,51 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import PageTransitionWrapper from "@/components/PageTransitionWrapper";
 
 export const metadata: Metadata = {
-  title: "Connectify — Digital Transformation • Product Engineering • AI",
+  title: "Connectify — Software Engineering, Cloud Platforms & AI Solutions",
   description:
-    "Connectify designs, engineers, and scales enterprise-grade digital platforms, SaaS products, and AI intelligence for corporations, governments, and market leaders.",
+    "Connectify is a software engineering agency. We build high-performance web applications, robust cloud architecture, and production-ready AI tools for growing enterprises.",
   keywords: [
-    "Digital Transformation",
-    "Product Engineering",
+    "Software Engineering",
+    "Product Design",
     "Enterprise Software",
     "Cloud Architecture",
-    "Fintech",
-    "Healthtech",
-    "AI Agents",
+    "Web Development",
+    "Mobile App Development",
+    "Artificial Intelligence",
     "Connectify"
   ],
   authors: [{ name: "Connectify Global" }],
   openGraph: {
-    title: "Connectify — Strategic Technology & Advisory Partner",
-    description: "We build digital products that move businesses forward.",
+    title: "Connectify — Software Engineering, Cloud Platforms & AI Solutions",
+    description: "We engineer scalable digital products, cloud platforms & AI solutions.",
     url: "https://connectify.global",
     siteName: "Connectify",
     type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Connectify — Software Engineering & AI Solutions",
+    description: "We engineer scalable digital products, cloud platforms & AI solutions."
+  }
+};
+
+const jsonLdSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Connectify",
+  "url": "https://connectify.global",
+  "logo": "https://connectify.global/connectifylogo-purple.png",
+  "description": "Connectify is a software engineering agency building scalable digital products, cloud architecture, and AI solutions.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bengaluru",
+    "addressRegion": "Karnataka",
+    "addressCountry": "India"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "business@connectify.global",
+    "contactType": "customer service"
   }
 };
 
@@ -45,6 +70,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `

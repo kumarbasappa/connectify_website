@@ -35,10 +35,10 @@ export default function ProcessTimeline() {
             04 / PROCESS ARCHITECTURE
           </p>
           <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
-            Four stages from concept to enterprise scale.
+            Structured 7-step software delivery process.
           </h2>
           <p className="font-sans mt-4 text-base font-medium leading-relaxed text-slate-700 sm:text-lg dark:text-slate-300">
-            Our structured engineering methodology ensures predictable delivery, transparent governance, and zero operational surprises.
+            Our transparent engineering methodology ensures predictable delivery, continuous quality control, and smooth production launches.
           </p>
         </div>
 
@@ -78,7 +78,7 @@ export default function ProcessTimeline() {
         </div>
 
         {/* Animated Sequential Process Workflow Tabs */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4 relative z-10">
+        <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 relative z-10">
           {processSteps.map((step, idx) => {
             const isActive = idx === activeStep;
             return (
