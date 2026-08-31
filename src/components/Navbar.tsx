@@ -57,11 +57,20 @@ function DockItem({
     return val - bounds.x - bounds.width / 2;
   });
 
-  const widthSync = useTransform(distance, [-150, 0, 150], [40, 54, 40]);
+  // Continuous Parabolic / Cosine Magnification Curve (42px -> 62px, 1.5x scaling)
+  const widthSync = useTransform(distance, [-150, 0, 150], [42, 62, 42]);
   const width = useSpring(widthSync, {
     mass: 0.1,
-    stiffness: 260,
-    damping: 16,
+    stiffness: 300,
+    damping: 20,
+  });
+
+  // Proportional Icon Magnification (18px -> 26px)
+  const iconSizeSync = useTransform(distance, [-150, 0, 150], [18, 26, 18]);
+  const iconSize = useSpring(iconSizeSync, {
+    mass: 0.1,
+    stiffness: 300,
+    damping: 20,
   });
 
   const [hovered, setHovered] = useState(false);
@@ -79,10 +88,10 @@ function DockItem({
         {hovered && (
           <motion.div
             initial={{ opacity: 0, y: 10, scale: 0.8 }}
-            animate={{ opacity: 1, y: -10, scale: 1.05 }}
+            animate={{ opacity: 1, y: -12, scale: 1.05 }}
             exit={{ opacity: 0, y: 6, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            className="absolute -top-9 z-30 pointer-events-none px-2.5 py-1 rounded-md bg-slate-900/90 text-white text-[11px] font-semibold font-sans whitespace-nowrap backdrop-blur-md border border-white/10 shadow-lg dark:bg-white/90 dark:text-slate-950"
+            transition={{ type: "spring", stiffness: 420, damping: 22 }}
+            className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-[11px] font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
           >
             {link.label}
           </motion.div>
@@ -91,22 +100,26 @@ function DockItem({
 
       <Link href={link.href} aria-label={link.label}>
         <motion.div
+          whileTap={{ scale: 0.85, y: -3 }}
           style={{ width, height: width }}
-          className={`flex items-center justify-center rounded-2xl transition-all duration-300 border ${isActive
-            ? "bg-slate-900 text-white border-slate-800 shadow-lg shadow-indigo-500/20 dark:bg-white dark:text-slate-950 dark:border-white dark:shadow-[0_0_16px_rgba(0,245,212,0.4)]"
-            : "bg-white/80 text-slate-700 border-slate-200/80 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
-            }`}
+          className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${
+            isActive
+              ? "bg-slate-900 text-white border-slate-800 shadow-xl shadow-indigo-500/25 dark:bg-white dark:text-slate-950 dark:border-white dark:shadow-[0_0_20px_rgba(56,189,248,0.5)]"
+              : "bg-white/80 text-slate-700 border-slate-200/90 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
+          }`}
         >
-          <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-none" />
+          <motion.div style={{ width: iconSize, height: iconSize }} className="flex items-center justify-center flex-none">
+            <Icon className="w-full h-full" />
+          </motion.div>
         </motion.div>
       </Link>
 
       {/* macOS Active App Indicator Dot with Horizontal Glide Layout Transition */}
       {isActive && (
         <motion.span
-          layoutId="navbar-active-indicator"
+          layoutId="dock-active-dot"
           transition={{ type: "spring", stiffness: 380, damping: 28 }}
-          className="absolute -bottom-2 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-[0_0_12px_rgba(0,245,212,0.9)]"
+          className="absolute -bottom-2.5 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-[0_0_10px_rgba(56,189,248,0.9)]"
         />
       )}
     </div>
@@ -118,7 +131,9 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [nearBottomEdge, setNearBottomEdge] = useState(false);
 
   const mouseX = useMotionValue(Infinity);
 
@@ -131,6 +146,43 @@ export default function Navbar() {
 
   useEffect(() => {
     setMounted(true);
+
+    // Global listener to detect input focus across forms to prevent dock occlusion
+    const handleFocusIn = (e: FocusEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable)
+      ) {
+        setIsInputFocused(true);
+      }
+    };
+
+    const handleFocusOut = () => {
+      setIsInputFocused(false);
+    };
+
+    // Re-emerge dock when mouse moves close to the bottom screen edge (<80px)
+    const handleMouseMove = (e: MouseEvent) => {
+      if (e.clientY >= window.innerHeight - 80) {
+        setNearBottomEdge(true);
+      } else {
+        setNearBottomEdge(false);
+      }
+    };
+
+    window.addEventListener("focusin", handleFocusIn);
+    window.addEventListener("focusout", handleFocusOut);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("focusin", handleFocusIn);
+      window.removeEventListener("focusout", handleFocusOut);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -138,13 +190,16 @@ export default function Navbar() {
     const diff = latest - previous;
 
     if (latest <= 10) {
-      setHidden(false);
-    } else if (diff > 10) {
-      setHidden(true);
-    } else if (diff < -10) {
-      setHidden(false);
+      setIsScrollingDown(false);
+    } else if (diff > 8) {
+      setIsScrollingDown(true);
+    } else if (diff < -8) {
+      setIsScrollingDown(false);
     }
   });
+
+  // Dock hides when typing in forms or scrolling down, unless mouse is near bottom edge
+  const shouldHideDock = (isInputFocused || isScrollingDown) && !nearBottomEdge;
 
   return (
     <>
@@ -177,16 +232,16 @@ export default function Navbar() {
       <motion.header
         variants={{
           visible: { y: 0, opacity: 1 },
-          hidden: { y: "160%", opacity: 0 },
+          hidden: { y: "180%", opacity: 0 },
         }}
-        animate={hidden && !mobileMenuOpen ? "hidden" : "visible"}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        animate={shouldHideDock && !mobileMenuOpen ? "hidden" : "visible"}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-end w-max max-w-[95vw]"
       >
         <motion.div
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
-          className="relative flex items-end gap-2.5 sm:gap-3 px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-[#111827]/85 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
+          className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 rounded-2xl bg-white/80 dark:bg-[#0f172a]/85 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
         >
           {/* Desktop Magnified Dock Links */}
           <div className="hidden md:flex items-end gap-2 sm:gap-2.5">
