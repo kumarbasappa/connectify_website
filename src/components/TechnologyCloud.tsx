@@ -135,7 +135,7 @@ function TechCard3D({ tech }: { tech: { name: string; description: string; verif
         transform: `perspective(800px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
         transition: "transform 0.15s ease-out",
       }}
-      className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-md backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/80 hover:border-brand/60 dark:hover:border-indigo-500/60 shadow-slate-900/5 hover:shadow-2xl"
+      className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-md backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/80 hover:border-indigo-500/40 dark:hover:border-cyan-400/40 transition-all duration-300 shadow-slate-900/5 hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-cyan-500/10"
     >
       {/* Dynamic Inner Glare Radial */}
       <div
@@ -149,10 +149,10 @@ function TechCard3D({ tech }: { tech: { name: string; description: string; verif
       <div className="relative z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 flex items-center justify-center">
+            <div className="p-2.5 rounded-xl bg-indigo-500/5 dark:bg-cyan-500/10 border border-indigo-500/10 dark:border-cyan-500/20 flex items-center justify-center transition-colors group-hover:bg-indigo-500/10 dark:group-hover:bg-cyan-500/20">
               <TechBrandSvg name={tech.name} />
             </div>
-            <h3 className="font-display text-xl font-bold text-slate-900 transition-colors group-hover:text-brand dark:text-white dark:group-hover:text-cyan-400">
+            <h3 className="font-display text-xl font-bold text-slate-900 transition-colors group-hover:text-indigo-600 dark:text-white dark:group-hover:text-cyan-400">
               {tech.name}
             </h3>
           </div>
@@ -208,14 +208,14 @@ export default function TechnologyCloud() {
                 onClick={() => setActiveTab(cat.id)}
                 className={`relative inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-display text-sm font-semibold transition-all duration-200 ${
                   isActive
-                    ? "text-white dark:text-slate-950"
+                    ? "text-white dark:text-white"
                     : "text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="tech-tab-pill"
-                    className="absolute inset-0 bg-slate-900 dark:bg-white rounded-full shadow-md"
+                    className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-cyan-500 dark:to-indigo-500 rounded-full shadow-lg shadow-indigo-500/25 dark:shadow-cyan-500/25"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}

@@ -428,7 +428,7 @@ export default function Hero() {
 
           <Link
             href="/case-studies"
-            className="inline-flex items-center justify-center px-7 py-3.5 border border-slate-200/90 bg-white/80 text-slate-900 hover:bg-white shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-white font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[170px]"
+            className="inline-flex items-center justify-center px-7 py-3.5 border border-slate-300 dark:border-white/20 hover:border-indigo-400 dark:hover:border-cyan-400 bg-white/80 dark:bg-white/5 text-slate-900 dark:text-white hover:bg-white dark:hover:bg-white/10 shadow-xs backdrop-blur-md font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[170px]"
           >
             Explore Our Work
           </Link>

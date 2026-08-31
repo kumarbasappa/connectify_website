@@ -88,15 +88,15 @@ export default function ProcessTimeline() {
                 onClick={() => setActiveStep(idx)}
                 className={`relative flex flex-col justify-between rounded-2xl border p-6 text-left transition-all duration-300 ease-in-out ${
                   isActive
-                    ? "border-brand bg-white shadow-xl scale-[1.02] dark:border-amber-400 dark:bg-slate-900/90 dark:shadow-[0_0_25px_rgba(245,158,11,0.25)]"
-                    : "border-slate-200 bg-white/90 hover:border-brand/60 dark:border-white/10 dark:bg-slate-900/60 dark:hover:border-amber-400/60"
+                    ? "border-indigo-500 bg-white shadow-xl shadow-indigo-500/10 scale-[1.02] dark:border-indigo-400 dark:bg-slate-900/90 dark:shadow-[0_0_25px_rgba(99,102,241,0.25)]"
+                    : "border-slate-200 bg-white/90 hover:border-indigo-500/50 dark:border-white/10 dark:bg-slate-900/60 dark:hover:border-indigo-400/50"
                 }`}
               >
                 <div>
                   <div className="flex w-full items-center justify-between">
                     <span
                       className={`font-mono text-2xl font-black transition-colors ${
-                        isActive ? "text-brand dark:text-amber-400" : "text-slate-400 dark:text-slate-500 opacity-80"
+                        isActive ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500 opacity-80"
                       }`}
                     >
                       {step.stepNumber}
@@ -113,7 +113,7 @@ export default function ProcessTimeline() {
                 {/* Animated Active Indicator Progress Bar */}
                 <div className="mt-6 w-full h-1 bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-brand dark:bg-amber-400"
+                    className="h-full bg-gradient-to-r from-indigo-600 via-sky-500 to-amber-400"
                     initial={{ width: "0%" }}
                     animate={{ width: isActive ? "100%" : "0%" }}
                     transition={{ duration: 0.4 }}
@@ -132,17 +132,17 @@ export default function ProcessTimeline() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
-            className="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-xl transition-all duration-300 hover:border-brand/60 lg:p-12 dark:border-white/10 dark:bg-slate-900/90 dark:hover:border-amber-400/60"
+            className="mt-8 rounded-3xl border border-indigo-500/30 bg-white p-8 shadow-xl shadow-indigo-500/5 transition-all duration-300 hover:border-indigo-500/60 lg:p-12 dark:border-indigo-500/30 dark:bg-slate-900/90 dark:hover:border-indigo-400/60 dark:shadow-[0_0_30px_rgba(99,102,241,0.15)]"
           >
             <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
               <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-brand/10 border border-brand/20 px-4 py-1.5 font-mono text-xs font-bold text-brand dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-400">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/15 border border-indigo-500/30 px-4 py-1.5 font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400 shadow-[0_0_12px_rgba(99,102,241,0.2)]">
                   STAGE {processSteps[activeStep].stepNumber}
                 </span>
                 <h3 className="mt-4 font-display text-2xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
                   {processSteps[activeStep].title}
                 </h3>
-                <p className="font-display mt-2 text-base font-bold text-brand dark:text-amber-400">
+                <p className="font-display mt-2 text-base font-bold text-indigo-600 dark:text-indigo-400">
                   {processSteps[activeStep].subtitle}
                 </p>
               </div>

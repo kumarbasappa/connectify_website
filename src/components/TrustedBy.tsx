@@ -3,14 +3,14 @@
 import { useRef } from "react";
 
 const industryDomains = [
-  { name: "Automotive Solutions", tag: "Automotive" },
-  { name: "Enterprise Systems", tag: "Enterprise" },
-  { name: "Banking & Financial Rails", tag: "BFSI" },
-  { name: "Public Sector Tech", tag: "Public Sector" },
-  { name: "Logistics & Mobility", tag: "Logistics" },
-  { name: "Cross-Border Fintech", tag: "Fintech" },
-  { name: "Healthcare Platforms", tag: "Healthcare" },
-  { name: "Artificial Intelligence", tag: "AI" },
+  { name: "Automotive Solutions", tag: "Automotive", style: "bg-sky-500/10 text-sky-600 dark:text-sky-300 border-sky-500/20" },
+  { name: "Enterprise Systems", tag: "Enterprise", style: "bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20" },
+  { name: "Banking & Financial Rails", tag: "BFSI", style: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/20" },
+  { name: "Public Sector Tech", tag: "Public Sector", style: "bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20" },
+  { name: "Logistics & Mobility", tag: "Logistics", style: "bg-sky-500/10 text-sky-600 dark:text-sky-300 border-sky-500/20" },
+  { name: "Cross-Border Fintech", tag: "Fintech", style: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/20" },
+  { name: "Healthcare Platforms", tag: "Healthcare", style: "bg-rose-500/10 text-rose-600 dark:text-rose-300 border-rose-500/20" },
+  { name: "Artificial Intelligence", tag: "AI", style: "bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20" },
 ];
 
 export default function TrustedBy() {
@@ -47,8 +47,8 @@ export default function TrustedBy() {
                 <span className="font-display text-sm font-bold tracking-tight text-slate-700 transition-colors group-hover:text-foreground dark:text-slate-300 dark:group-hover:text-white">
                   {item.name}
                 </span>
-                <span className="font-mono text-[10px] font-semibold text-muted opacity-70 group-hover:opacity-100">
-                  [{item.tag}]
+                <span className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-full border ${item.style}`}>
+                  {item.tag}
                 </span>
               </div>
             ))}
@@ -66,8 +66,8 @@ export default function TrustedBy() {
                 <span className="font-display text-sm font-bold tracking-tight text-slate-700 transition-colors group-hover:text-foreground dark:text-slate-300 dark:group-hover:text-white">
                   {item.name}
                 </span>
-                <span className="font-mono text-[10px] font-semibold text-muted opacity-70 group-hover:opacity-100">
-                  [{item.tag}]
+                <span className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-full border ${item.style}`}>
+                  {item.tag}
                 </span>
               </div>
             ))}

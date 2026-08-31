@@ -23,6 +23,15 @@ const projectMetricsMap: Record<string, string> = {
   "trackway": "Real-Time Fleet Telemetry",
 };
 
+const categoryGradients: Record<string, string> = {
+  "GovTech": "bg-gradient-to-r from-blue-500/15 to-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30",
+  "AI Platform": "bg-gradient-to-r from-purple-500/15 to-indigo-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30",
+  "HealthTech": "bg-gradient-to-r from-rose-500/15 to-pink-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/30",
+  "Enterprise POS": "bg-gradient-to-r from-amber-500/15 to-orange-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30",
+  "Fintech": "bg-gradient-to-r from-emerald-500/15 to-teal-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30",
+  "Logistics": "bg-gradient-to-r from-sky-500/15 to-blue-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/30",
+};
+
 export default function SelectedWork() {
   const rootRef = useRef<HTMLElement>(null);
 
@@ -100,6 +109,9 @@ export default function SelectedWork() {
           {featuredProjects.map((project) => {
             const systemMetric =
               projectMetricsMap[project.slug] || "99.99% Operational SLA";
+            const categoryBadgeStyle =
+              categoryGradients[project.category] ||
+              "bg-gradient-to-r from-indigo-500/15 to-purple-500/15 text-indigo-700 dark:text-cyan-300 border border-indigo-500/30";
             return (
               <div key={project.slug} data-project-card>
                 <BorderGlow
@@ -113,7 +125,7 @@ export default function SelectedWork() {
                 >
                   <Link
                     href={`/case-studies/${project.slug}`}
-                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-indigo-500/60 hover:shadow-2xl dark:border-white/10 dark:bg-slate-900/90 dark:hover:border-cyan-500/60 dark:hover:shadow-[0_0_30px_rgba(56,189,248,0.15)]"
+                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-indigo-500/60 hover:shadow-2xl hover:shadow-indigo-500/15 dark:border-white/10 dark:bg-slate-900/90 dark:hover:border-cyan-500/60 dark:hover:shadow-[0_0_30px_rgba(56,189,248,0.2)]"
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -135,7 +147,7 @@ export default function SelectedWork() {
                     <div className="flex flex-1 flex-col justify-between p-6">
                       <div>
                         <div className="flex items-center justify-between">
-                          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand dark:text-cyan-400">
+                          <span className={`font-mono text-[10px] font-bold px-2.5 py-1 rounded-full ${categoryBadgeStyle}`}>
                             {project.category}
                           </span>
                           <ArrowRight className="h-4 w-4 text-slate-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-cyan-400" />
