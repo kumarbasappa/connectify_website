@@ -179,13 +179,71 @@ export default function WhatWeBuild() {
                   <p className="relative z-10 font-sans mt-3 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
                     {item.subtitle}
                   </p>
+
+                  {/* Mobile Accordion Detail Fallback (< 1024px) */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="relative z-10 mt-5 pt-5 border-t border-slate-200/80 dark:border-white/10 lg:hidden overflow-hidden"
+                      >
+                        <p className="font-sans text-sm font-medium text-slate-700 dark:text-slate-300 mb-4">
+                          {item.description}
+                        </p>
+
+                        <div className="space-y-4">
+                          <div>
+                            <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-cyan-400 flex items-center gap-1.5 mb-2">
+                              <ShieldAlert className="w-3.5 h-3.5" />
+                              Key Challenges Solved:
+                            </h4>
+                            <ul className="grid gap-2">
+                              {item.problemsSolved.map((prob, i) => (
+                                <li key={i} className="flex items-start gap-2 font-sans text-xs font-medium text-slate-700 dark:text-slate-300">
+                                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                                  <span>{prob}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div>
+                            <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-indigo-400 flex items-center gap-1.5 mb-2">
+                              <Sparkles className="w-3.5 h-3.5" />
+                              Production Deliverables:
+                            </h4>
+                            <div className="flex flex-wrap gap-1.5">
+                              {item.deliverables.map((del, idx) => (
+                                <span key={idx} className="rounded-full bg-slate-100 dark:bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-slate-800 dark:text-slate-200">
+                                  {del}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="pt-2">
+                            <Link
+                              href={`/services#${item.id}`}
+                              className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-950 px-4 py-2 text-xs font-bold shadow-sm"
+                            >
+                              <span>Explore {item.title}</span>
+                              <ArrowRight className="h-3.5 w-3.5" />
+                            </Link>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
           </div>
 
-          {/* Right Column: Glassmorphic Detail Inspector Pane with Animated Slide Cross-fade */}
-          <div className="lg:col-span-6">
+          {/* Right Column: Glassmorphic Detail Inspector Pane for Desktop Only */}
+          <div className="hidden lg:block lg:col-span-6">
             <div className="sticky top-28 rounded-3xl border border-slate-200/90 bg-white/95 p-8 shadow-2xl backdrop-blur-xl lg:p-10 dark:border-white/10 dark:bg-slate-900/90 min-h-[480px]">
               <AnimatePresence mode="wait">
                 <motion.div

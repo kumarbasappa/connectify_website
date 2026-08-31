@@ -93,7 +93,7 @@ export function MarqueeLogoPill({ name, logoSvg, industry, accentColor }: Marque
         <img
           src={logoSvg}
           alt={`${name} Logo`}
-          className="h-full w-auto max-h-7 object-contain grayscale opacity-65 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-0 dark:invert dark:opacity-60 dark:group-hover:opacity-100 transition-all duration-300"
+          className="h-full w-auto max-h-7 object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-0 dark:invert dark:opacity-60 dark:group-hover:opacity-100 transition-all duration-300"
           loading="eager"
         />
       </div>

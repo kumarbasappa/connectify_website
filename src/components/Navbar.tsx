@@ -207,6 +207,7 @@ export default function Navbar() {
       <div className="fixed top-5 left-5 z-50 flex items-center">
         <Link
           href="/"
+          aria-label="Connectify Enterprise Homepage"
           className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-indigo-500/50 dark:border-white/10 dark:bg-slate-950/80 dark:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
         >
           {/* Light Mode Purple Icon */}
@@ -271,7 +272,7 @@ export default function Navbar() {
                 type="button"
                 onClick={toggleTheme}
                 className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 text-slate-800 transition-colors hover:bg-white dark:border-white/10 dark:bg-slate-900/80 dark:text-white/90 dark:hover:bg-slate-800"
-                aria-label="Toggle theme"
+                aria-label="Toggle light or dark color theme"
               >
                 {theme === "dark" ? (
                   <Sun className="h-4 w-4 text-amber-400" />
@@ -284,6 +285,7 @@ export default function Navbar() {
             {/* Let's Talk CTA */}
             <Link
               href="/contact"
+              aria-label="Let's Talk - Schedule an enterprise consultation"
               className="inline-flex items-center gap-1.5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 px-4 py-2.5 text-xs font-bold shadow-md transition-all duration-300 h-10"
             >
               <span>Let&apos;s Talk</span>

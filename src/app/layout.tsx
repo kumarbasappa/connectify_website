@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   }
 };
 
-const jsonLdSchema = {
+const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Connectify",
@@ -57,6 +57,22 @@ const jsonLdSchema = {
   }
 };
 
+const professionalServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Connectify Enterprise Software & AI Engineering",
+  "url": "https://connectify.global",
+  "logo": "https://connectify.global/connectifylogo-purple.png",
+  "image": "https://connectify.global/connectifylogo-purple.png",
+  "priceRange": "$$$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bengaluru",
+    "addressRegion": "Karnataka",
+    "addressCountry": "India"
+  }
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -72,7 +88,11 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
         />
         <script
           dangerouslySetInnerHTML={{

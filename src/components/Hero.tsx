@@ -331,37 +331,6 @@ export default function Hero() {
         }}
         className="relative z-20 w-full max-w-[980px] mx-auto px-0 flex flex-col items-center text-center my-auto -translate-y-4 md:-translate-y-6"
       >
-        {/* 1. Official Connectify Brand Logo Centered Near Top */}
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, scale: 0.9, y: 12 },
-            show: { opacity: 1, scale: 1, y: 0 },
-          }}
-          transition={{ duration: 0.4 }}
-          className="mt-1 sm:mt-2 mb-4"
-        >
-          <motion.div
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="group relative flex items-center justify-center rounded-2xl px-5 py-2.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_40px_rgba(99,102,241,0.15)] bg-white/60 border border-slate-200/80 dark:shadow-[0_0_50px_rgba(99,102,241,0.25)] dark:bg-slate-900/60 dark:border-indigo-500/20"
-          >
-            {/* Light Mode Purple Logo */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/connectifylogo-purple.png"
-              alt="Connectify Brand Logo"
-              className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 dark:hidden"
-            />
-            {/* Dark Mode White Logo */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/connectifylogo-white.png"
-              alt="Connectify Brand Logo"
-              className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
-            />
-          </motion.div>
-        </motion.div>
-
         {/* Status Pill Badge with Animated Radar Ping */}
         <motion.div
           variants={{
@@ -369,15 +338,15 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.3 }}
-          className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-5 md:mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-cyan-300"
+          className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-6 md:mb-8 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
         >
           <span className="relative flex h-2.5 w-2.5 items-center justify-center">
             <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-40" />
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
           </span>
-          <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-cyan-400" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-extrabold">
+          <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
+          <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.22em] font-extrabold">
             ENTERPRISE SOFTWARE &amp; AI ENGINEERING
           </span>
         </motion.div>
@@ -389,10 +358,10 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5 }}
-          className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[62px] md:leading-[1.1] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-4 max-w-4xl"
+          className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[64px] md:leading-[1.12] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-6 max-w-4xl px-2"
         >
           We engineer scalable digital products,{" "}
-          <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-violet-600 dark:from-cyan-300 dark:via-indigo-300 dark:to-fuchsia-400 bg-clip-text text-transparent">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 to-purple-600 dark:from-indigo-400 dark:via-cyan-300 dark:to-purple-300">
             cloud platforms &amp; AI solutions.
           </span>
         </motion.h1>
@@ -404,7 +373,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5 }}
-          className="font-sans text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-white/80 max-w-2xl mx-auto mb-7 md:mb-8 font-medium tracking-wide"
+          className="font-sans text-base sm:text-lg md:text-xl leading-relaxed text-slate-600 dark:text-white/70 max-w-2xl mx-auto mb-8 md:mb-10 font-medium tracking-wide"
         >
           Connectify helps ambitious brands and growing enterprises build high-performance web applications, robust cloud architecture, and production-ready AI tools.
         </motion.p>
