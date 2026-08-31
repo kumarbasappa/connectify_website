@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" fill="none">
+  <path d="M20 5C12 5 6 11 6 19c0 8 6 14 14 14s14-6 14-14c0-8-6-14-14-14zm0 4c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z" fill="currentColor"/>
+  <path d="M20 11l2.5 5h5.5l-4.5 3.5 1.7 5.5-5.2-3.8-5.2 3.8 1.7-5.5L12 16h5.5z" fill="currentColor"/>
+  <text x="42" y="24" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="-0.02em">GOVT OF KARNATAKA</text>
+</svg>

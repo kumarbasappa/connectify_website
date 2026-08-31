@@ -2,85 +2,112 @@
 
 import { useRef } from "react";
 
-type MarqueeItem = {
+interface MarqueeItemProps {
   name: string;
-  logoUrl: string;
+  logoSvg: string;
   industry: string;
-  badgeColor: string;
-};
+  accentColor: string;
+}
 
-const marqueeClients: MarqueeItem[] = [
+const marqueeClients: MarqueeItemProps[] = [
   {
     name: "Government of Karnataka",
-    logoUrl: "/clients/The-Karnataka-Government-Kannada-Logo-Vector.svg-.png",
+    logoSvg: "/clients/govt-karnataka.svg",
     industry: "GovTech",
-    badgeColor: "sky",
+    accentColor: "sky",
   },
   {
     name: "AU Small Finance Bank",
-    logoUrl: "/clients/AU-Bank-new-logo-for-GBM_1024X1024_(cropped).png",
+    logoSvg: "/clients/au-bank.svg",
     industry: "BFSI",
-    badgeColor: "emerald",
+    accentColor: "emerald",
   },
   {
     name: "Hyundai Motors",
-    logoUrl: "/clients/Hyundai-Logo-2011.png",
+    logoSvg: "/clients/hyundai.svg",
     industry: "Automotive",
-    badgeColor: "cyan",
+    accentColor: "cyan",
   },
   {
     name: "ITC Limited",
-    logoUrl: "/clients/ITC_Limited_Logo.svg.png",
+    logoSvg: "/clients/itc.svg",
     industry: "Enterprise",
-    badgeColor: "purple",
+    accentColor: "purple",
   },
   {
     name: "Rapido Mobility",
-    logoUrl: "/clients/Rapido-business-model.jpg",
+    logoSvg: "/clients/rapido.svg",
     industry: "Logistics",
-    badgeColor: "amber",
+    accentColor: "amber",
   },
   {
     name: "Nium Global",
-    logoUrl: "/clients/Nium_1200x675-768x432.jpg",
+    logoSvg: "/clients/nium.svg",
     industry: "Fintech",
-    badgeColor: "emerald",
+    accentColor: "emerald",
   },
   {
     name: "Integra Systems",
-    logoUrl: "/clients/Integra Micro Systems_logo.png",
+    logoSvg: "/clients/integra.svg",
     industry: "Tech",
-    badgeColor: "indigo",
+    accentColor: "indigo",
   },
   {
     name: "Namma Metro",
-    logoUrl: "/clients/Namma_metro.svg.png",
+    logoSvg: "/clients/namma-metro.svg",
     industry: "Transit",
-    badgeColor: "purple",
+    accentColor: "purple",
   },
   {
     name: "Bank of Abyssinia",
-    logoUrl: "/clients/BankofAbyssinia-logo.jpg",
+    logoSvg: "/clients/bank-abyssinia.svg",
     industry: "Banking",
-    badgeColor: "emerald",
+    accentColor: "emerald",
   },
   {
     name: "FidyPay",
-    logoUrl: "/clients/fidypaylogo.ad923170.png",
+    logoSvg: "/clients/fidypay.svg",
     industry: "Fintech",
-    badgeColor: "cyan",
+    accentColor: "cyan",
   },
 ];
 
 const badgeColorMap: Record<string, string> = {
-  sky: "bg-sky-500/10 text-sky-600 dark:text-sky-300 border border-sky-500/20",
-  purple: "bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/20",
-  rose: "bg-rose-500/10 text-rose-600 dark:text-rose-300 border border-rose-500/20",
-  emerald: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20",
-  amber: "bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20",
-  indigo: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/20",
-  cyan: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20",
+  sky: "bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-500/20",
+  emerald: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/20",
+  amber: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/20",
+  purple: "bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/20",
+  rose: "bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/20",
+  indigo: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/20",
+  cyan: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500/20",
 };
+
+export function MarqueeLogoPill({ name, logoSvg, industry, accentColor }: MarqueeItemProps) {
+  const badgeStyle = badgeColorMap[accentColor] || badgeColorMap.sky;
+
+  return (
+    <div className="inline-flex items-center gap-3.5 px-5 py-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-900/60 backdrop-blur-md shadow-sm hover:border-indigo-400/60 dark:hover:border-cyan-400/50 hover:shadow-md transition-all duration-300 group shrink-0 will-change-transform transform-gpu [image-rendering:-webkit-optimize-contrast] cursor-pointer">
+      {/* High-Res Logo Container */}
+      <div className="flex items-center justify-center h-7 w-auto min-w-[80px] max-w-[125px]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoSvg}
+          alt={`${name} Logo`}
+          className="h-full w-auto max-h-7 object-contain grayscale opacity-65 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-0 dark:invert dark:opacity-60 dark:group-hover:opacity-100 transition-all duration-300"
+          loading="eager"
+        />
+      </div>
+
+      {/* Divider */}
+      <span className="w-px h-4 bg-slate-200 dark:bg-white/10 group-hover:bg-slate-300 dark:group-hover:bg-white/20 transition-colors" />
+
+      {/* Domain Badge */}
+      <span className={`text-[11px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full border ${badgeStyle}`}>
+        {industry}
+      </span>
+    </div>
+  );
+}
 
 export default function TrustedBy() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -108,24 +135,13 @@ export default function TrustedBy() {
           {/* Primary Track */}
           <div className="flex shrink-0 animate-marquee items-center gap-6 sm:gap-8 pr-6 sm:pr-8 group-hover/marquee:[animation-play-state:paused]">
             {marqueeClients.map((item, idx) => (
-              <div
+              <MarqueeLogoPill
                 key={`${item.name}-${idx}`}
-                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-sm hover:border-indigo-400 dark:hover:border-cyan-400/50 transition-all duration-300 group cursor-pointer"
-              >
-                {/* Company Logo */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.logoUrl}
-                  alt={`${item.name} Logo`}
-                  className="h-6 w-auto max-w-[110px] object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-0 dark:invert dark:group-hover:brightness-100 dark:group-hover:invert-0 transition-all duration-300"
-                />
-                {/* Vertical Divider */}
-                <span className="w-[1px] h-4 bg-slate-200 dark:bg-white/10" />
-                {/* Industry Tag */}
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${badgeColorMap[item.badgeColor] || badgeColorMap.sky}`}>
-                  {item.industry}
-                </span>
-              </div>
+                name={item.name}
+                logoSvg={item.logoSvg}
+                industry={item.industry}
+                accentColor={item.accentColor}
+              />
             ))}
           </div>
 
@@ -136,24 +152,13 @@ export default function TrustedBy() {
             role="presentation"
           >
             {marqueeClients.map((item, idx) => (
-              <div
+              <MarqueeLogoPill
                 key={`clone-${item.name}-${idx}`}
-                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-sm hover:border-indigo-400 dark:hover:border-cyan-400/50 transition-all duration-300 group cursor-pointer"
-              >
-                {/* Company Logo */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.logoUrl}
-                  alt={`${item.name} Logo`}
-                  className="h-6 w-auto max-w-[110px] object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-0 dark:invert dark:group-hover:brightness-100 dark:group-hover:invert-0 transition-all duration-300"
-                />
-                {/* Vertical Divider */}
-                <span className="w-[1px] h-4 bg-slate-200 dark:bg-white/10" />
-                {/* Industry Tag */}
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${badgeColorMap[item.badgeColor] || badgeColorMap.sky}`}>
-                  {item.industry}
-                </span>
-              </div>
+                name={item.name}
+                logoSvg={item.logoSvg}
+                industry={item.industry}
+                accentColor={item.accentColor}
+              />
             ))}
           </div>
         </div>

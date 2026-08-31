@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 40" fill="none">
+  <rect x="10" y="8" width="6" height="22" fill="currentColor"/>
+  <rect x="20" y="8" width="12" height="6" fill="currentColor"/>
+  <rect x="20" y="16" width="12" height="6" fill="currentColor"/>
+  <text x="38" y="25" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="-0.02em">INTEGRA</text>
+</svg>

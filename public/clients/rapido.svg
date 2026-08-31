@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 40" fill="none">
+  <path d="M12 28L24 7l4 3-8 18h-8z" fill="currentColor"/>
+  <path d="M22 28L34 7l4 3-8 18h-8z" fill="currentColor" opacity="0.7"/>
+  <text x="44" y="25" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="15" fill="currentColor" letter-spacing="-0.02em">RAPIDO</text>
+</svg>
