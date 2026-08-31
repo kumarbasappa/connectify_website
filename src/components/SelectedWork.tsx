@@ -13,32 +13,14 @@ gsap.registerPlugin(ScrollTrigger);
 // Select top 6 showcase projects from real data
 const featuredProjects = projects.slice(0, 6);
 
-// Quantitative key metric badges for showcased projects
-const projectMetricsMap: Record<string, { badge1: string; badge2: string }> = {
-  "karnataka-statewide-survey-platform": {
-    badge1: "2.5M+ Households",
-    badge2: "99.99% Uptime",
-  },
-  "taurus-career-ai": {
-    badge1: "45% Faster Matching",
-    badge2: "Sub-200ms Latency",
-  },
-  "flycure-health": {
-    badge1: "15+ Partner Hospitals",
-    badge2: "HIPAA Compliant",
-  },
-  "cloud-kitchen-pos": {
-    badge1: "100+ Live Kitchens",
-    badge2: "Zero Offline Data Loss",
-  },
-  "contractor-loyalty-app": {
-    badge1: "80k+ Active Contractors",
-    badge2: "Real-Time Ledger",
-  },
-  "trackway": {
-    badge1: "10k+ Telemetry Streams/sec",
-    badge2: "Live GPS Tracking",
-  },
+// Quantitative impact metric badges for showcased projects
+const projectMetricsMap: Record<string, string[]> = {
+  "karnataka-statewide-survey-platform": ["2.5M+ Households", "99.99% Uptime"],
+  "taurus-career-ai": ["45% Faster Matching", "Sub-200ms Latency"],
+  "flycure-health": ["15+ Partner Hospitals", "HIPAA Compliant"],
+  "cloud-kitchen-pos": ["100+ Live Kitchens", "Zero Offline Data Loss"],
+  "contractor-loyalty-app": ["80k+ Active Contractors", "Real-Time Ledger"],
+  "trackway": ["10k+ Telemetry Streams/sec", "Live GPS Tracking"],
 };
 
 const categoryGradients: Record<string, string> = {
@@ -125,10 +107,8 @@ export default function SelectedWork() {
         {/* Project Cards Grid */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredProjects.map((project) => {
-            const metrics = projectMetricsMap[project.slug] || {
-              badge1: "99.99% Operational SLA",
-              badge2: "Production Live",
-            };
+            const systemMetrics =
+              projectMetricsMap[project.slug] || ["Enterprise SLA", "Live System"];
             const categoryBadgeStyle =
               categoryGradients[project.category] ||
               "bg-gradient-to-r from-indigo-500/15 to-purple-500/15 text-indigo-700 dark:text-cyan-300 border border-indigo-500/30";
@@ -157,15 +137,17 @@ export default function SelectedWork() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
 
-                      {/* Live System Metric Overlay Chips */}
-                      <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
-                        <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-slate-950/85 px-2.5 py-1 font-mono text-[10px] font-bold text-emerald-400 backdrop-blur-md shadow-lg">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-                          <span>{metrics.badge1}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 rounded-full border border-indigo-500/40 bg-slate-950/85 px-2.5 py-1 font-mono text-[10px] font-bold text-cyan-300 backdrop-blur-md shadow-lg">
-                          <span>{metrics.badge2}</span>
-                        </div>
+                      {/* Live System Quantitative Impact Metric Badges Overlay */}
+                      <div className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 z-10">
+                        {systemMetrics.map((metric, mIdx) => (
+                          <div
+                            key={mIdx}
+                            className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-slate-950/85 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-400 backdrop-blur-md shadow-lg"
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping flex-none" />
+                            <span>{metric}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
 

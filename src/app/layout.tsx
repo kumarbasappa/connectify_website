@@ -37,40 +37,47 @@ export const metadata: Metadata = {
   }
 };
 
-const organizationJsonLd = {
+const jsonLdSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Connectify",
-  "url": "https://connectify.global",
-  "logo": "https://connectify.global/connectifylogo-purple.png",
-  "description": "Connectify is a software engineering agency building scalable digital products, cloud architecture, and AI solutions.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Bengaluru",
-    "addressRegion": "Karnataka",
-    "addressCountry": "India"
-  },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "email": "business@connectify.global",
-    "contactType": "customer service"
-  }
-};
-
-const professionalServiceJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Connectify Enterprise Software & AI Engineering",
-  "url": "https://connectify.global",
-  "logo": "https://connectify.global/connectifylogo-purple.png",
-  "image": "https://connectify.global/connectifylogo-purple.png",
-  "priceRange": "$$$$",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Bengaluru",
-    "addressRegion": "Karnataka",
-    "addressCountry": "India"
-  }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://connectify.global/#organization",
+      "name": "Connectify",
+      "url": "https://connectify.global",
+      "logo": "https://connectify.global/connectifylogo-purple.png",
+      "description": "Connectify is a software engineering agency building scalable digital products, cloud architecture, and AI solutions.",
+      "sameAs": [
+        "https://linkedin.com/company/connectify",
+        "https://github.com/connectify"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka",
+        "addressCountry": "India"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "business@connectify.global",
+        "contactType": "customer service"
+      }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://connectify.global/#service",
+      "name": "Connectify Software Engineering & AI Advisory",
+      "url": "https://connectify.global",
+      "priceRange": "$$$",
+      "areaServed": "Global",
+      "serviceType": [
+        "Software Engineering",
+        "Cloud Architecture",
+        "Enterprise AI Solutions",
+        "GovTech Infrastructure"
+      ]
+    }
+  ]
 };
 
 export default function RootLayout({
@@ -88,11 +95,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
         />
         <script
           dangerouslySetInnerHTML={{
