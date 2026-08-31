@@ -296,6 +296,19 @@ export default function Hero() {
       {/* Full-Bleed Canvas */}
       <FluidWarpGridCanvas />
 
+      {/* Multi-Color Ambient Glow Mesh */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        {/* Light Mode Glows */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-indigo-500/15 rounded-full blur-[120px] dark:hidden" />
+        <div className="absolute top-1/3 -left-32 w-[500px] h-[400px] bg-violet-500/12 rounded-full blur-[120px] dark:hidden" />
+        <div className="absolute top-1/4 -right-32 w-[500px] h-[400px] bg-cyan-400/10 rounded-full blur-[120px] dark:hidden" />
+
+        {/* Dark Mode Cyber Glows */}
+        <div className="hidden dark:block absolute -top-24 left-1/2 -translate-x-1/2 w-[750px] h-[550px] bg-indigo-500/25 rounded-full blur-[130px]" />
+        <div className="hidden dark:block absolute top-1/3 -left-32 w-[550px] h-[450px] bg-cyan-400/20 rounded-full blur-[130px]" />
+        <div className="hidden dark:block absolute top-1/4 -right-32 w-[550px] h-[450px] bg-fuchsia-500/20 rounded-full blur-[130px]" />
+      </div>
+
       {/* Dynamic Cursor-Follow Radial Glow */}
       <div
         className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-500 opacity-60 dark:opacity-40"
@@ -356,14 +369,14 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.3 }}
-          className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-5 md:mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-400"
+          className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-5 md:mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-cyan-300"
         >
           <span className="relative flex h-2.5 w-2.5 items-center justify-center">
             <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-40" />
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
           </span>
-          <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
+          <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-cyan-400" />
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-extrabold">
             ENTERPRISE SOFTWARE &amp; AI ENGINEERING
           </span>
@@ -379,7 +392,7 @@ export default function Hero() {
           className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[62px] md:leading-[1.1] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-4 max-w-4xl"
         >
           We engineer scalable digital products,{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 to-purple-600 dark:from-indigo-400 dark:via-cyan-300 dark:to-purple-300">
+          <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-violet-600 dark:from-cyan-300 dark:via-indigo-300 dark:to-fuchsia-400 bg-clip-text text-transparent">
             cloud platforms &amp; AI solutions.
           </span>
         </motion.h1>
@@ -391,7 +404,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5 }}
-          className="font-sans text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-white/70 max-w-2xl mx-auto mb-7 md:mb-8 font-medium tracking-wide"
+          className="font-sans text-sm sm:text-base md:text-lg leading-relaxed text-slate-600 dark:text-white/80 max-w-2xl mx-auto mb-7 md:mb-8 font-medium tracking-wide"
         >
           Connectify helps ambitious brands and growing enterprises build high-performance web applications, robust cloud architecture, and production-ready AI tools.
         </motion.p>
@@ -407,7 +420,7 @@ export default function Hero() {
         >
           <Link
             href="/contact"
-            className="group relative inline-flex items-center justify-center px-7 py-3.5 bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
+            className="group relative inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white shadow-lg shadow-indigo-500/25 dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 dark:hover:from-cyan-400 dark:hover:via-indigo-400 dark:hover:to-fuchsia-400 dark:shadow-cyan-500/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
           >
             <span>Start a Project</span>
             <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />

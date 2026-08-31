@@ -10,6 +10,67 @@ import { ArrowRight, CheckCircle2, Sparkles, Layers, ShieldAlert, Cpu } from "lu
 
 gsap.registerPlugin(ScrollTrigger);
 
+const pillarColorStyles: Record<
+  string,
+  {
+    badgeBg: string;
+    badgeText: string;
+    activeBorder: string;
+    activeGlow: string;
+    iconBg: string;
+    textAccent: string;
+  }
+> = {
+  "digital-solutions": {
+    badgeBg: "bg-sky-500/10 dark:bg-sky-950/60 border border-sky-500/30",
+    badgeText: "text-sky-600 dark:text-sky-400",
+    activeBorder: "border-sky-500 dark:border-sky-400",
+    activeGlow: "shadow-xl shadow-sky-500/15",
+    iconBg: "bg-sky-500 text-white",
+    textAccent: "text-sky-600 dark:text-sky-400",
+  },
+  "technology-services": {
+    badgeBg: "bg-violet-500/10 dark:bg-violet-950/60 border border-violet-500/30",
+    badgeText: "text-violet-600 dark:text-violet-400",
+    activeBorder: "border-violet-500 dark:border-violet-400",
+    activeGlow: "shadow-xl shadow-violet-500/15",
+    iconBg: "bg-violet-500 text-white",
+    textAccent: "text-violet-600 dark:text-violet-400",
+  },
+  "business-advisory": {
+    badgeBg: "bg-amber-500/10 dark:bg-amber-950/60 border border-amber-500/30",
+    badgeText: "text-amber-600 dark:text-amber-400",
+    activeBorder: "border-amber-500 dark:border-amber-400",
+    activeGlow: "shadow-xl shadow-amber-500/15",
+    iconBg: "bg-amber-500 text-white",
+    textAccent: "text-amber-600 dark:text-amber-400",
+  },
+  "investment-consulting": {
+    badgeBg: "bg-emerald-500/10 dark:bg-emerald-950/60 border border-emerald-500/30",
+    badgeText: "text-emerald-600 dark:text-emerald-400",
+    activeBorder: "border-emerald-500 dark:border-emerald-400",
+    activeGlow: "shadow-xl shadow-emerald-500/15",
+    iconBg: "bg-emerald-500 text-white",
+    textAccent: "text-emerald-600 dark:text-emerald-400",
+  },
+  "brand-experience": {
+    badgeBg: "bg-rose-500/10 dark:bg-rose-950/60 border border-rose-500/30",
+    badgeText: "text-rose-600 dark:text-rose-400",
+    activeBorder: "border-rose-500 dark:border-rose-400",
+    activeGlow: "shadow-xl shadow-rose-500/15",
+    iconBg: "bg-rose-500 text-white",
+    textAccent: "text-rose-600 dark:text-rose-400",
+  },
+  "data-ai": {
+    badgeBg: "bg-indigo-500/10 dark:bg-indigo-950/60 border border-indigo-500/30",
+    badgeText: "text-indigo-600 dark:text-indigo-400",
+    activeBorder: "border-indigo-500 dark:border-indigo-400",
+    activeGlow: "shadow-xl shadow-indigo-500/15",
+    iconBg: "bg-indigo-500 text-white",
+    textAccent: "text-indigo-600 dark:text-indigo-400",
+  },
+};
+
 export default function WhatWeBuild() {
   const [activeIdx, setActiveIdx] = useState(0);
   const rootRef = useRef<HTMLElement>(null);
@@ -37,6 +98,7 @@ export default function WhatWeBuild() {
   }, []);
 
   const activeService = serviceCategories[activeIdx] || serviceCategories[0];
+  const activeStyles = pillarColorStyles[activeService.id] || pillarColorStyles["digital-solutions"];
 
   return (
     <section
@@ -66,6 +128,7 @@ export default function WhatWeBuild() {
           <div className="space-y-3 lg:col-span-6">
             {serviceCategories.map((item, index) => {
               const isActive = index === activeIdx;
+              const styleToken = pillarColorStyles[item.id] || pillarColorStyles["digital-solutions"];
               return (
                 <div
                   key={item.id}
@@ -76,7 +139,7 @@ export default function WhatWeBuild() {
                   {isActive && (
                     <motion.div
                       layoutId="activePillar"
-                      className="absolute inset-0 rounded-2xl bg-white dark:bg-slate-900/90 border-2 border-brand dark:border-indigo-500 shadow-xl shadow-brand/10 z-0"
+                      className={`absolute inset-0 rounded-2xl bg-white dark:bg-slate-900/90 border-2 ${styleToken.activeBorder} ${styleToken.activeGlow} z-0`}
                       transition={{ type: "spring", stiffness: 350, damping: 28 }}
                     />
                   )}
@@ -84,7 +147,7 @@ export default function WhatWeBuild() {
                     <div className="flex items-center gap-4">
                       <span
                         className={`font-mono text-sm font-extrabold transition-colors ${
-                          isActive ? "text-brand dark:text-cyan-400" : "text-slate-500"
+                          isActive ? styleToken.textAccent : "text-slate-500"
                         }`}
                       >
                         {item.number}
@@ -105,8 +168,8 @@ export default function WhatWeBuild() {
                       aria-label={`Explore ${item.title} details`}
                       className={`flex h-8 w-8 items-center justify-center rounded-full transition-all ${
                         isActive
-                          ? "bg-slate-900 text-white dark:bg-indigo-600 dark:text-white"
-                          : "bg-black/5 text-slate-500 group-hover:bg-brand/10 group-hover:text-brand dark:bg-white/10 dark:text-slate-300"
+                          ? styleToken.iconBg
+                          : "bg-black/5 text-slate-500 group-hover:bg-black/10 dark:bg-white/10 dark:text-slate-300"
                       }`}
                     >
                       <ArrowRight className="h-4 w-4" />
@@ -133,7 +196,7 @@ export default function WhatWeBuild() {
                   transition={{ duration: 0.25, ease: "easeOut" }}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-brand/10 px-4 py-1.5 font-mono text-xs font-bold text-brand dark:bg-cyan-950/60 dark:text-cyan-400 dark:border dark:border-cyan-500/30 flex items-center gap-1.5">
+                    <span className={`rounded-full px-4 py-1.5 font-mono text-xs font-bold ${activeStyles.badgeBg} ${activeStyles.badgeText} flex items-center gap-1.5`}>
                       <Layers className="w-3.5 h-3.5" />
                       PILLAR {activeService.number}
                     </span>

@@ -69,7 +69,7 @@ export const serviceCategories: ServiceCategory[] = [
         deliverables: ["Custom Cart & Payment Rail Integration", "Real-time Stock Synchronization", "Order Fulfillment API"]
       }
     ],
-    accentColor: "#5228B9"
+    accentColor: "#0ea5e9"
   },
   {
     id: "technology-services",
@@ -116,7 +116,7 @@ export const serviceCategories: ServiceCategory[] = [
         deliverables: ["24/7 Incident Response", "Patch & Security Updates", "Monthly Health Audits"]
       }
     ],
-    accentColor: "#8F00FF"
+    accentColor: "#8b5cf6"
   },
   {
     id: "business-advisory",
@@ -169,7 +169,7 @@ export const serviceCategories: ServiceCategory[] = [
         deliverables: ["Pricing Model Matrices", "Partner Ecosystem Plans", "Sales Enablement Kits"]
       }
     ],
-    accentColor: "#3B1A8A"
+    accentColor: "#f59e0b"
   },
   {
     id: "investment-consulting",
@@ -222,7 +222,7 @@ export const serviceCategories: ServiceCategory[] = [
         deliverables: ["Board KPI Dashboards", "Burn-rate Controls", "Strategic Milestones Tracker"]
       }
     ],
-    accentColor: "#5228B9"
+    accentColor: "#10b981"
   },
   {
     id: "brand-experience",
@@ -262,7 +262,7 @@ export const serviceCategories: ServiceCategory[] = [
         deliverables: ["Complete Screen Layouts", "Interactive Figma Prototypes", "Design Tokens Spec"]
       }
     ],
-    accentColor: "#8F00FF"
+    accentColor: "#f43f5e"
   },
   {
     id: "data-ai",
@@ -302,6 +302,6 @@ export const serviceCategories: ServiceCategory[] = [
         deliverables: ["Custom AI Search Engines", "Autonomous Operations Agents", "LLM Guardrails & Security"]
       }
     ],
-    accentColor: "#3B1A8A"
+    accentColor: "#6366f1"
   }
 ];

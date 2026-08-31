@@ -92,8 +92,8 @@ function DockItem({
       <Link href={link.href} aria-label={link.label}>
         <motion.div
           style={{ width, height: width }}
-          className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${isActive
-            ? "bg-slate-900 text-white border-slate-800 shadow-md dark:bg-white dark:text-slate-950 dark:border-white"
+          className={`flex items-center justify-center rounded-2xl transition-all duration-300 border ${isActive
+            ? "bg-slate-900 text-white border-slate-800 shadow-lg shadow-indigo-500/20 dark:bg-white dark:text-slate-950 dark:border-white dark:shadow-[0_0_16px_rgba(0,245,212,0.4)]"
             : "bg-white/80 text-slate-700 border-slate-200/80 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
             }`}
         >
@@ -106,7 +106,7 @@ function DockItem({
         <motion.span
           layoutId="navbar-active-indicator"
           transition={{ type: "spring", stiffness: 380, damping: 28 }}
-          className="absolute -bottom-2 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]"
+          className="absolute -bottom-2 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-[0_0_12px_rgba(0,245,212,0.9)]"
         />
       )}
     </div>
@@ -139,14 +139,9 @@ export default function Navbar() {
 
     if (latest <= 10) {
       setHidden(false);
-      return;
-    }
-
-    if (Math.abs(diff) < 5) return;
-
-    if (latest > 80 && diff > 0) {
+    } else if (diff > 10) {
       setHidden(true);
-    } else if (diff < 0) {
+    } else if (diff < -10) {
       setHidden(false);
     }
   });
@@ -191,7 +186,7 @@ export default function Navbar() {
         <motion.div
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
-          className="relative flex items-end gap-2.5 sm:gap-3 px-4 py-2.5 rounded-2xl bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10"
+          className="relative flex items-end gap-2.5 sm:gap-3 px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-[#111827]/85 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
         >
           {/* Desktop Magnified Dock Links */}
           <div className="hidden md:flex items-end gap-2 sm:gap-2.5">
