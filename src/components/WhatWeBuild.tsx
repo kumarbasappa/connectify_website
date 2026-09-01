@@ -130,8 +130,13 @@ export default function WhatWeBuild() {
               const isActive = index === activeIdx;
               const styleToken = pillarColorStyles[item.id] || pillarColorStyles["digital-solutions"];
               return (
-                <div
+                <motion.div
                   key={item.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.45, delay: index * 0.07, type: "spring", stiffness: 280, damping: 24 }}
+                  whileHover={{ y: -6 }}
                   onMouseEnter={() => setActiveIdx(index)}
                   onClick={() => setActiveIdx(index)}
                   className="relative group cursor-pointer rounded-2xl border p-6 transition-all duration-300 border-black/10 dark:border-white/10"
@@ -221,7 +226,7 @@ export default function WhatWeBuild() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
           </div>

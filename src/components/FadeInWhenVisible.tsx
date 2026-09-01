@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 
 interface FadeInProps {
@@ -16,15 +16,20 @@ export default function FadeInWhenVisible({
   direction = "up",
   className = "",
 }: FadeInProps) {
-  const yOffset = direction === "up" ? 24 : direction === "down" ? -24 : 0;
-  const xOffset = direction === "left" ? 24 : direction === "right" ? -24 : 0;
+  const shouldReduceMotion = useReducedMotion();
+  const yOffset = shouldReduceMotion ? 0 : direction === "up" ? 24 : direction === "down" ? -24 : 0;
+  const xOffset = shouldReduceMotion ? 0 : direction === "left" ? 24 : direction === "right" ? -24 : 0;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: yOffset, x: xOffset }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0.2 }
+          : { duration: 0.55, delay, ease: [0.25, 1, 0.5, 1] }
+      }
       className={className}
     >
       {children}

@@ -232,14 +232,21 @@ export default function TechnologyCloud() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
             className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {selectedCategory.techs.map((tech) => (
-              <TechCard3D key={tech.name} tech={tech} />
+            {selectedCategory.techs.map((tech, index) => (
+              <motion.div
+                key={tech.name}
+                initial={{ opacity: 0, y: 20, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: index * 0.08, type: "spring", stiffness: 280, damping: 24 }}
+              >
+                <TechCard3D tech={tech} />
+              </motion.div>
             ))}
           </motion.div>
         </AnimatePresence>

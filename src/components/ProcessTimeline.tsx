@@ -82,9 +82,14 @@ export default function ProcessTimeline() {
           {processSteps.map((step, idx) => {
             const isActive = idx === activeStep;
             return (
-              <button
+              <motion.button
                 key={step.stepNumber}
                 type="button"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.4, delay: idx * 0.06, type: "spring", stiffness: 280, damping: 24 }}
+                whileHover={{ y: -4, scale: 1.02 }}
                 onClick={() => setActiveStep(idx)}
                 className={`relative flex flex-col justify-between rounded-2xl border p-6 text-left transition-all duration-300 ease-in-out ${
                   isActive
@@ -119,7 +124,7 @@ export default function ProcessTimeline() {
                     transition={{ duration: 0.4 }}
                   />
                 </div>
-              </button>
+              </motion.button>
             );
           })}
         </div>

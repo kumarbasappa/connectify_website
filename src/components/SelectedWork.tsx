@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import BorderGlow from "./BorderGlow";
@@ -106,14 +107,22 @@ export default function SelectedWork() {
 
         {/* Project Cards Grid */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredProjects.map((project) => {
+          {featuredProjects.map((project, idx) => {
             const systemMetrics =
               projectMetricsMap[project.slug] || ["Enterprise SLA", "Live System"];
             const categoryBadgeStyle =
               categoryGradients[project.category] ||
               "bg-gradient-to-r from-indigo-500/15 to-purple-500/15 text-indigo-700 dark:text-cyan-300 border border-indigo-500/30";
             return (
-              <div key={project.slug} data-project-card>
+              <motion.div
+                key={project.slug}
+                data-project-card
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.08, type: "spring", stiffness: 280, damping: 24 }}
+                whileHover={{ y: -6, scale: 1.015 }}
+              >
                 <BorderGlow
                   backgroundColor="var(--card-bg)"
                   borderRadius={20}
@@ -125,7 +134,7 @@ export default function SelectedWork() {
                 >
                   <Link
                     href={`/case-studies/${project.slug}`}
-                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-indigo-500/60 hover:shadow-2xl hover:shadow-indigo-500/15 dark:border-white/10 dark:bg-slate-900/90 dark:hover:border-cyan-500/60 dark:hover:shadow-[0_0_30px_rgba(56,189,248,0.2)]"
+                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md transition-all duration-500 ease-out hover:border-indigo-500/60 hover:shadow-2xl hover:shadow-indigo-500/15 dark:border-white/10 dark:bg-slate-900/90 dark:hover:border-cyan-500/60 dark:hover:shadow-[0_0_30px_rgba(56,189,248,0.2)]"
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -133,20 +142,23 @@ export default function SelectedWork() {
                         src={project.image}
                         alt={project.name}
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
 
                       {/* Live System Quantitative Impact Metric Badges Overlay */}
                       <div className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 z-10">
                         {systemMetrics.map((metric, mIdx) => (
-                          <div
+                          <motion.div
                             key={mIdx}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.35, delay: idx * 0.08 + mIdx * 0.1, type: "spring", stiffness: 350 }}
                             className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-slate-950/85 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-400 backdrop-blur-md shadow-lg"
                           >
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping flex-none" />
                             <span>{metric}</span>
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                     </div>
@@ -180,7 +192,7 @@ export default function SelectedWork() {
                     </div>
                   </Link>
                 </BorderGlow>
-              </div>
+              </motion.div>
             );
           })}
         </div>

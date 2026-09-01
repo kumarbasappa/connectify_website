@@ -239,6 +239,9 @@ export default function Navbar() {
         className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-end w-max max-w-[95vw]"
       >
         <motion.div
+          animate={{ y: [0, -3, 0] }}
+          whileHover={{ y: -5, scale: 1.008 }}
+          transition={{ y: { repeat: Infinity, duration: 4, ease: "easeInOut" }, scale: { duration: 0.2 } }}
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
           className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 rounded-2xl bg-white/80 dark:bg-[#0f172a]/85 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"

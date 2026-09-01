@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { motion } from "framer-motion";
 
 interface MarqueeItemProps {
   name: string;
@@ -86,7 +87,11 @@ export function MarqueeLogoPill({ name, logoSvg, industry, accentColor }: Marque
   const badgeStyle = badgeColorMap[accentColor] || badgeColorMap.sky;
 
   return (
-    <div className="inline-flex items-center gap-3.5 px-5 py-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-900/60 backdrop-blur-md shadow-sm hover:border-indigo-400/60 dark:hover:border-cyan-400/50 hover:shadow-md transition-all duration-300 group shrink-0 will-change-transform transform-gpu [image-rendering:-webkit-optimize-contrast] cursor-pointer">
+    <motion.div
+      whileHover={{ scale: 1.05, y: -3 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      className="inline-flex items-center gap-3.5 px-5 py-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-900/60 backdrop-blur-md shadow-sm hover:border-indigo-400/60 dark:hover:border-cyan-400/50 hover:shadow-md transition-all duration-300 group shrink-0 will-change-transform transform-gpu [image-rendering:-webkit-optimize-contrast] cursor-pointer"
+    >
       {/* High-Res Logo Container */}
       <div className="flex items-center justify-center h-7 w-auto min-w-[80px] max-w-[125px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -105,7 +110,7 @@ export function MarqueeLogoPill({ name, logoSvg, industry, accentColor }: Marque
       <span className={`text-[11px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full border ${badgeStyle}`}>
         {industry}
       </span>
-    </div>
+    </motion.div>
   );
 }
 

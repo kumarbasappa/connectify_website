@@ -365,10 +365,10 @@ export default function Hero() {
         {/* Status Pill Badge with Animated Radar Ping */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: 10 },
+            hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
           className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-5 md:mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-cyan-300"
         >
           <span className="relative flex h-2.5 w-2.5 items-center justify-center">
@@ -385,10 +385,10 @@ export default function Hero() {
         {/* Scaled Responsive Headline */}
         <motion.h1
           variants={{
-            hidden: { opacity: 0, y: 12 },
+            hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
           className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[64px] md:leading-[1.12] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-6 sm:mb-8 max-w-4xl sm:max-w-5xl"
         >
           We engineer scalable digital products,{" "}
@@ -400,32 +400,40 @@ export default function Hero() {
         {/* Subtitle */}
         <motion.p
           variants={{
-            hidden: { opacity: 0, y: 10 },
+            hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
           className="font-sans text-base sm:text-lg md:text-xl leading-relaxed text-slate-600 dark:text-white/80 max-w-2xl sm:max-w-3xl mx-auto mb-8 md:mb-10 font-medium tracking-wide"
         >
           Connectify helps ambitious brands and growing enterprises build high-performance web applications, robust cloud architecture, and production-ready AI tools.
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTAs with Animated Gradient Glow */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: 12 },
+            hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto mt-2"
         >
-          <Link
-            href="/contact"
-            aria-label="Start a Project with Connectify"
-            className="group relative inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white shadow-lg shadow-indigo-500/25 dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 dark:hover:from-cyan-400 dark:hover:via-indigo-400 dark:hover:to-fuchsia-400 dark:shadow-cyan-500/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
-          >
-            <span>Start a Project</span>
-            <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </Link>
+          <div className="relative group w-full sm:w-auto">
+            {/* Animated Pulsing Glow Backdrop */}
+            <motion.div
+              animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.97, 1.03, 0.97] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-md opacity-60 dark:from-cyan-400 dark:via-indigo-500 dark:to-fuchsia-500"
+            />
+            <Link
+              href="/contact"
+              aria-label="Start a Project with Connectify"
+              className="relative group inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white shadow-lg shadow-indigo-500/25 dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 dark:hover:from-cyan-400 dark:hover:via-indigo-400 dark:hover:to-fuchsia-400 dark:shadow-cyan-500/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
+            >
+              <span>Start a Project</span>
+              <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </div>
 
           <Link
             href="/case-studies"
