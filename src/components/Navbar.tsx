@@ -17,8 +17,6 @@ import {
   Home,
   Info,
   Layers,
-  Cpu,
-  GitBranch,
   Briefcase,
   Mail,
   Sun,
@@ -33,8 +31,6 @@ const navLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "About", href: "/about", icon: Info },
   { label: "Services", href: "/services", icon: Layers },
-  { label: "Tech Stack", href: "/services#tech-stack", icon: Cpu },
-  { label: "Process", href: "/services#process", icon: GitBranch },
   { label: "Work", href: "/case-studies", icon: Briefcase },
   { label: "Contact", href: "/contact", icon: Mail },
 ];
