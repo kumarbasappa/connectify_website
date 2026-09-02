@@ -331,37 +331,6 @@ export default function Hero() {
         }}
         className="relative z-20 w-full max-w-[980px] mx-auto px-0 flex flex-col items-center text-center my-auto -translate-y-4 md:-translate-y-6"
       >
-        {/* 1. Official Connectify Brand Logo Centered Near Top */}
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, scale: 0.9, y: 12 },
-            show: { opacity: 1, scale: 1, y: 0 },
-          }}
-          transition={{ duration: 0.4 }}
-          className="mt-1 sm:mt-2 mb-4"
-        >
-          <motion.div
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="group relative flex items-center justify-center rounded-2xl px-5 py-2.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_40px_rgba(99,102,241,0.15)] bg-white/60 border border-slate-200/80 dark:shadow-[0_0_50px_rgba(99,102,241,0.25)] dark:bg-slate-900/60 dark:border-indigo-500/20"
-          >
-            {/* Light Mode Purple Logo */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/connectifylogo-purple.png"
-              alt="Connectify Brand Logo"
-              className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 dark:hidden"
-            />
-            {/* Dark Mode White Logo */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/connectifylogo-white.png"
-              alt="Connectify Brand Logo"
-              className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
-            />
-          </motion.div>
-        </motion.div>
-
         {/* Status Pill Badge with Animated Radar Ping */}
         <motion.div
           variants={{
@@ -369,7 +338,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-          className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-5 md:mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-cyan-300"
+          className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md mb-5 md:mb-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-cyan-300"
         >
           <span className="relative flex h-2.5 w-2.5 items-center justify-center">
             <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-40" />
@@ -377,8 +346,8 @@ export default function Hero() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
           </span>
           <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-cyan-400" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-extrabold">
-            ENTERPRISE SOFTWARE &amp; AI ENGINEERING
+          <span className="font-mono text-xs font-semibold tracking-wider">
+            Enterprise Software &amp; AI Engineering
           </span>
         </motion.div>
 
@@ -389,7 +358,7 @@ export default function Hero() {
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
-          className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[64px] md:leading-[1.12] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-6 sm:mb-8 max-w-4xl sm:max-w-5xl"
+          className="font-display text-4xl sm:text-5xl md:text-6xl md:leading-[1.12] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-6 sm:mb-8 max-w-4xl sm:max-w-5xl"
         >
           We engineer scalable digital products,{" "}
           <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-violet-600 dark:from-cyan-300 dark:via-indigo-300 dark:to-fuchsia-400 bg-clip-text text-transparent">
@@ -428,7 +397,7 @@ export default function Hero() {
             <Link
               href="/contact"
               aria-label="Start a Project with Connectify"
-              className="relative group inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white shadow-lg shadow-indigo-500/25 dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 dark:hover:from-cyan-400 dark:hover:via-indigo-400 dark:hover:to-fuchsia-400 dark:shadow-cyan-500/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
+              className="relative group inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white shadow-lg shadow-indigo-500/25 dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 dark:hover:from-cyan-400 dark:hover:via-indigo-400 dark:hover:to-fuchsia-400 dark:shadow-cyan-500/25 font-display text-sm font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] w-full sm:w-auto min-w-[180px]"
             >
               <span>Start a Project</span>
               <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -438,7 +407,7 @@ export default function Hero() {
           <Link
             href="/case-studies"
             aria-label="Explore Our Case Studies"
-            className="inline-flex items-center justify-center px-7 py-3.5 border border-slate-300 dark:border-white/20 hover:border-indigo-400 dark:hover:border-cyan-400 bg-white/80 dark:bg-white/5 text-slate-900 dark:text-white hover:bg-white dark:hover:bg-white/10 shadow-xs backdrop-blur-md font-display text-[14px] font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[170px]"
+            className="inline-flex items-center justify-center px-7 py-3.5 border border-slate-300 dark:border-white/20 hover:border-indigo-400 dark:hover:border-cyan-400 bg-white/80 dark:bg-white/5 text-slate-900 dark:text-white hover:bg-white dark:hover:bg-white/10 shadow-xs backdrop-blur-md font-display text-sm font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto min-w-[170px]"
           >
             Explore Our Work
           </Link>

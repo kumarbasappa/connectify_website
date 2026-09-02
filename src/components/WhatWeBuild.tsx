@@ -111,9 +111,9 @@ export default function WhatWeBuild() {
 
       <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
         <div data-services-heading className="max-w-3xl">
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-brand dark:text-cyan-400 flex items-center gap-2">
+          <p className="font-mono text-xs font-bold tracking-wider text-brand dark:text-cyan-400 flex items-center gap-2">
             <Cpu className="w-3.5 h-3.5" />
-            02 / SERVICES SUITE
+            02 / Services Suite
           </p>
           <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-5xl dark:text-white">
             Technology consulting &amp; strategic advisory pillars.
@@ -199,7 +199,7 @@ export default function WhatWeBuild() {
                           {item.description}
                         </p>
                         <div className="mt-4">
-                          <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
+                          <h4 className="font-mono text-xs font-semibold tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
                             <ShieldAlert className="w-3.5 h-3.5" /> Key Challenges Solved:
                           </h4>
                           <ul className="mt-2 space-y-1.5">
@@ -212,12 +212,12 @@ export default function WhatWeBuild() {
                           </ul>
                         </div>
                         <div className="mt-4">
-                          <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-purple-600 dark:text-indigo-400 flex items-center gap-1.5">
+                          <h4 className="font-mono text-xs font-semibold tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
                             <Sparkles className="w-3.5 h-3.5" /> Deliverables:
                           </h4>
                           <div className="mt-2 flex flex-wrap gap-1.5">
                             {item.deliverables.map((del, idx) => (
-                              <span key={idx} className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+                              <span key={idx} className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
                                 {del}
                               </span>
                             ))}
@@ -245,9 +245,9 @@ export default function WhatWeBuild() {
                   <div className="flex items-center justify-between">
                     <span className={`rounded-full px-4 py-1.5 font-mono text-xs font-bold ${activeStyles.badgeBg} ${activeStyles.badgeText} flex items-center gap-1.5`}>
                       <Layers className="w-3.5 h-3.5" />
-                      PILLAR {activeService.number}
+                      Pillar {activeService.number}
                     </span>
-                    <span className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
+                    <span className="font-mono text-xs tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
                       Interactive Detail Pane
                     </span>
                   </div>
@@ -261,7 +261,7 @@ export default function WhatWeBuild() {
 
                   {/* Key Challenges Solved */}
                   <div className="mt-8">
-                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-cyan-400 flex items-center gap-1.5">
+                    <h4 className="font-mono text-xs font-semibold tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
                       <ShieldAlert className="w-3.5 h-3.5" />
                       Key Business Challenges Solved:
                     </h4>
@@ -280,7 +280,7 @@ export default function WhatWeBuild() {
 
                   {/* Enterprise Deliverables */}
                   <div className="mt-8 border-t border-slate-200/90 pt-6 dark:border-white/10">
-                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-indigo-400 flex items-center gap-1.5">
+                    <h4 className="font-mono text-xs font-semibold tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
                       Production Deliverables:
                     </h4>

@@ -100,9 +100,9 @@ function DockItem({
 
       <Link href={link.href} aria-label={`Navigate to ${link.label}`}>
         <motion.div
-          whileTap={{ scale: 0.85, y: -3 }}
-          style={{ width, height: width }}
-          className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${
+          whileTap={{ scale: 0.9, y: -2 }}
+          style={{ height: width }}
+          className={`flex items-center gap-2 px-3 sm:px-3.5 rounded-2xl transition-all duration-200 border ${
             isActive
               ? "bg-slate-900 text-white border-slate-800 shadow-xl shadow-indigo-500/25 dark:bg-white dark:text-slate-950 dark:border-white dark:shadow-[0_0_20px_rgba(56,189,248,0.5)]"
               : "bg-white/80 text-slate-700 border-slate-200/90 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
@@ -111,6 +111,7 @@ function DockItem({
           <motion.div style={{ width: iconSize, height: iconSize }} className="flex items-center justify-center flex-none">
             <Icon className="w-full h-full" />
           </motion.div>
+          <span className="font-display text-xs font-semibold whitespace-nowrap">{link.label}</span>
         </motion.div>
       </Link>
 
