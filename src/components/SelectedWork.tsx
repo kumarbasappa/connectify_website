@@ -129,6 +129,7 @@ export default function SelectedWork() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.5, delay: idx * 0.08, type: "spring", stiffness: 280, damping: 24 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
                 >
                 <BorderGlow
                   backgroundColor="var(--card-bg)"

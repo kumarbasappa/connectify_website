@@ -174,14 +174,15 @@ export default function TechnologyCloud() {
 
   const categoryIcons: Record<string, React.ReactNode> = {
     frontend: <Code2 className="w-4 h-4" />,
+    mobile: <ShieldCheck className="w-4 h-4" />,
     backend: <Server className="w-4 h-4" />,
-    "data-ai": <Database className="w-4 h-4" />,
-    "cloud-infra": <Cloud className="w-4 h-4" />,
+    database: <Database className="w-4 h-4" />,
+    "cloud-ai": <Cloud className="w-4 h-4" />,
   };
 
   return (
     <section className="relative bg-background py-24 lg:py-32 border-t border-slate-200/90 dark:border-white/10 overflow-hidden">
-      <div className="mx-auto w-full max-w-7xl px-0 relative z-10">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 relative z-10">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-brand dark:text-cyan-400 flex items-center gap-2">
@@ -228,28 +229,31 @@ export default function TechnologyCloud() {
           })}
         </div>
 
-        {/* Active Tech Stack Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {selectedCategory.techs.map((tech, index) => (
-              <motion.div
-                key={tech.name}
-                initial={{ opacity: 0, y: 20, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.08, type: "spring", stiffness: 280, damping: 24 }}
-              >
-                <TechCard3D tech={tech} />
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* Active Tech Stack Grid with Smooth Layout Pop Transition & Weightless Lift */}
+        <motion.div layout className="mt-10">
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {selectedCategory.techs.map((tech, index) => (
+                <motion.div
+                  key={tech.name}
+                  layout
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm p-6 shadow-sm hover:shadow-2xl hover:shadow-indigo-500/15 dark:hover:shadow-cyan-500/15 transition-all"
+                >
+                  <TechCard3D tech={tech} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );
