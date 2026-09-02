@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import BorderGlow from "./BorderGlow";
 import { projects } from "@/lib/projects";
 import { ArrowRight, Activity } from "lucide-react";
+import { AntiGravityElement } from "./AntiGravity";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -114,15 +115,21 @@ export default function SelectedWork() {
               categoryGradients[project.category] ||
               "bg-gradient-to-r from-indigo-500/15 to-purple-500/15 text-indigo-700 dark:text-cyan-300 border border-indigo-500/30";
             return (
-              <motion.div
+              <AntiGravityElement
                 key={project.slug}
-                data-project-card
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: idx * 0.08, type: "spring", stiffness: 280, damping: 24 }}
-                whileHover={{ y: -6, scale: 1.015 }}
+                floatDistance={10}
+                floatDuration={4.8 + idx * 0.5}
+                floatDelay={idx * 0.12}
+                intensity={0.22}
+                scaleOnHover={1.02}
               >
+                <motion.div
+                  data-project-card
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.08, type: "spring", stiffness: 280, damping: 24 }}
+                >
                 <BorderGlow
                   backgroundColor="var(--card-bg)"
                   borderRadius={20}
@@ -142,19 +149,19 @@ export default function SelectedWork() {
                         src={project.image}
                         alt={project.name}
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
 
                       {/* Live System Quantitative Impact Metric Badges Overlay */}
-                      <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2 z-10">
+                      <div className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 z-10">
                         {systemMetrics.map((metric, mIdx) => (
                           <motion.div
                             key={mIdx}
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.35, delay: idx * 0.08 + mIdx * 0.1, type: "spring", stiffness: 350 }}
-                            className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-slate-950/90 px-3 py-1 font-mono text-xs font-semibold text-emerald-400 backdrop-blur-md shadow-lg"
+                            className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-slate-950/85 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-400 backdrop-blur-md shadow-lg"
                           >
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping flex-none" />
                             <span>{metric}</span>
@@ -166,12 +173,12 @@ export default function SelectedWork() {
                     <div className="flex flex-1 flex-col justify-between p-6">
                       <div>
                         <div className="flex items-center justify-between">
-                          <span className={`font-mono text-xs font-semibold px-3 py-1 rounded-full ${categoryBadgeStyle}`}>
+                          <span className={`font-mono text-[10px] font-bold px-2.5 py-1 rounded-full ${categoryBadgeStyle}`}>
                             {project.category}
                           </span>
                           <ArrowRight className="h-4 w-4 text-slate-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-cyan-400" />
                         </div>
-                        <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-slate-950 transition-colors group-hover:text-indigo-600 dark:text-white dark:group-hover:text-cyan-400">
+                        <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-slate-950 transition-colors group-hover:text-brand dark:text-white dark:group-hover:text-cyan-400">
                           {project.name}
                         </h3>
                         <p className="font-sans mt-2 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 line-clamp-2">
@@ -193,7 +200,8 @@ export default function SelectedWork() {
                   </Link>
                 </BorderGlow>
               </motion.div>
-            );
+            </AntiGravityElement>
+          );
           })}
         </div>
 

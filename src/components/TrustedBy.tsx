@@ -107,7 +107,7 @@ export function MarqueeLogoPill({ name, logoSvg, industry, accentColor }: Marque
       <span className="w-px h-4 bg-slate-200 dark:bg-white/10 group-hover:bg-slate-300 dark:group-hover:bg-white/20 transition-colors" />
 
       {/* Domain Badge */}
-      <span className={`text-xs font-semibold tracking-wide px-2.5 py-0.5 rounded-full border ${badgeStyle}`}>
+      <span className={`text-[11px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full border ${badgeStyle}`}>
         {industry}
       </span>
     </motion.div>
@@ -120,8 +120,8 @@ export default function TrustedBy() {
   return (
     <section className="relative overflow-hidden border-y border-black/10 bg-background py-12 dark:border-white/10">
       <div className="mx-auto max-w-7xl px-0 text-center">
-        <p className="font-mono text-xs font-bold tracking-wider text-slate-700 dark:text-cyan-400">
-          Industries We Build For
+        <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-900 dark:text-cyan-400">
+          INDUSTRIES WE BUILD FOR
         </p>
       </div>
 

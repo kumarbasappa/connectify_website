@@ -100,9 +100,9 @@ function DockItem({
 
       <Link href={link.href} aria-label={`Navigate to ${link.label}`}>
         <motion.div
-          whileTap={{ scale: 0.9, y: -2 }}
-          style={{ height: width }}
-          className={`flex items-center gap-2 px-3 sm:px-3.5 rounded-2xl transition-all duration-200 border ${
+          whileTap={{ scale: 0.85, y: -3 }}
+          style={{ width, height: width }}
+          className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${
             isActive
               ? "bg-slate-900 text-white border-slate-800 shadow-xl shadow-indigo-500/25 dark:bg-white dark:text-slate-950 dark:border-white dark:shadow-[0_0_20px_rgba(56,189,248,0.5)]"
               : "bg-white/80 text-slate-700 border-slate-200/90 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
@@ -111,7 +111,6 @@ function DockItem({
           <motion.div style={{ width: iconSize, height: iconSize }} className="flex items-center justify-center flex-none">
             <Icon className="w-full h-full" />
           </motion.div>
-          <span className="font-display text-xs font-semibold whitespace-nowrap">{link.label}</span>
         </motion.div>
       </Link>
 
@@ -202,6 +201,9 @@ export default function Navbar() {
   // Dock hides when typing in forms or scrolling down, unless mouse is near bottom edge
   const shouldHideDock = (isInputFocused || isScrollingDown) && !nearBottomEdge;
 
+  const [themeHovered, setThemeHovered] = useState(false);
+  const [ctaHovered, setCtaHovered] = useState(false);
+
   return (
     <>
       {/* Top-Left Fixed Corporate Brand Logo Badge */}
@@ -242,7 +244,7 @@ export default function Navbar() {
         <motion.div
           animate={{ y: [0, -3, 0] }}
           whileHover={{ y: -5, scale: 1.008 }}
-          transition={{ y: { repeat: Infinity, duration: 4, ease: "easeInOut" }, scale: { duration: 0.2 } }}
+          transition={{ y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" }, scale: { duration: 0.2 } }}
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
           className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 rounded-2xl bg-white/80 dark:bg-[#0f172a]/85 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
@@ -269,30 +271,68 @@ export default function Navbar() {
 
           {/* Utilities & Action Buttons */}
           <div className="flex items-center gap-2">
-            {/* Theme Toggle Button */}
+            {/* Theme Toggle Button with Floating Tooltip */}
             {mounted && (
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 text-slate-800 transition-colors hover:bg-white dark:border-white/10 dark:bg-slate-900/80 dark:text-white/90 dark:hover:bg-slate-800"
-                aria-label="Toggle theme"
+              <div
+                className="relative flex flex-col items-center"
+                onMouseEnter={() => setThemeHovered(true)}
+                onMouseLeave={() => setThemeHovered(false)}
               >
-                {theme === "dark" ? (
-                  <Sun className="h-4 w-4 text-amber-400" />
-                ) : (
-                  <Moon className="h-4 w-4 text-slate-700" />
-                )}
-              </button>
+                <AnimatePresence>
+                  {themeHovered && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                      animate={{ opacity: 1, y: -12, scale: 1.05 }}
+                      exit={{ opacity: 0, y: 6, scale: 0.8 }}
+                      transition={{ type: "spring", stiffness: 420, damping: 22 }}
+                      className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-[11px] font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
+                    >
+                      {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 text-slate-800 transition-all hover:scale-105 hover:bg-white dark:border-white/10 dark:bg-slate-900/80 dark:text-white/90 dark:hover:bg-slate-800"
+                  aria-label="Toggle theme"
+                >
+                  {theme === "dark" ? (
+                    <Sun className="h-4 w-4 text-amber-400" />
+                  ) : (
+                    <Moon className="h-4 w-4 text-slate-700" />
+                  )}
+                </button>
+              </div>
             )}
 
-            {/* Let's Talk CTA */}
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-1.5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 px-4 py-2.5 text-xs font-bold shadow-md transition-all duration-300 h-10"
+            {/* Unified Primary CTA with Floating Tooltip & Magnetic Hover */}
+            <div
+              className="relative flex flex-col items-center"
+              onMouseEnter={() => setCtaHovered(true)}
+              onMouseLeave={() => setCtaHovered(false)}
             >
-              <span>Let&apos;s Talk</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
+              <AnimatePresence>
+                {ctaHovered && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                    animate={{ opacity: 1, y: -12, scale: 1.05 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.8 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 22 }}
+                    className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-[11px] font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
+                  >
+                    Schedule Consultation
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <Link
+                href="/contact"
+                className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 px-4 py-2.5 text-xs font-extrabold shadow-lg shadow-indigo-500/25 dark:shadow-cyan-500/25 transition-all duration-300 h-10 hover:scale-[1.04]"
+              >
+                <span>Start a Project</span>
+                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
 
             {/* Mobile Hamburger Toggle Button */}
             <button
