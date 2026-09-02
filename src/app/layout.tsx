@@ -88,8 +88,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="light h-full antialiased"
-      style={{ colorScheme: "light" }}
+      className="h-full antialiased"
       suppressHydrationWarning
     >
       <head>

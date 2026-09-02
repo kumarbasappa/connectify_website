@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
 interface AntiGravityProps {
@@ -25,6 +25,7 @@ export function AntiGravityElement({
   scaleOnHover = 1.03,
 }: AntiGravityProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -34,7 +35,7 @@ export function AntiGravityElement({
   const springY = useSpring(mouseY, springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    if (shouldReduceMotion || !ref.current) return;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
     const centerX = left + width / 2;
     const centerY = top + height / 2;
@@ -58,7 +59,7 @@ export function AntiGravityElement({
       onMouseLeave={handleMouseLeave}
       style={{ x: springX, y: springY }}
       animate={
-        enableFloat
+        enableFloat && !shouldReduceMotion
           ? {
               y: [0, -floatDistance, 0],
             }

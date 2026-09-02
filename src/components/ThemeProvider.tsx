@@ -1,63 +1,63 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from "next-themes";
 
-type Theme = "light" | "dark";
-
-interface ThemeContextType {
-  theme: Theme;
+interface CustomThemeContextType {
+  theme: string;
+  setTheme: (theme: string) => void;
   toggleTheme: () => void;
+  mounted: boolean;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
-  theme: "light",
+const CustomThemeContext = createContext<CustomThemeContextType>({
+  theme: "dark",
+  setTheme: () => {},
   toggleTheme: () => {},
+  mounted: false,
 });
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+function ThemeStateWrapper({ children }: { children: React.ReactNode }) {
+  const { theme, setTheme, resolvedTheme } = useNextTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem("connectify-theme") as Theme | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initialTheme: Theme = savedTheme ? savedTheme : (prefersDark ? "dark" : "light");
-
-    setTheme(initialTheme);
-    if (initialTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-      document.documentElement.style.colorScheme = "dark";
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-      document.documentElement.style.colorScheme = "light";
-    }
   }, []);
 
   const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-    localStorage.setItem("connectify-theme", nextTheme);
-    if (nextTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-      document.documentElement.style.colorScheme = "dark";
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-      document.documentElement.style.colorScheme = "light";
-    }
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
+  const currentTheme = mounted ? (theme || resolvedTheme || "dark") : "dark";
+
   return (
-    <ThemeContext.Provider value={{ theme: mounted ? theme : "light", toggleTheme }}>
+    <CustomThemeContext.Provider
+      value={{
+        theme: currentTheme,
+        setTheme,
+        toggleTheme,
+        mounted,
+      }}
+    >
       {children}
-    </ThemeContext.Provider>
+    </CustomThemeContext.Provider>
+  );
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="dark"
+      enableSystem
+      disableTransitionOnChange={false}
+    >
+      <ThemeStateWrapper>{children}</ThemeStateWrapper>
+    </NextThemesProvider>
   );
 }
 
 export function useTheme() {
-  return useContext(ThemeContext);
+  return useContext(CustomThemeContext);
 }
