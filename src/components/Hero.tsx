@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
@@ -323,10 +323,12 @@ export default function Hero() {
         initial="hidden"
         animate="show"
         variants={{
-          hidden: {},
+          hidden: { opacity: 0 },
           show: {
+            opacity: 1,
             transition: {
-              staggerChildren: 0.08,
+              staggerChildren: 0.12,
+              delayChildren: 0.05,
             },
           },
         }}
@@ -335,10 +337,10 @@ export default function Hero() {
         {/* 1. Official Connectify Brand Logo Centered Near Top */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, scale: 0.9, y: 12 },
+            hidden: { opacity: 0, scale: 0.9, y: 16 },
             show: { opacity: 1, scale: 1, y: 0 },
           }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
           className="mt-1 sm:mt-2 mb-4"
         >
           <AntiGravityElement floatDistance={10} floatDuration={4.2} intensity={0.25} scaleOnHover={1.05}>
@@ -361,13 +363,13 @@ export default function Hero() {
           </AntiGravityElement>
         </motion.div>
 
-        {/* Status Pill Badge with Animated Radar Ping */}
+        {/* 2. Status Pill Eyebrow Badge (Fades + Slides Up First) */}
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+          transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
           className="mb-5 md:mb-6"
         >
           <AntiGravityElement floatDistance={8} floatDuration={5.2} floatDelay={0.5} intensity={0.18}>
@@ -385,13 +387,13 @@ export default function Hero() {
           </AntiGravityElement>
         </motion.div>
 
-        {/* Scaled Responsive Headline */}
+        {/* 3. Main Headline (Fades + Slides Up Next) */}
         <motion.h1
           variants={{
             hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
           className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[64px] md:leading-[1.12] md:tracking-[-0.03em] font-extrabold text-slate-950 dark:text-white mb-6 sm:mb-8 max-w-4xl sm:max-w-5xl"
         >
           We engineer scalable digital products,{" "}
@@ -400,55 +402,79 @@ export default function Hero() {
           </span>
         </motion.h1>
 
-        {/* Subtitle */}
+        {/* 4. Subtitle Paragraph (Fades + Slides Up Following Headline) */}
         <motion.p
           variants={{
             hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
           className="font-sans text-base sm:text-lg md:text-xl leading-relaxed text-slate-600 dark:text-white/80 max-w-2xl sm:max-w-3xl mx-auto mb-8 md:mb-10 font-medium tracking-wide"
         >
           Connectify helps ambitious brands and growing enterprises build high-performance web applications, robust cloud architecture, and production-ready AI tools.
         </motion.p>
 
-        {/* CTAs with Anti-Gravity Magnetic Pull */}
+        {/* 5. CTA Buttons Container (Staggered Entrance for Primary and Secondary Buttons) */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: 20 },
-            show: { opacity: 1, y: 0 },
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
           }}
-          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 w-full sm:w-auto mt-2"
         >
-          <AntiGravityElement floatDistance={12} floatDuration={4.8} intensity={0.3} scaleOnHover={1.04}>
-            <div className="relative group w-full sm:w-auto">
-              {/* Animated Pulsing Glow Backdrop */}
-              <motion.div
-                animate={{ opacity: [0.4, 0.85, 0.4], scale: [0.97, 1.04, 0.97] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-md opacity-60 dark:from-cyan-400 dark:via-indigo-500 dark:to-fuchsia-500"
-              />
-              <Link
-                href="/contact"
-                aria-label="Start a Project with Connectify"
-                className="relative group inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white shadow-lg shadow-indigo-500/25 dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 dark:hover:from-cyan-400 dark:hover:via-indigo-400 dark:hover:to-fuchsia-400 dark:shadow-cyan-500/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[180px]"
-              >
-                <span>Start a Project</span>
-                <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </AntiGravityElement>
+          {/* Primary CTA: Start a Project */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 16 },
+              show: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
+            className="w-full sm:w-auto"
+          >
+            <AntiGravityElement floatDistance={12} floatDuration={4.8} intensity={0.3} scaleOnHover={1.04}>
+              <div className="relative group w-full sm:w-auto">
+                {/* Animated Pulsing Glow Backdrop */}
+                <motion.div
+                  animate={{ opacity: [0.4, 0.85, 0.4], scale: [0.97, 1.04, 0.97] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-md opacity-60 dark:from-cyan-400 dark:via-indigo-500 dark:to-fuchsia-500"
+                />
+                <Link
+                  href="/contact"
+                  aria-label="Start a Project with Connectify"
+                  className="relative group inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white shadow-lg shadow-indigo-500/25 dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 dark:hover:from-cyan-400 dark:hover:via-indigo-400 dark:hover:to-fuchsia-400 dark:shadow-cyan-500/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[180px]"
+                >
+                  <span>Start a Project</span>
+                  <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </AntiGravityElement>
+          </motion.div>
 
-          <AntiGravityElement floatDistance={10} floatDuration={5.5} floatDelay={0.4} intensity={0.25} scaleOnHover={1.03}>
-            <Link
-              href="/case-studies"
-              aria-label="Explore Our Case Studies"
-              className="inline-flex items-center justify-center px-7 py-3.5 border border-slate-300 dark:border-white/20 hover:border-indigo-400 dark:hover:border-cyan-400 bg-white/80 dark:bg-white/5 text-slate-900 dark:text-white hover:bg-white dark:hover:bg-white/10 shadow-xs backdrop-blur-md font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[170px]"
-            >
-              Explore Our Work
-            </Link>
-          </AntiGravityElement>
+          {/* Secondary CTA: Explore Our Work */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 16 },
+              show: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
+            className="w-full sm:w-auto"
+          >
+            <AntiGravityElement floatDistance={10} floatDuration={5.5} floatDelay={0.4} intensity={0.25} scaleOnHover={1.03}>
+              <Link
+                href="/case-studies"
+                aria-label="Explore Our Case Studies"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-slate-300 dark:border-white/20 hover:border-indigo-400 dark:hover:border-cyan-400 bg-white/80 dark:bg-white/5 text-slate-900 dark:text-white hover:bg-white dark:hover:bg-white/10 shadow-xs backdrop-blur-md font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[170px]"
+              >
+                Explore Our Work
+              </Link>
+            </AntiGravityElement>
+          </motion.div>
         </motion.div>
 
         {/* Counter Ribbon - Commented out per request */}
