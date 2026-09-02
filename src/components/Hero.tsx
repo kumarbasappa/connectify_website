@@ -292,17 +292,13 @@ export default function Hero() {
   return (
     <section
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-[calc(100vh-80px)] overflow-hidden flex flex-col justify-center items-center pt-16 pb-40 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300"
+      className="relative w-full min-h-[100dvh] min-h-screen overflow-hidden flex flex-col justify-center items-center pt-12 pb-32 bg-[#f8fafc] dark:bg-[#080c14] transition-colors duration-300"
     >
       {/* Full-Bleed Canvas */}
       <FluidWarpGridCanvas />
 
-      {/* Multi-Color Ambient Glow Mesh with Zero-G Drift Keyframes */}
-      <motion.div
-        animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-      >
+      {/* Multi-Color Ambient Glow Mesh */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         {/* Light Mode Glows */}
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-indigo-500/15 rounded-full blur-[120px] dark:hidden" />
         <div className="absolute top-1/3 -left-32 w-[500px] h-[400px] bg-violet-500/12 rounded-full blur-[120px] dark:hidden" />
@@ -312,7 +308,7 @@ export default function Hero() {
         <div className="hidden dark:block absolute -top-24 left-1/2 -translate-x-1/2 w-[750px] h-[550px] bg-indigo-500/25 rounded-full blur-[130px]" />
         <div className="hidden dark:block absolute top-1/3 -left-32 w-[550px] h-[450px] bg-cyan-400/20 rounded-full blur-[130px]" />
         <div className="hidden dark:block absolute top-1/4 -right-32 w-[550px] h-[450px] bg-fuchsia-500/20 rounded-full blur-[130px]" />
-      </motion.div>
+      </div>
 
       {/* Dynamic Cursor-Follow Radial Glow */}
       <div
@@ -322,7 +318,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Main Hero Content Container - Optically centered upward with pb-40 clearance */}
+      {/* Main Hero Content Container - Optically centered upward with generous bottom clearance */}
       <motion.div
         initial="hidden"
         animate="show"
@@ -334,19 +330,48 @@ export default function Hero() {
             },
           },
         }}
-        className="relative z-20 w-full max-w-[980px] mx-auto px-4 flex flex-col items-center text-center my-auto"
+        className="relative z-20 w-full max-w-[980px] mx-auto px-0 flex flex-col items-center text-center my-auto -translate-y-2 md:-translate-y-4 pb-20 sm:pb-28"
       >
-        {/* Status Pill Badge with Animated Radar Ping & Zero-G Drift */}
+        {/* 1. Official Connectify Brand Logo Centered Near Top */}
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, scale: 0.9, y: 12 },
+            show: { opacity: 1, scale: 1, y: 0 },
+          }}
+          transition={{ duration: 0.4 }}
+          className="mt-1 sm:mt-2 mb-4"
+        >
+          <AntiGravityElement floatDistance={10} floatDuration={4.2} intensity={0.25} scaleOnHover={1.05}>
+            <div className="group relative flex items-center justify-center rounded-2xl px-5 py-2.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_40px_rgba(99,102,241,0.15)] bg-white/60 border border-slate-200/80 dark:shadow-[0_0_50px_rgba(99,102,241,0.25)] dark:bg-slate-900/60 dark:border-indigo-500/20">
+              {/* Light Mode Purple Logo */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/connectifylogo-purple.png"
+                alt="Connectify Brand Logo"
+                className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 dark:hidden"
+              />
+              {/* Dark Mode White Logo */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/connectifylogo-white.png"
+                alt="Connectify Brand Logo"
+                className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
+              />
+            </div>
+          </AntiGravityElement>
+        </motion.div>
+
+        {/* Status Pill Badge with Animated Radar Ping */}
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 20 },
             show: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-          className="mb-5 md:mb-6 mt-4"
+          className="mb-5 md:mb-6"
         >
-          <AntiGravityElement floatDistance={8} floatDuration={5} floatDelay={0.2} intensity={0.18}>
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] dark:text-cyan-300">
+          <AntiGravityElement floatDistance={8} floatDuration={5.2} floatDelay={0.5} intensity={0.18}>
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-slate-300/80 bg-slate-900/5 text-slate-800 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] dark:text-cyan-300">
               <span className="relative flex h-2.5 w-2.5 items-center justify-center">
                 <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-40" />
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />

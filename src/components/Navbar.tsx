@@ -206,11 +206,11 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top-Left Fixed Corporate Brand Logo Badge with Clean Backdrop Blur */}
+      {/* Top-Left Fixed Corporate Brand Logo Badge */}
       <div className="fixed top-5 left-5 z-50 flex items-center">
         <Link
           href="/"
-          className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/50 bg-white/80 px-4 py-2 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-indigo-500/50 dark:border-slate-800/50 dark:bg-slate-900/80 dark:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
+          className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-indigo-500/50 dark:border-white/10 dark:bg-slate-950/80 dark:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
         >
           {/* Light Mode Purple Icon */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -231,26 +231,25 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* macOS Floating Magnification Bottom Navigation Dock with Weightless Spring Magnetic Entrance */}
+      {/* macOS Floating Magnification Bottom Dock */}
       <motion.header
-        initial={{ y: 50, opacity: 0 }}
         variants={{
           visible: { y: 0, opacity: 1 },
           hidden: { y: "180%", opacity: 0 },
         }}
         animate={shouldHideDock && !mobileMenuOpen ? "hidden" : "visible"}
-        transition={{ type: "spring", stiffness: 120, damping: 20 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-end w-max max-w-[95vw]"
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-end w-max max-w-[95vw]"
       >
         <motion.div
-          animate={{ y: [0, -4, 0] }}
-          whileHover={{ y: -6, scale: 1.01 }}
-          transition={{ y: { repeat: Infinity, duration: 5, ease: "easeInOut" }, scale: { duration: 0.2 } }}
+          animate={{ y: [0, -3, 0] }}
+          whileHover={{ y: -5, scale: 1.008 }}
+          transition={{ y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" }, scale: { duration: 0.2 } }}
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
-          className="relative flex items-center gap-2.5 sm:gap-3 px-4 py-2.5 rounded-full bg-white/70 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl shadow-indigo-500/10 ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
+          className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 rounded-2xl bg-white/80 dark:bg-[#0f172a]/85 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
         >
-          {/* Desktop Magnified Navigation Dock Links */}
+          {/* Desktop Magnified Dock Links */}
           <div className="hidden md:flex items-end gap-2 sm:gap-2.5">
             {navLinks.map((link) => {
               const isActive =
@@ -268,10 +267,10 @@ export default function Navbar() {
           </div>
 
           {/* Vertical Divider */}
-          <div className="hidden md:block h-5 w-[1px] bg-slate-200 dark:bg-slate-800 self-center mx-1" />
+          <div className="hidden md:block h-8 w-[1px] bg-slate-200 dark:bg-slate-800 self-center mx-1" />
 
-          {/* Utilities & Action Buttons (Strictly dedicated to Theme Toggle & Mobile Menu) */}
-          <div className="flex items-center gap-1.5">
+          {/* Utilities & Action Buttons */}
+          <div className="flex items-center gap-2">
             {/* Theme Toggle Button with Floating Tooltip */}
             {mounted && (
               <div
@@ -295,23 +294,51 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={toggleTheme}
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                  className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 text-slate-800 transition-all hover:scale-105 hover:bg-white dark:border-white/10 dark:bg-slate-900/80 dark:text-white/90 dark:hover:bg-slate-800"
                   aria-label="Toggle theme"
                 >
                   {theme === "dark" ? (
-                    <Sun className="h-5 w-5 text-amber-400" />
+                    <Sun className="h-4 w-4 text-amber-400" />
                   ) : (
-                    <Moon className="h-5 w-5 text-slate-700" />
+                    <Moon className="h-4 w-4 text-slate-700" />
                   )}
                 </button>
               </div>
             )}
 
+            {/* Unified Primary CTA with Floating Tooltip & Magnetic Hover */}
+            <div
+              className="relative flex flex-col items-center"
+              onMouseEnter={() => setCtaHovered(true)}
+              onMouseLeave={() => setCtaHovered(false)}
+            >
+              <AnimatePresence>
+                {ctaHovered && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                    animate={{ opacity: 1, y: -12, scale: 1.05 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.8 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 22 }}
+                    className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-[11px] font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
+                  >
+                    Schedule Consultation
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <Link
+                href="/contact"
+                className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 px-4 py-2.5 text-xs font-extrabold shadow-lg shadow-indigo-500/25 dark:shadow-cyan-500/25 transition-all duration-300 h-10 hover:scale-[1.04]"
+              >
+                <span>Start a Project</span>
+                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+
             {/* Mobile Hamburger Toggle Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 md:hidden transition-all"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-800 md:hidden dark:border-white/15 dark:bg-white/10 dark:text-white"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
