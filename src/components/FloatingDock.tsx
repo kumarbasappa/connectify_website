@@ -66,6 +66,8 @@ export default function FloatingDock() {
           <Tooltip.Trigger asChild>
             <button
               type="button"
+              id="dock-theme-toggle-btn"
+              data-testid="theme-toggle-btn"
               onClick={toggleTheme}
               className="p-2.5 rounded-full text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               aria-label="Toggle Theme"

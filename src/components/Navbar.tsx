@@ -293,6 +293,8 @@ export default function Navbar() {
                 </AnimatePresence>
                 <button
                   type="button"
+                  id="theme-toggle-btn"
+                  data-testid="theme-toggle-btn"
                   onClick={toggleTheme}
                   className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 text-slate-800 transition-all hover:scale-105 hover:bg-white dark:border-white/10 dark:bg-slate-900/80 dark:text-white/90 dark:hover:bg-slate-800"
                   aria-label="Toggle theme"
