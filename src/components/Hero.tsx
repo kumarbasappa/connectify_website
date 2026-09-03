@@ -276,6 +276,212 @@ function FluidWarpGridCanvas() {
   );
 }
 
+// ─────────────────────────────────────────────────
+// Aurora Gradient Blobs — animated liquid light mesh
+// ─────────────────────────────────────────────────
+const auroraBlobs = [
+  // Teal/cyan blob — top-centre drift
+  {
+    id: "blob-teal",
+    lightClass: "bg-cyan-400/20",
+    darkClass: "bg-cyan-400/30",
+    blendLight: "normal" as const,
+    blendDark: "screen" as const,
+    sizeW: 680,
+    sizeH: 540,
+    // keyframe positions as [x%, y%] pairs
+    xFrames: ["-10%", "5%", "-5%", "10%", "-10%"],
+    yFrames: ["-18%", "-8%", "-20%", "-12%", "-18%"],
+    scaleFrames: [1, 1.08, 0.96, 1.05, 1],
+    opacityFrames: [0.7, 1, 0.8, 1, 0.7],
+    duration: 22,
+    delay: 0,
+  },
+  // Purple/violet blob — left drift
+  {
+    id: "blob-violet",
+    lightClass: "bg-violet-500/15",
+    darkClass: "bg-violet-500/28",
+    blendLight: "normal" as const,
+    blendDark: "screen" as const,
+    sizeW: 520,
+    sizeH: 460,
+    xFrames: ["-28%", "-18%", "-32%", "-22%", "-28%"],
+    yFrames: ["26%", "38%", "22%", "34%", "26%"],
+    scaleFrames: [1, 1.1, 0.93, 1.07, 1],
+    opacityFrames: [0.65, 1, 0.75, 0.9, 0.65],
+    duration: 18,
+    delay: 3,
+  },
+  // Pink/magenta blob — right drift
+  {
+    id: "blob-pink",
+    lightClass: "bg-pink-400/12",
+    darkClass: "bg-fuchsia-500/25",
+    blendLight: "normal" as const,
+    blendDark: "screen" as const,
+    sizeW: 540,
+    sizeH: 480,
+    xFrames: ["62%", "54%", "68%", "58%", "62%"],
+    yFrames: ["10%", "22%", "6%", "18%", "10%"],
+    scaleFrames: [1, 0.94, 1.06, 0.98, 1],
+    opacityFrames: [0.6, 0.9, 0.7, 1, 0.6],
+    duration: 25,
+    delay: 6,
+  },
+  // Indigo blob — bottom-centre anchor
+  {
+    id: "blob-indigo",
+    lightClass: "bg-indigo-500/14",
+    darkClass: "bg-indigo-500/28",
+    blendLight: "normal" as const,
+    blendDark: "screen" as const,
+    sizeW: 600,
+    sizeH: 420,
+    xFrames: ["20%", "32%", "18%", "28%", "20%"],
+    yFrames: ["55%", "45%", "60%", "50%", "55%"],
+    scaleFrames: [1, 1.05, 0.97, 1.03, 1],
+    opacityFrames: [0.55, 0.85, 0.65, 0.9, 0.55],
+    duration: 20,
+    delay: 9,
+  },
+];
+
+function AuroraBlobs() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-[1] overflow-hidden"
+    >
+      {auroraBlobs.map((blob) => (
+        <motion.div
+          key={blob.id}
+          className={`absolute rounded-full blur-[110px] will-change-transform
+            ${blob.lightClass} dark:${blob.darkClass}`}
+          style={{
+            width: blob.sizeW,
+            height: blob.sizeH,
+            top: 0,
+            left: 0,
+            mixBlendMode: "normal",
+          }}
+          animate={
+            shouldReduceMotion
+              ? {
+                  x: blob.xFrames[0],
+                  y: blob.yFrames[0],
+                  scale: 1,
+                  opacity: blob.opacityFrames[0] * 0.6,
+                }
+              : {
+                  x: blob.xFrames,
+                  y: blob.yFrames,
+                  scale: blob.scaleFrames,
+                  opacity: blob.opacityFrames,
+                }
+          }
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : {
+                  duration: blob.duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: blob.delay,
+                  times: [0, 0.25, 0.5, 0.75, 1],
+                }
+          }
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
+// FlowingWaves — animated stroke-dashoffset SVG wave lines
+// ─────────────────────────────────────────────────
+const wavePaths = [
+  // Wave 1 — high sinusoidal arc
+  "M -200 420 C 200 340, 600 500, 1000 420 C 1400 340, 1800 500, 2200 420",
+  // Wave 2 — shallow mid-page undulation
+  "M -200 560 C 300 480, 700 640, 1100 560 C 1500 480, 1900 640, 2300 560",
+  // Wave 3 — lower pronounced curve
+  "M -200 700 C 250 620, 650 780, 1050 700 C 1450 620, 1850 780, 2250 700",
+];
+
+const waveDurations = [28, 22, 35];
+const waveDelays = [0, 5, 11];
+const waveLengths = [2800, 3000, 3200]; // approximate stroke-dasharray
+
+function FlowingWaves() {
+  const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const gradientId = isDark ? "wave-grad-dark" : "wave-grad-light";
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-[2] overflow-hidden"
+    >
+      <svg
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="none"
+        className="absolute inset-0 w-full h-full"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          {/* Light-mode wave gradient */}
+          <linearGradient id="wave-grad-light" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(99,102,241,0)" />
+            <stop offset="30%" stopColor="rgba(99,102,241,0.30)" />
+            <stop offset="60%" stopColor="rgba(14,165,233,0.22)" />
+            <stop offset="100%" stopColor="rgba(99,102,241,0)" />
+          </linearGradient>
+          {/* Dark-mode wave gradient */}
+          <linearGradient id="wave-grad-dark" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(56,189,248,0)" />
+            <stop offset="30%" stopColor="rgba(168,85,247,0.50)" />
+            <stop offset="60%" stopColor="rgba(56,189,248,0.38)" />
+            <stop offset="100%" stopColor="rgba(56,189,248,0)" />
+          </linearGradient>
+        </defs>
+
+        {wavePaths.map((d, i) => (
+          <motion.path
+            key={`wave-${i}-${isDark ? "dark" : "light"}`}
+            d={d}
+            fill="none"
+            strokeWidth={isDark ? 2 : 1.5}
+            strokeLinecap="round"
+            style={{
+              stroke: `url(#${gradientId})`,
+              strokeDasharray: waveLengths[i],
+            }}
+            animate={
+              shouldReduceMotion
+                ? { strokeDashoffset: 0 }
+                : { strokeDashoffset: [0, -waveLengths[i]] }
+            }
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : {
+                    duration: waveDurations[i],
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: waveDelays[i],
+                  }
+            }
+          />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 export default function Hero() {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
@@ -297,18 +503,11 @@ export default function Hero() {
       {/* Full-Bleed Canvas */}
       <FluidWarpGridCanvas />
 
-      {/* Multi-Color Ambient Glow Mesh */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        {/* Light Mode Glows */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-indigo-500/15 rounded-full blur-[120px] dark:hidden" />
-        <div className="absolute top-1/3 -left-32 w-[500px] h-[400px] bg-violet-500/12 rounded-full blur-[120px] dark:hidden" />
-        <div className="absolute top-1/4 -right-32 w-[500px] h-[400px] bg-cyan-400/10 rounded-full blur-[120px] dark:hidden" />
+      {/* ── Animated Aurora Gradient Blobs ── */}
+      <AuroraBlobs />
 
-        {/* Dark Mode Cyber Glows */}
-        <div className="hidden dark:block absolute -top-24 left-1/2 -translate-x-1/2 w-[750px] h-[550px] bg-indigo-500/25 rounded-full blur-[130px]" />
-        <div className="hidden dark:block absolute top-1/3 -left-32 w-[550px] h-[450px] bg-cyan-400/20 rounded-full blur-[130px]" />
-        <div className="hidden dark:block absolute top-1/4 -right-32 w-[550px] h-[450px] bg-fuchsia-500/20 rounded-full blur-[130px]" />
-      </div>
+      {/* ── Flowing SVG Wave Lines ── */}
+      <FlowingWaves />
 
       {/* Dynamic Cursor-Follow Radial Glow */}
       <div
