@@ -93,4 +93,108 @@ test.describe("Connectify Visual Verification Suite", () => {
       fullPage: false,
     });
   });
+
+  test("Hover Effects Verification - Cards", async ({ page }, testInfo) => {
+    // Only test hover on desktop (skip mobile since hover doesn't apply)
+    if (testInfo.project.name.toLowerCase().includes("mobile")) {
+      test.skip();
+    }
+
+    const projectName = testInfo.project.name;
+    const sanitizeProject = projectName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
+
+    // --- 1. Case Studies Page (Tilt + Spotlight) ---
+    await page.goto("/case-studies", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(1000); // Wait for preloader/animations
+
+    // Find the first case study card (wraps with TiltCard/SpotlightCard)
+    const caseStudyCard = page.locator('.tilt-card').first();
+    await caseStudyCard.waitFor({ state: "visible", timeout: 10000 }).catch(() => {});
+    
+    if (await caseStudyCard.isVisible()) {
+      const box = await caseStudyCard.boundingBox();
+      if (box) {
+        // Scroll card into view (using evaluate to bypass Playwright stability checks on floating elements)
+        await caseStudyCard.evaluate((node) => node.scrollIntoView({ block: "center", behavior: "auto" }));
+        await page.waitForTimeout(1000); // Give it time to scroll and settle
+
+        // Re-fetch bounding box after scroll
+        const updatedBox = await caseStudyCard.boundingBox();
+        if (updatedBox) {
+          // Position 1: Top-Left
+          await page.mouse.move(updatedBox.x + updatedBox.width * 0.1, updatedBox.y + updatedBox.height * 0.1);
+          await page.waitForTimeout(300); // Wait for spring animation to settle
+          await page.screenshot({
+            path: testInfo.outputPath(`case-study-card-hover-topleft-${sanitizeProject}.png`),
+            fullPage: false,
+          });
+
+          // Position 2: Center
+          await page.mouse.move(updatedBox.x + updatedBox.width * 0.5, updatedBox.y + updatedBox.height * 0.5);
+          await page.waitForTimeout(300);
+          await page.screenshot({
+            path: testInfo.outputPath(`case-study-card-hover-center-${sanitizeProject}.png`),
+            fullPage: false,
+          });
+
+          // Position 3: Bottom-Right
+          await page.mouse.move(updatedBox.x + updatedBox.width * 0.9, updatedBox.y + updatedBox.height * 0.9);
+          await page.waitForTimeout(300);
+          await page.screenshot({
+            path: testInfo.outputPath(`case-study-card-hover-bottomright-${sanitizeProject}.png`),
+            fullPage: false,
+          });
+
+          // Mouse leave
+          await page.mouse.move(0, 0);
+          await page.waitForTimeout(300);
+        }
+      }
+    }
+
+    // --- 2. Home Page - What We Build (Spotlight only, on pillar cards) ---
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(1000); // Wait for preloader/animations
+
+    // Find the first service pillar card (assuming it uses spotlight-card class or similar)
+    // Looking at WhatWeBuild.tsx, it adds SpotlightCard which has 'spotlight-card' class
+    const serviceCard = page.locator('.spotlight-card').first();
+    await serviceCard.waitFor({ state: "visible", timeout: 10000 }).catch(() => {});
+    
+    if (await serviceCard.isVisible()) {
+      const box = await serviceCard.boundingBox();
+      if (box) {
+        await serviceCard.evaluate((node) => node.scrollIntoView({ block: "center", behavior: "auto" }));
+        await page.waitForTimeout(1000);
+
+        // Re-fetch bounding box after scroll
+        const updatedBox = await serviceCard.boundingBox();
+        if (updatedBox) {
+          // Position 1: Top-Left
+          await page.mouse.move(updatedBox.x + updatedBox.width * 0.1, updatedBox.y + updatedBox.height * 0.1);
+          await page.waitForTimeout(300);
+          await page.screenshot({
+            path: testInfo.outputPath(`service-card-hover-topleft-${sanitizeProject}.png`),
+            fullPage: false,
+          });
+
+          // Position 2: Center
+          await page.mouse.move(updatedBox.x + updatedBox.width * 0.5, updatedBox.y + updatedBox.height * 0.5);
+          await page.waitForTimeout(300);
+          await page.screenshot({
+            path: testInfo.outputPath(`service-card-hover-center-${sanitizeProject}.png`),
+            fullPage: false,
+          });
+
+          // Position 3: Bottom-Right
+          await page.mouse.move(updatedBox.x + updatedBox.width * 0.9, updatedBox.y + updatedBox.height * 0.9);
+          await page.waitForTimeout(300);
+          await page.screenshot({
+            path: testInfo.outputPath(`service-card-hover-bottomright-${sanitizeProject}.png`),
+            fullPage: false,
+          });
+        }
+      }
+    }
+  });
 });
