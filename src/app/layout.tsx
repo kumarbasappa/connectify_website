@@ -7,6 +7,7 @@ import RevealOnScroll from "@/components/RevealOnScroll";
 import CustomCursor from "@/components/CustomCursor";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import PageTransitionWrapper from "@/components/PageTransitionWrapper";
+import Preloader from "@/components/Preloader";
 
 export const metadata: Metadata = {
   title: "Connectify — Software Engineering, Cloud Platforms & AI Solutions",
@@ -122,6 +123,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>
+          <Preloader />
           <CustomCursor />
           <SmoothScroll />
           <RevealOnScroll />

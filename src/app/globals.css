@@ -311,3 +311,26 @@ html.dark .btn-glow {
     animation: none !important;
   }
 }
+
+/* ── SpotlightCard ─────────────────────────────────── */
+/* Activate the overlay on hover (pointer devices only) */
+@media (hover: hover) and (pointer: fine) {
+  .spotlight-card:hover .spotlight-overlay {
+    opacity: 1 !important;
+  }
+}
+
+/* Touch devices: never show spotlight */
+@media (hover: none) {
+  .spotlight-overlay {
+    display: none !important;
+  }
+}
+
+/* ── TiltCard ──────────────────────────────────────── */
+/* Touch devices: no 3D tilt (handled in component too, this is a CSS safety net) */
+@media (hover: none) {
+  .tilt-card {
+    transform: none !important;
+  }
+}

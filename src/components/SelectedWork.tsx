@@ -9,6 +9,8 @@ import BorderGlow from "./BorderGlow";
 import { projects } from "@/lib/projects";
 import { ArrowRight, Activity } from "lucide-react";
 import { AntiGravityElement } from "./AntiGravity";
+import SpotlightCard from "./SpotlightCard";
+import TiltCard from "./TiltCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -130,6 +132,8 @@ export default function SelectedWork() {
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.5, delay: idx * 0.08, type: "spring", stiffness: 280, damping: 24 }}
                 >
+                <TiltCard maxTilt={8} scaleOnHover={1.025}>
+                <SpotlightCard color="indigo">
                 <BorderGlow
                   backgroundColor="var(--card-bg)"
                   borderRadius={20}
@@ -199,6 +203,8 @@ export default function SelectedWork() {
                     </div>
                   </Link>
                 </BorderGlow>
+                </SpotlightCard>
+                </TiltCard>
               </motion.div>
             </AntiGravityElement>
           );

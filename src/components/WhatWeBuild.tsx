@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { serviceCategories } from "@/lib/services";
 import { ArrowRight, CheckCircle2, Sparkles, Layers, ShieldAlert, Cpu } from "lucide-react";
 import { AntiGravityElement } from "./AntiGravity";
+import SpotlightCard from "./SpotlightCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -146,8 +147,10 @@ export default function WhatWeBuild() {
                     transition={{ duration: 0.45, delay: index * 0.07, type: "spring", stiffness: 280, damping: 24 }}
                     onMouseEnter={() => setActiveIdx(index)}
                     onClick={() => setActiveIdx(index)}
-                    className="relative group cursor-pointer rounded-2xl border p-6 transition-all duration-300 border-black/10 dark:border-white/10 hover:shadow-[0_20px_45px_rgba(99,102,241,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)]"
+                    className="relative group cursor-pointer rounded-2xl border p-0 transition-all duration-300 border-black/10 dark:border-white/10 hover:shadow-[0_20px_45px_rgba(99,102,241,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)]"
                   >
+                    <SpotlightCard color="purple" className="rounded-2xl">
+                    <div className="relative p-6">
                   {isActive && (
                     <motion.div
                       layoutId="activePillar"
@@ -233,7 +236,9 @@ export default function WhatWeBuild() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                    </div>
+                    </SpotlightCard>
+                  </motion.div>
               </AntiGravityElement>
             );
             })}
