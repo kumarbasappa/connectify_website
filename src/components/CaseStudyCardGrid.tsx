@@ -43,7 +43,7 @@ export default function CaseStudyCardGrid({ projects }: CaseStudyCardGridProps) 
                 <div className="flex flex-1 flex-col justify-between p-6">
                   <div>
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-cyan-400">
+                      <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-cyan-400">
                         {project.category}
                       </span>
                       <svg
@@ -68,7 +68,7 @@ export default function CaseStudyCardGrid({ projects }: CaseStudyCardGridProps) 
                     {project.tech.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full border border-black/10 bg-surface px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200"
+                        className="rounded-full border border-black/10 bg-surface px-2.5 py-0.5 font-mono text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200"
                       >
                         {t}
                       </span>

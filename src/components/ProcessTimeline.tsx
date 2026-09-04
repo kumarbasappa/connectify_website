@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { processSteps } from "@/lib/process";
-import { CheckCircle2, ArrowRight, Activity, GitBranch, Layers, Rocket } from "lucide-react";
+import { CheckCircle2, ArrowRight, Activity, GitBranch, Layers, Rocket, FlaskConical, Cloud, Headset } from "lucide-react";
 
 export default function ProcessTimeline() {
   const [activeStep, setActiveStep] = useState(0);
@@ -21,6 +21,9 @@ export default function ProcessTimeline() {
     <GitBranch key="2" className="w-5 h-5 text-purple-500" />,
     <Layers key="3" className="w-5 h-5 text-sky-500" />,
     <Rocket key="4" className="w-5 h-5 text-amber-500" />,
+    <FlaskConical key="5" className="w-5 h-5 text-rose-500" />,
+    <Cloud key="6" className="w-5 h-5 text-teal-500" />,
+    <Headset key="7" className="w-5 h-5 text-cyan-500" />,
   ];
 
   return (
@@ -139,7 +142,7 @@ export default function ProcessTimeline() {
             transition={{ duration: 0.3 }}
             className="mt-8 rounded-3xl border border-indigo-500/30 bg-white p-8 shadow-xl shadow-indigo-500/5 transition-all duration-300 hover:border-indigo-500/60 lg:p-12 dark:border-indigo-500/30 dark:bg-slate-900/90 dark:hover:border-indigo-400/60 dark:shadow-[0_0_30px_rgba(99,102,241,0.15)]"
           >
-            <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
+            <div className="flex flex-col justify-between gap-8">
               <div>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/15 border border-indigo-500/30 px-4 py-1.5 font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400 shadow-[0_0_12px_rgba(99,102,241,0.2)]">
                   STAGE {processSteps[activeStep].stepNumber}
@@ -180,7 +183,7 @@ export default function ProcessTimeline() {
                 <ul className="mt-4 space-y-2.5">
                   {processSteps[activeStep].deliverables.map((del, i) => (
                     <li key={i} className="flex items-center gap-3 font-sans text-sm font-medium text-slate-700 dark:text-slate-300">
-                      <span className="h-1.5 w-1.5 rounded-full bg-brand dark:bg-amber-400 shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-none" />
                       <span>{del}</span>
                     </li>
                   ))}

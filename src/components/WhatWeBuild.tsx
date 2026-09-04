@@ -180,7 +180,7 @@ export default function WhatWeBuild() {
 
                     <Link
                       href={`/services#${item.id}`}
-                      aria-label={`Explore ${item.title} details`}
+                      aria-label={`Select ${item.title} pillar`}
                       className={`flex h-8 w-8 items-center justify-center rounded-full transition-all ${
                         isActive
                           ? styleToken.iconBg
@@ -209,7 +209,7 @@ export default function WhatWeBuild() {
                           {item.description}
                         </p>
                         <div className="mt-4">
-                          <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
+                          <h4 className="font-mono text-xs font-bold tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
                             <ShieldAlert className="w-3.5 h-3.5" /> Key Challenges Solved:
                           </h4>
                           <ul className="mt-2 space-y-1.5">
@@ -222,12 +222,12 @@ export default function WhatWeBuild() {
                           </ul>
                         </div>
                         <div className="mt-4">
-                          <h4 className="font-mono text-[11px] font-bold uppercase tracking-wider text-purple-600 dark:text-indigo-400 flex items-center gap-1.5">
+                          <h4 className="font-mono text-xs font-bold tracking-wider text-purple-600 dark:text-indigo-400 flex items-center gap-1.5">
                             <Sparkles className="w-3.5 h-3.5" /> Deliverables:
                           </h4>
                           <div className="mt-2 flex flex-wrap gap-1.5">
                             {item.deliverables.map((del, idx) => (
-                              <span key={idx} className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+                              <span key={idx} className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-3.5 py-1 text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
                                 {del}
                               </span>
                             ))}
@@ -260,9 +260,6 @@ export default function WhatWeBuild() {
                       <Layers className="w-3.5 h-3.5" />
                       PILLAR {activeService.number}
                     </span>
-                    <span className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
-                      Interactive Detail Pane
-                    </span>
                   </div>
 
                   <h3 className="mt-6 font-display text-2xl font-extrabold text-slate-950 sm:text-3xl dark:text-white">
@@ -274,7 +271,7 @@ export default function WhatWeBuild() {
 
                   {/* Key Challenges Solved */}
                   <div className="mt-8">
-                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-cyan-400 flex items-center gap-1.5">
+                    <h4 className="font-mono text-xs font-bold tracking-wider text-brand dark:text-cyan-400 flex items-center gap-1.5">
                       <ShieldAlert className="w-3.5 h-3.5" />
                       Key Business Challenges Solved:
                     </h4>
@@ -293,7 +290,7 @@ export default function WhatWeBuild() {
 
                   {/* Enterprise Deliverables */}
                   <div className="mt-8 border-t border-slate-200/90 pt-6 dark:border-white/10">
-                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-brand dark:text-indigo-400 flex items-center gap-1.5">
+                    <h4 className="font-mono text-xs font-bold tracking-wider text-brand dark:text-indigo-400 flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
                       Production Deliverables:
                     </h4>
@@ -301,7 +298,7 @@ export default function WhatWeBuild() {
                       {activeService.deliverables.map((del, idx) => (
                         <span
                           key={idx}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-slate-100/80 px-3 py-1.5 font-sans text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-slate-100/80 px-4 py-1.5 font-sans text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
                           {del}

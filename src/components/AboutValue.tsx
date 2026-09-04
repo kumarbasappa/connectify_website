@@ -20,7 +20,7 @@ export default function AboutValue() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-6"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-cyan-400 mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3.5 py-1 font-mono text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-cyan-400 mb-6">
               <Sparkles className="w-3.5 h-3.5" />
               ENGINEERING EXCELLENCE
             </div>
@@ -52,7 +52,7 @@ export default function AboutValue() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="group rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 dark:border-white/10 dark:bg-slate-900/80">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-indigo-600 dark:text-cyan-400">01 / ARCHITECTURE</span>
+                  <span className="font-mono text-xs font-bold text-indigo-600 dark:text-cyan-400">01 / Architecture</span>
                   <div className="p-2 rounded-xl bg-indigo-50 dark:bg-white/5 border border-indigo-100 dark:border-white/10 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
                     <Cpu className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
                   </div>

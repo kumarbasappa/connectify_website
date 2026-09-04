@@ -81,22 +81,8 @@ function DockItem({
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
-      className="relative flex flex-col items-center justify-end"
+      className="relative flex flex-col items-center justify-end gap-1.5"
     >
-      {/* macOS Floating Tooltip Badge with Spring Overshoot */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.8 }}
-            animate={{ opacity: 1, y: -12, scale: 1.05 }}
-            exit={{ opacity: 0, y: 6, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 420, damping: 22 }}
-            className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-[11px] font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
-          >
-            {link.label}
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <Link href={link.href} aria-label={`Navigate to ${link.label}`}>
         <motion.div
@@ -113,6 +99,9 @@ function DockItem({
           </motion.div>
         </motion.div>
       </Link>
+      <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 hidden md:block">
+        {link.label}
+      </span>
 
       {/* macOS Active App Indicator Dot with Horizontal Glide Layout Transition */}
       {isActive && (
@@ -267,10 +256,10 @@ export default function Navbar() {
           </div>
 
           {/* Vertical Divider */}
-          <div className="hidden md:block h-8 w-[1px] bg-slate-200 dark:bg-slate-800 self-center mx-1" />
+          <div className="hidden md:block h-8 w-[1px] bg-slate-200 dark:bg-slate-800 self-center mx-3" />
 
           {/* Utilities & Action Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {/* Theme Toggle Button with Floating Tooltip */}
             {mounted && (
               <div
@@ -285,7 +274,7 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: -12, scale: 1.05 }}
                       exit={{ opacity: 0, y: 6, scale: 0.8 }}
                       transition={{ type: "spring", stiffness: 420, damping: 22 }}
-                      className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-[11px] font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
+                      className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-xs font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
                     >
                       {theme === "dark" ? "Light Mode" : "Dark Mode"}
                     </motion.div>
@@ -321,7 +310,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: -12, scale: 1.05 }}
                     exit={{ opacity: 0, y: 6, scale: 0.8 }}
                     transition={{ type: "spring", stiffness: 420, damping: 22 }}
-                    className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-[11px] font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
+                    className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-xs font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
                   >
                     Schedule Consultation
                   </motion.div>
@@ -329,7 +318,7 @@ export default function Navbar() {
               </AnimatePresence>
               <Link
                 href="/contact"
-                className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-400 text-white dark:from-cyan-500 dark:via-indigo-500 dark:to-fuchsia-500 px-4 py-2.5 text-xs font-extrabold shadow-lg shadow-indigo-500/25 dark:shadow-cyan-500/25 transition-all duration-300 h-10 hover:scale-[1.04]"
+                className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 px-4 py-2.5 text-xs font-extrabold shadow-lg transition-all duration-300 h-10 hover:scale-[1.04] border border-transparent dark:border-white/10"
               >
                 <span>Start a Project</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />

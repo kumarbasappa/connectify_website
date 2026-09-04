@@ -205,7 +205,7 @@ export default function ContactForm() {
         )}
       </button>
 
-      <p className="text-center text-[11px] text-slate-600 dark:text-slate-400">
+      <p className="text-center text-xs text-slate-600 dark:text-slate-400">
         By submitting this form, you agree to our confidential handling of your project brief.
       </p>
     </form>

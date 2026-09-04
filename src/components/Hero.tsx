@@ -533,34 +533,7 @@ export default function Hero() {
         }}
         className="relative z-20 w-full max-w-[980px] mx-auto px-0 flex flex-col items-center text-center my-auto -translate-y-2 md:-translate-y-4 pb-20 sm:pb-28"
       >
-        {/* 1. Official Connectify Brand Logo Centered Near Top */}
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, scale: 0.9, y: 16 },
-            show: { opacity: 1, scale: 1, y: 0 },
-          }}
-          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-          className="mt-1 sm:mt-2 mb-4"
-        >
-          <AntiGravityElement floatDistance={10} floatDuration={4.2} intensity={0.25} scaleOnHover={1.05}>
-            <div className="group relative flex items-center justify-center rounded-2xl px-5 py-2.5 backdrop-blur-xl transition-all duration-300 shadow-[0_0_40px_rgba(99,102,241,0.15)] bg-white/60 border border-slate-200/80 dark:shadow-[0_0_50px_rgba(99,102,241,0.25)] dark:bg-slate-900/60 dark:border-indigo-500/20">
-              {/* Light Mode Purple Logo */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/connectifylogo-purple.png"
-                alt="Connectify Brand Logo"
-                className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 dark:hidden"
-              />
-              {/* Dark Mode White Logo */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/connectifylogo-white.png"
-                alt="Connectify Brand Logo"
-                className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
-              />
-            </div>
-          </AntiGravityElement>
-        </motion.div>
+
 
         {/* 2. Status Pill Eyebrow Badge (Fades + Slides Up First) */}
         <motion.div
@@ -579,7 +552,7 @@ export default function Hero() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
               </span>
               <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-cyan-400" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-extrabold">
+              <span className="font-mono text-xs uppercase tracking-[0.2em] font-extrabold">
                 ENTERPRISE SOFTWARE &amp; AI ENGINEERING
               </span>
             </div>
@@ -691,7 +664,7 @@ export default function Hero() {
               <p className="font-mono text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
                 <CountUpNumber target={25} suffix="+" />
               </p>
-              <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-xs sm:text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Deployed Systems
               </p>
             </div>
@@ -700,7 +673,7 @@ export default function Hero() {
               <p className="font-mono text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
                 <CountUpNumber target={99.99} decimals={2} suffix="%" />
               </p>
-              <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-xs sm:text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 SLA Uptime
               </p>
             </div>
@@ -709,7 +682,7 @@ export default function Hero() {
               <p className="font-mono text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
                 <CountUpNumber target={6} />
               </p>
-              <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-xs sm:text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Core Practices
               </p>
             </div>
@@ -718,7 +691,7 @@ export default function Hero() {
               <p className="font-mono text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
                 Tier-1
               </p>
-              <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
+              <p className="font-mono text-xs sm:text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
                 Enterprise Clients
               </p>
             </div>
@@ -747,7 +720,7 @@ export default function Hero() {
           </div>
           <div className="text-left">
             <p className="font-display text-xs font-bold text-slate-900 dark:text-white">Cloud Native</p>
-            <p className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">Scalable Microservices</p>
+            <p className="font-mono text-xs font-semibold text-slate-500 dark:text-slate-400">Scalable Microservices</p>
           </div>
         </motion.div>
       </motion.div>
@@ -772,7 +745,7 @@ export default function Hero() {
           </div>
           <div className="text-left">
             <p className="font-display text-xs font-bold text-slate-900 dark:text-white">AI Engineering</p>
-            <p className="font-mono text-[10px] font-semibold text-slate-500 dark:text-slate-400">Intelligent Workflows</p>
+            <p className="font-mono text-xs font-semibold text-slate-500 dark:text-slate-400">Intelligent Workflows</p>
           </div>
         </motion.div>
       </motion.div>

@@ -158,16 +158,16 @@ export default function SelectedWork() {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
 
                       {/* Live System Quantitative Impact Metric Badges Overlay */}
-                      <div className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 z-10">
+                      <div className="absolute top-5 left-5 flex flex-wrap items-center gap-1.5 z-10">
                         {systemMetrics.map((metric, mIdx) => (
                           <motion.div
                             key={mIdx}
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.35, delay: idx * 0.08 + mIdx * 0.1, type: "spring", stiffness: 350 }}
-                            className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-slate-950/85 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-400 backdrop-blur-md shadow-lg"
+                            className="flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-2.5 py-0.5 font-mono text-xs font-bold text-slate-200 backdrop-blur-md shadow-lg"
                           >
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping flex-none" />
+                            <span className="h-1.5 w-1.5 rounded-full bg-slate-400 flex-none" />
                             <span>{metric}</span>
                           </motion.div>
                         ))}
@@ -177,10 +177,10 @@ export default function SelectedWork() {
                     <div className="flex flex-1 flex-col justify-between p-6">
                       <div>
                         <div className="flex items-center justify-between">
-                          <span className={`font-mono text-[10px] font-bold px-2.5 py-1 rounded-full ${categoryBadgeStyle}`}>
+                          <span className={`font-mono text-xs font-bold px-2.5 py-1 rounded-full ${categoryBadgeStyle}`}>
                             {project.category}
                           </span>
-                          <ArrowRight className="h-4 w-4 text-slate-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-cyan-400" />
+                          <ArrowRight className="h-5 w-5 stroke-[2.5] text-slate-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-cyan-400" />
                         </div>
                         <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-slate-950 transition-colors group-hover:text-brand dark:text-white dark:group-hover:text-cyan-400">
                           {project.name}
@@ -194,7 +194,7 @@ export default function SelectedWork() {
                         {project.tech.map((t) => (
                           <span
                             key={t}
-                            className="rounded-full border border-slate-200 bg-slate-100/80 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+                            className="rounded-full border border-slate-200 bg-slate-100/80 px-2.5 py-0.5 font-mono text-xs font-semibold text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
                           >
                             {t}
                           </span>

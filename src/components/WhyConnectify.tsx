@@ -61,7 +61,7 @@ export default function WhyConnectify() {
                       <TrendingUp className="w-3.5 h-3.5" />
                       01 / STRATEGIC ALIGNMENT
                     </span>
-                    <span className="rounded-full bg-amber-500/10 border border-amber-500/30 px-3 py-1 font-mono text-[11px] font-bold text-amber-600 dark:text-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.2)]">
+                    <span className="rounded-full bg-amber-500/10 border border-amber-500/30 px-3 py-1 font-mono text-xs font-bold text-amber-600 dark:text-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.2)]">
                       ROI FOCUS
                     </span>
                   </div>
@@ -195,7 +195,7 @@ export default function WhyConnectify() {
                       <Clock className="w-3.5 h-3.5" />
                       04 / OPERATIONAL EMBEDDING
                     </span>
-                    <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 font-mono text-[11px] font-extrabold text-emerald-600 dark:text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                    <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 font-mono text-xs font-extrabold text-emerald-600 dark:text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
                       24/7 SRE COVERAGE
                     </span>
                   </div>
