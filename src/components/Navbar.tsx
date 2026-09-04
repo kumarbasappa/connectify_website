@@ -85,6 +85,7 @@ function DockItem({
       onBlur={() => setHovered(false)}
       className="relative flex flex-col items-center justify-end gap-1.5"
     >
+
       <Link href={link.href} aria-label={`Navigate to ${link.label}`}>
         <motion.div
           whileTap={{ scale: 0.85, y: -3 }}
@@ -196,28 +197,30 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top-Left Fixed Single Wordmark Logo Badge with Gravity/Dropping Spring Physics */}
-      <motion.div
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          type: "spring",
-          damping: 12,
-          stiffness: 100,
-          mass: 0.8,
-        }}
-        className="fixed top-4 left-4 sm:top-5 sm:left-6 z-50 flex items-center"
-      >
+      {/* Top-Left Fixed Corporate Brand Logo Badge */}
+      <div className="fixed top-5 left-5 z-50 flex items-center">
         <Link
           href="/"
-          aria-label="Connectify Homepage"
-          className="group flex items-center rounded-2xl border border-slate-200/80 bg-white/80 px-3.5 py-1.5 sm:px-4.5 sm:py-2 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-indigo-500/50 dark:border-white/10 dark:bg-slate-950/80 dark:shadow-[0_0_30px_rgba(99,102,241,0.25)]"
+          className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-indigo-500/50 dark:border-white/10 dark:bg-slate-950/80 dark:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
         >
-          <span className="font-display text-base sm:text-lg font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] via-indigo-600 to-purple-600 dark:from-cyan-400 dark:via-sky-400 dark:to-indigo-300">
-            connectify
+          {/* Light Mode Purple Icon */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/connectify-icon-purple.png"
+            alt="Connectify Icon"
+            className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 dark:hidden"
+          />
+          {/* Dark Mode White Icon */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/connectify-icon-white.png"
+            alt="Connectify Icon"
+            className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 hidden dark:block"
+          />
+          <span className="font-display text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">connectify
           </span>
         </Link>
-      </motion.div>
+      </div>
 
       {/* macOS Floating Magnification Bottom Dock */}
       <motion.header
