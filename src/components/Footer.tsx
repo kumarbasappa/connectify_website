@@ -160,7 +160,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Open office location on Google Maps"
-                  className="inline-flex items-start gap-1 transition-colors hover:text-indigo-400 underline-offset-4 hover:underline"
+                  className="inline-flex items-start gap-1 transition-colors hover:text-electric underline-offset-4 hover:underline"
                 >
                   <span>8, Avalahalli Main Road, JP Nagar 9th Phase, 3rd Block, Bengaluru, Karnataka 560076, India</span>
                 </a>

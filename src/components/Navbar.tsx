@@ -17,23 +17,22 @@ import {
   Home,
   Info,
   Layers,
+  Box,
   Briefcase,
   Mail,
-  Sun,
-  Moon,
   ArrowRight,
   Menu,
   X,
-  Package,
+  Check,
 } from "lucide-react";
-import { useTheme } from "./ThemeProvider";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "About", href: "/about", icon: Info },
   { label: "Services", href: "/services", icon: Layers },
-  { label: "Products", href: "/products", icon: Package },
-  { label: "Work", href: "/case-studies", icon: Briefcase },
+  { label: "Products", href: "/products", icon: Box },
+  { label: "Case Studies", href: "/case-studies", icon: Briefcase },
   { label: "Contact", href: "/contact", icon: Mail },
 ];
 
@@ -57,20 +56,18 @@ function DockItem({
     return val - bounds.x - bounds.width / 2;
   });
 
-  // Continuous Parabolic / Cosine Magnification Curve (42px -> 62px, 1.5x scaling)
-  const widthSync = useTransform(distance, [-150, 0, 150], [42, 62, 42]);
+  const widthSync = useTransform(distance, [-140, 0, 140], [40, 54, 40]);
   const width = useSpring(widthSync, {
     mass: 0.1,
-    stiffness: 300,
-    damping: 20,
+    stiffness: 200,
+    damping: 12,
   });
 
-  // Proportional Icon Magnification (18px -> 26px)
-  const iconSizeSync = useTransform(distance, [-150, 0, 150], [18, 26, 18]);
+  const iconSizeSync = useTransform(distance, [-140, 0, 140], [18, 24, 18]);
   const iconSize = useSpring(iconSizeSync, {
     mass: 0.1,
-    stiffness: 300,
-    damping: 20,
+    stiffness: 200,
+    damping: 12,
   });
 
   const [hovered, setHovered] = useState(false);
@@ -85,6 +82,20 @@ function DockItem({
       onBlur={() => setHovered(false)}
       className="relative flex flex-col items-center justify-end gap-1.5"
     >
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+            animate={{ opacity: 1, y: -12, scale: 1.05 }}
+            exit={{ opacity: 0, y: 6, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 420, damping: 22 }}
+            className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-xs font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950 flex items-center gap-1.5"
+          >
+            <span>{link.label}</span>
+            {isActive && <Check className="w-3 h-3 text-emerald-400 dark:text-emerald-600" />}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Link href={link.href} aria-label={`Navigate to ${link.label}`}>
         <motion.div
@@ -92,7 +103,7 @@ function DockItem({
           style={{ width, height: width }}
           className={`flex items-center justify-center rounded-2xl transition-colors duration-200 border ${
             isActive
-              ? "bg-slate-900 text-white border-slate-800 shadow-xl shadow-indigo-500/25 dark:bg-white dark:text-slate-950 dark:border-white dark:shadow-[0_0_20px_rgba(56,189,248,0.5)]"
+              ? "bg-brand text-white border-brand-deep shadow-xl shadow-brand/25 dark:bg-brand dark:text-white dark:border-brand-deep"
               : "bg-white/80 text-slate-700 border-slate-200/90 hover:bg-white dark:bg-slate-900/80 dark:text-white/80 dark:border-white/10 dark:hover:bg-slate-800"
           }`}
         >
@@ -101,7 +112,7 @@ function DockItem({
           </motion.div>
         </motion.div>
       </Link>
-      <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 hidden md:block">
+      <span className={`text-[10px] font-bold hidden md:block ${isActive ? "text-brand dark:text-electric font-extrabold" : "text-slate-600 dark:text-slate-400"}`}>
         {link.label}
       </span>
 
@@ -110,7 +121,7 @@ function DockItem({
         <motion.span
           layoutId="dock-active-dot"
           transition={{ type: "spring", stiffness: 380, damping: 28 }}
-          className="absolute -bottom-2.5 h-1.5 w-1.5 rounded-full bg-indigo-600 dark:bg-cyan-400 shadow-[0_0_10px_rgba(56,189,248,0.9)]"
+          className="absolute -bottom-2.5 h-1.5 w-1.5 rounded-full bg-brand dark:bg-electric shadow-xs"
         />
       )}
     </div>
@@ -119,8 +130,6 @@ function DockItem({
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -136,9 +145,6 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    setMounted(true);
-
-    // Global listener to detect input focus across forms to prevent dock occlusion
     const handleFocusIn = (e: FocusEvent) => {
       const target = e.target as HTMLElement | null;
       if (
@@ -156,7 +162,6 @@ export default function Navbar() {
       setIsInputFocused(false);
     };
 
-    // Re-emerge dock when mouse moves close to the bottom screen edge (<80px)
     const handleMouseMove = (e: MouseEvent) => {
       if (e.clientY >= window.innerHeight - 80) {
         setNearBottomEdge(true);
@@ -189,10 +194,8 @@ export default function Navbar() {
     }
   });
 
-  // Dock hides when typing in forms or scrolling down, unless mouse is near bottom edge
   const shouldHideDock = (isInputFocused || isScrollingDown) && !nearBottomEdge;
 
-  const [themeHovered, setThemeHovered] = useState(false);
   const [ctaHovered, setCtaHovered] = useState(false);
 
   return (
@@ -201,23 +204,24 @@ export default function Navbar() {
       <div className="fixed top-5 left-5 z-50 flex items-center">
         <Link
           href="/"
-          className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-indigo-500/50 dark:border-white/10 dark:bg-slate-950/80 dark:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
+          className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-brand/50 dark:border-white/10 dark:bg-slate-950/80 dark:shadow-[0_0_30px_rgba(37,99,235,0.2)]"
         >
-          {/* Light Mode Purple Icon */}
+          {/* Light Mode Logo Icon */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/connectify-icon-purple.png"
             alt="Connectify Icon"
             className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 dark:hidden"
           />
-          {/* Dark Mode White Icon */}
+          {/* Dark Mode Logo Icon */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/connectify-icon-white.png"
             alt="Connectify Icon"
             className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 hidden dark:block"
           />
-          <span className="font-display text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">connectify
+          <span className="font-display text-sm font-extrabold tracking-tight text-foreground">
+            connectify
           </span>
         </Link>
       </div>
@@ -238,7 +242,7 @@ export default function Navbar() {
           transition={{ y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" }, scale: { duration: 0.2 } }}
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
-          className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 rounded-2xl bg-white/80 dark:bg-[#0f172a]/85 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
+          className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 rounded-2xl bg-white/80 dark:bg-surface/90 backdrop-blur-xl border border-border shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
         >
           {/* Desktop Magnified Dock Links */}
           <div className="hidden md:flex items-end gap-2 sm:gap-2.5">
@@ -258,48 +262,16 @@ export default function Navbar() {
           </div>
 
           {/* Vertical Divider */}
-          <div className="hidden md:block h-8 w-[1px] bg-slate-200 dark:bg-slate-800 self-center mx-3" />
+          <div className="hidden md:block h-8 w-[1px] bg-border self-center mx-2" />
 
           {/* Utilities & Action Buttons */}
-          <div className="flex items-center gap-3">
-            {/* Theme Toggle Button with Floating Tooltip */}
-            {mounted && (
-              <div
-                className="relative flex flex-col items-center"
-                onMouseEnter={() => setThemeHovered(true)}
-                onMouseLeave={() => setThemeHovered(false)}
-              >
-                <AnimatePresence>
-                  {themeHovered && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.8 }}
-                      animate={{ opacity: 1, y: -12, scale: 1.05 }}
-                      exit={{ opacity: 0, y: 6, scale: 0.8 }}
-                      transition={{ type: "spring", stiffness: 420, damping: 22 }}
-                      className="absolute -top-10 z-30 pointer-events-none px-3 py-1 rounded-xl bg-slate-900/90 text-white text-xs font-bold font-display whitespace-nowrap backdrop-blur-xl border border-white/20 shadow-2xl dark:bg-white/95 dark:text-slate-950"
-                    >
-                      {theme === "dark" ? "Light Mode" : "Dark Mode"}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                <button
-                  type="button"
-                  id="theme-toggle-btn"
-                  data-testid="theme-toggle-btn"
-                  onClick={toggleTheme}
-                  className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 text-slate-800 transition-all hover:scale-105 hover:bg-white dark:border-white/10 dark:bg-slate-900/80 dark:text-white/90 dark:hover:bg-slate-800"
-                  aria-label="Toggle theme"
-                >
-                  {theme === "dark" ? (
-                    <Sun className="h-4 w-4 text-amber-400" />
-                  ) : (
-                    <Moon className="h-4 w-4 text-slate-700" />
-                  )}
-                </button>
-              </div>
-            )}
+          <div className="flex items-center gap-2.5">
+            {/* Desktop Theme Toggle Selector */}
+            <div className="hidden sm:block">
+              <ThemeToggle />
+            </div>
 
-            {/* Unified Primary CTA with Floating Tooltip & Magnetic Hover */}
+            {/* Primary CTA */}
             <div
               className="relative flex flex-col items-center"
               onMouseEnter={() => setCtaHovered(true)}
@@ -320,7 +292,7 @@ export default function Navbar() {
               </AnimatePresence>
               <Link
                 href="/contact"
-                className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 px-4 py-2.5 text-xs font-extrabold shadow-lg transition-all duration-300 h-10 hover:scale-[1.04] border border-transparent dark:border-white/10"
+                className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-brand text-white hover:bg-brand-deep dark:bg-brand dark:text-white dark:hover:bg-brand-deep px-4 py-2.5 text-xs font-extrabold shadow-lg transition-all duration-300 h-10 hover:scale-[1.04] border border-transparent"
               >
                 <span>Start a Project</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -331,7 +303,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-800 md:hidden dark:border-white/15 dark:bg-white/10 dark:text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-border bg-surface text-foreground md:hidden"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
@@ -345,7 +317,7 @@ export default function Navbar() {
           {/* 2px Scroll Progress Bar */}
           <motion.div
             style={{ scaleX, transformOrigin: "0%" }}
-            className="absolute bottom-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-indigo-600 via-sky-500 to-purple-500"
+            className="absolute bottom-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-brand via-electric to-brand-deep"
           />
         </motion.div>
       </motion.header>
@@ -353,7 +325,7 @@ export default function Navbar() {
       {/* Mobile Menu Bottom Sheet Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md md:hidden">
-          <div className="fixed bottom-24 left-1/2 w-[90%] -translate-x-1/2 rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-[#121927]">
+          <div className="fixed bottom-24 left-1/2 w-[90%] -translate-x-1/2 rounded-3xl border border-border bg-background p-6 shadow-2xl">
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => {
                 const isActive =
@@ -365,21 +337,30 @@ export default function Navbar() {
                     key={link.label}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-2.5 font-display text-sm font-semibold transition-all ${isActive
-                      ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950"
-                      : "text-slate-800 hover:bg-slate-100 dark:text-white dark:hover:bg-white/10"
-                      }`}
+                    className={`flex items-center justify-between rounded-xl px-4 py-2.5 font-display text-sm font-semibold transition-all ${
+                      isActive
+                        ? "bg-brand text-white"
+                        : "text-foreground hover:bg-surface"
+                    }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span>{link.label}</span>
+                    <div className="flex items-center gap-3">
+                      <Icon className="w-4 h-4" />
+                      <span>{link.label}</span>
+                    </div>
+                    {isActive && <Check className="w-4 h-4 text-white" />}
                   </Link>
                 );
               })}
-              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10">
+
+              {/* Mobile Theme Toggle Section */}
+              <div className="mt-4 pt-4 border-t border-border flex flex-col gap-3">
+                <p className="font-mono text-xs font-bold text-muted uppercase tracking-wider">Appearance</p>
+                <ThemeToggle className="w-full justify-around py-1" />
+
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-950 py-3 font-display text-sm font-semibold shadow-lg"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-brand text-white py-3 font-display text-sm font-semibold shadow-lg mt-2"
                 >
                   <span>Schedule Consultation</span>
                   <ArrowRight className="h-4 w-4" />

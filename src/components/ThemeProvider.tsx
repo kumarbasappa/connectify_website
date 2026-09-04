@@ -4,14 +4,16 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from "next-themes";
 
 interface CustomThemeContextType {
-  theme: string;
+  theme: string | undefined;
+  resolvedTheme: string | undefined;
   setTheme: (theme: string) => void;
   toggleTheme: () => void;
   mounted: boolean;
 }
 
 const CustomThemeContext = createContext<CustomThemeContextType>({
-  theme: "dark",
+  theme: "system",
+  resolvedTheme: "dark",
   setTheme: () => {},
   toggleTheme: () => {},
   mounted: false,
@@ -26,15 +28,20 @@ function ThemeStateWrapper({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggleTheme = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    if (theme === "system") {
+      setTheme("dark");
+    } else if (theme === "dark") {
+      setTheme("light");
+    } else {
+      setTheme("system");
+    }
   };
-
-  const currentTheme = mounted ? (theme || resolvedTheme || "dark") : "dark";
 
   return (
     <CustomThemeContext.Provider
       value={{
-        theme: currentTheme,
+        theme,
+        resolvedTheme,
         setTheme,
         toggleTheme,
         mounted,
@@ -49,8 +56,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="dark"
+      defaultTheme="system"
       enableSystem
+      storageKey="connectify-theme"
       disableTransitionOnChange={false}
     >
       <ThemeStateWrapper>{children}</ThemeStateWrapper>

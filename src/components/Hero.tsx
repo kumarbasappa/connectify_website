@@ -77,8 +77,8 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
               </span>
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="font-mono text-xs uppercase tracking-[0.2em] font-extrabold text-cyan-300">
+              <Sparkles className="w-3.5 h-3.5 text-electric" />
+              <span className="font-mono text-xs uppercase tracking-[0.2em] font-extrabold text-electric">
                 ENTERPRISE SOFTWARE &amp; AI ENGINEERING
               </span>
             </div>
@@ -157,12 +157,12 @@ export default function Hero() {
                       : { opacity: [0.4, 0.85, 0.4], scale: [0.97, 1.04, 0.97] }
                   }
                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -inset-1 rounded-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-fuchsia-500 blur-md opacity-60"
+                  className="absolute -inset-1 rounded-full bg-gradient-to-r from-electric via-brand to-brand-deep blur-md opacity-60"
                 />
                 <Link
                   href="/services"
                   aria-label="View Projects"
-                  className="relative group inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 hover:from-cyan-400 hover:via-indigo-400 hover:to-fuchsia-400 text-white shadow-lg shadow-cyan-500/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[180px]"
+                  className="relative group inline-flex items-center justify-center px-7 py-3.5 bg-gradient-to-r from-brand via-brand-deep to-electric hover:opacity-95 text-white shadow-lg shadow-brand/25 font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[180px]"
                 >
                   <span>View Projects</span>
                   <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -194,7 +194,7 @@ export default function Hero() {
               <Link
                 href="/case-studies"
                 aria-label="Case Studies"
-                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/25 hover:border-cyan-400 bg-white/10 text-white hover:bg-white/20 shadow-xs backdrop-blur-md font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[170px]"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-white/25 hover:border-electric bg-white/10 text-white hover:bg-white/20 shadow-xs backdrop-blur-md font-display text-[14px] font-semibold rounded-full transition-all duration-300 w-full sm:w-auto min-w-[170px]"
               >
                 Case Studies
               </Link>
