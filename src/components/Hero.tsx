@@ -52,6 +52,36 @@ export default function Hero() {
         }}
         className="relative z-20 w-full max-w-[980px] mx-auto px-6 flex flex-col items-center text-center my-auto -translate-y-2 md:-translate-y-4 pb-20 sm:pb-28"
       >
+        {/* 1. Top-Middle Centered Brand Logo Badge */}
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+            show: { opacity: 1, y: 0 },
+          }}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : { duration: 0.55, ease: [0.25, 1, 0.5, 1] }
+          }
+          className="mb-4 sm:mb-5"
+        >
+          <AntiGravityElement
+            floatDistance={shouldReduceMotion ? 0 : 10}
+            floatDuration={4.5}
+            intensity={shouldReduceMotion ? 0 : 0.25}
+          >
+            <div className="group relative inline-flex items-center justify-center px-6 py-3 rounded-2xl border border-white/20 bg-slate-900/70 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:border-electric/60">
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-brand via-electric to-brand-deep blur-md opacity-40 group-hover:opacity-75 transition-opacity duration-300 -z-10" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/connectifylogo-white.png"
+                alt="Connectify Brand Logo"
+                className="h-7 sm:h-9 w-auto object-contain drop-shadow-md"
+              />
+            </div>
+          </AntiGravityElement>
+        </motion.div>
+
         {/* Status Pill Eyebrow Badge */}
         <motion.div
           variants={{
