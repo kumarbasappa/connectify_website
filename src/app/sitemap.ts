@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { projects } from "@/lib/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://connectify.global";
+  const baseUrl = "https://connectify-website.vercel.app";
 
   const staticRoutes = [
     "",

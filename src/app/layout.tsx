@@ -27,13 +27,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Connectify — Software Engineering, Cloud Platforms & AI Solutions",
     description: "We engineer scalable digital products, cloud platforms & AI solutions.",
-    url: "https://connectify.global",
+    url: "https://connectify-website.vercel.app",
     siteName: "Connectify",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Connectify — Software Engineering & AI Solutions",
+    title: "Connectify — Software Engineering, Cloud Platforms & AI Solutions",
     description: "We engineer scalable digital products, cloud platforms & AI solutions."
   }
 };
@@ -43,10 +43,10 @@ const jsonLdSchema = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://connectify.global/#organization",
+      "@id": "https://connectify-website.vercel.app/#organization",
       "name": "Connectify",
-      "url": "https://connectify.global",
-      "logo": "https://connectify.global/connectifylogo-purple.png",
+      "url": "https://connectify-website.vercel.app",
+      "logo": "https://connectify-website.vercel.app/connectifylogo-purple.png",
       "description": "Connectify is a software engineering agency building scalable digital products, cloud architecture, and AI solutions.",
       "sameAs": [
         "https://linkedin.com/company/connectify",
@@ -66,9 +66,9 @@ const jsonLdSchema = {
     },
     {
       "@type": "ProfessionalService",
-      "@id": "https://connectify.global/#service",
+      "@id": "https://connectify-website.vercel.app/#service",
       "name": "Connectify Software Engineering & AI Advisory",
-      "url": "https://connectify.global",
+      "url": "https://connectify-website.vercel.app",
       "priceRange": "$$$",
       "areaServed": "Global",
       "serviceType": [

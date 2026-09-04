@@ -24,6 +24,7 @@ import {
   ArrowRight,
   Menu,
   X,
+  Package,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
@@ -31,6 +32,7 @@ const navLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "About", href: "/about", icon: Info },
   { label: "Services", href: "/services", icon: Layers },
+  { label: "Products", href: "/products", icon: Package },
   { label: "Work", href: "/case-studies", icon: Briefcase },
   { label: "Contact", href: "/contact", icon: Mail },
 ];
@@ -205,14 +207,14 @@ export default function Navbar() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/connectify-icon-purple.png"
-            alt="Konnectify Icon"
+            alt="Connectify Icon"
             className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 dark:hidden"
           />
           {/* Dark Mode White Icon */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/connectify-icon-white.png"
-            alt="Konnectify Icon"
+            alt="Connectify Icon"
             className="h-5 w-auto object-contain transition-transform duration-300 group-hover:rotate-6 hidden dark:block"
           />
           <span className="font-display text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">connectify
