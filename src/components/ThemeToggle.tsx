@@ -1,20 +1,20 @@
 "use client";
 
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 export default function ThemeToggle({ className = "" }: { className?: string }) {
-  const { theme, setTheme, mounted } = useTheme();
+  const { theme, resolvedTheme, setTheme, mounted } = useTheme();
 
   if (!mounted) {
     return (
       <div
-        className={`h-9 w-24 rounded-2xl border border-slate-200/80 bg-white/80 dark:border-white/10 dark:bg-slate-900/80 ${className}`}
+        className={`h-9 w-20 rounded-2xl border border-slate-200/80 bg-white/80 dark:border-white/10 dark:bg-slate-900/80 ${className}`}
       />
     );
   }
 
-  const activeTheme = theme || "system";
+  const activeTheme = theme === "dark" || resolvedTheme === "dark" ? "dark" : "light";
 
   return (
     <div
@@ -50,21 +50,6 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
         title="Dark theme"
       >
         <Moon className="h-4 w-4" />
-      </button>
-
-      <button
-        type="button"
-        onClick={() => setTheme("system")}
-        className={`flex h-8 w-8 items-center justify-center rounded-xl transition-all duration-200 ${
-          activeTheme === "system"
-            ? "bg-brand text-white shadow-xs"
-            : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-        }`}
-        aria-label="Switch to system theme preference"
-        aria-pressed={activeTheme === "system"}
-        title="System preference"
-      >
-        <Monitor className="h-4 w-4" />
       </button>
     </div>
   );

@@ -12,8 +12,8 @@ interface CustomThemeContextType {
 }
 
 const CustomThemeContext = createContext<CustomThemeContextType>({
-  theme: "system",
-  resolvedTheme: "dark",
+  theme: "light",
+  resolvedTheme: "light",
   setTheme: () => {},
   toggleTheme: () => {},
   mounted: false,
@@ -27,14 +27,14 @@ function ThemeStateWrapper({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  const toggleTheme = () => {
+  useEffect(() => {
     if (theme === "system") {
-      setTheme("dark");
-    } else if (theme === "dark") {
       setTheme("light");
-    } else {
-      setTheme("system");
     }
+  }, [theme, setTheme]);
+
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -56,8 +56,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="light"
+      enableSystem={false}
       storageKey="connectify-theme"
       disableTransitionOnChange={false}
     >

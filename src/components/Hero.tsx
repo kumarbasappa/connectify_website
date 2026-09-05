@@ -17,32 +17,17 @@ export default function Hero() {
   }, [shouldReduceMotion]);
 
   return (
-    <section className="relative flex w-full min-h-svh min-h-screen flex-col items-center justify-center overflow-hidden bg-[#f7f8fc] pt-12 pb-32 text-slate-950 transition-colors duration-300 dark:bg-slate-950 dark:text-white">
-      {/* Light mode: soft lavender mesh (no blend modes meant for dark canvases) */}
+    <section className="relative flex w-full min-h-svh min-h-screen flex-col items-center justify-center overflow-hidden bg-[#f4f6fb] pt-12 pb-32 text-slate-950 transition-colors duration-300 dark:bg-slate-950 dark:text-white">
+      {/* Light mode: high-key 3D poster — bright, airy, distinct from dark video */}
       <div className="pointer-events-none absolute inset-0 z-0 dark:hidden" aria-hidden="true">
-        <div className="absolute inset-0 bg-[#f7f8fc]" />
-        <div className="absolute -top-28 left-1/2 h-[460px] w-[780px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-200/45 via-sky-100/40 to-violet-100/35 blur-3xl" />
-        <div className="absolute -bottom-16 -left-16 h-80 w-80 rounded-full bg-blue-100/50 blur-3xl" />
-        <div className="absolute -right-10 top-1/3 h-64 w-64 rounded-full bg-violet-100/40 blur-3xl" />
-        <svg
-          className="absolute inset-x-0 bottom-0 h-40 w-full text-indigo-200/50"
-          viewBox="0 0 1440 160"
-          fill="none"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0 110 C 240 60, 480 150, 720 100 C 960 50, 1200 130, 1440 80 L 1440 160 L 0 160 Z"
-            fill="currentColor"
-            opacity="0.35"
-          />
-          <path
-            d="M0 90 C 200 140, 440 40, 720 90 C 1000 140, 1240 50, 1440 95"
-            stroke="currentColor"
-            strokeWidth="1.25"
-            fill="none"
-            opacity="0.45"
-          />
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero-poster-light.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/55 via-white/25 to-[#f4f6fb]/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.15)_0%,rgba(244,246,251,0.55)_70%)]" />
       </div>
 
       {/* Dark mode: full-bleed cinematic video */}

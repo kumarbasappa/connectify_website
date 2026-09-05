@@ -103,14 +103,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var saved = localStorage.getItem('connectify-theme');
-                  var isDark = false;
-                  if (saved === 'dark') {
-                    isDark = true;
-                  } else if (saved === 'light') {
-                    isDark = false;
-                  } else {
-                    isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  }
+                  var isDark = saved === 'dark';
                   if (isDark) {
                     document.documentElement.classList.add('dark');
                     document.documentElement.style.colorScheme = 'dark';
