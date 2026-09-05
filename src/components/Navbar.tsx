@@ -80,7 +80,7 @@ function DockItem({
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
-      className="relative flex flex-col items-center justify-end gap-1.5"
+      className="relative flex items-center justify-end"
     >
       <AnimatePresence>
         {hovered && (
@@ -112,16 +112,13 @@ function DockItem({
           </motion.div>
         </motion.div>
       </Link>
-      <span className={`text-[10px] font-bold hidden md:block ${isActive ? "text-brand dark:text-electric font-extrabold" : "text-slate-600 dark:text-slate-400"}`}>
-        {link.label}
-      </span>
 
       {/* macOS Active App Indicator Dot with Horizontal Glide Layout Transition */}
       {isActive && (
         <motion.span
           layoutId="dock-active-dot"
           transition={{ type: "spring", stiffness: 380, damping: 28 }}
-          className="absolute -bottom-2.5 h-1.5 w-1.5 rounded-full bg-brand dark:bg-electric shadow-xs"
+          className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-brand dark:bg-electric shadow-xs"
         />
       )}
     </div>
@@ -242,7 +239,7 @@ export default function Navbar() {
           transition={{ y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" }, scale: { duration: 0.2 } }}
           onMouseMove={(e) => mouseX.set(e.pageX)}
           onMouseLeave={() => mouseX.set(Infinity)}
-          className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-2.5 sm:px-4 rounded-2xl bg-white/80 dark:bg-surface/90 backdrop-blur-xl border border-border shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
+          className="relative flex items-end gap-2.5 sm:gap-3 px-3 py-3 sm:px-4 rounded-2xl bg-white/80 dark:bg-surface/90 backdrop-blur-xl border border-border shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-black/5 dark:ring-white/10 transition-colors duration-300"
         >
           {/* Desktop Magnified Dock Links */}
           <div className="hidden md:flex items-end gap-2 sm:gap-2.5">

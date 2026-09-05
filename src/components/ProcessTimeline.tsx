@@ -144,7 +144,7 @@ export default function ProcessTimeline() {
           >
             <div className="flex flex-col justify-between gap-8">
               <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/15 border border-indigo-500/30 px-4 py-1.5 font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400 shadow-[0_0_12px_rgba(99,102,241,0.2)]">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/15 border border-indigo-500/30 px-4 py-1.5 font-mono text-xs font-bold text-indigo-600 shadow-sm dark:text-indigo-400 dark:shadow-[0_0_12px_rgba(99,102,241,0.2)]">
                   STAGE {processSteps[activeStep].stepNumber}
                 </span>
                 <h3 className="mt-4 font-display text-2xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
